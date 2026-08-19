@@ -2,6 +2,9 @@
 
 本地推理 + UR7e 真机部署包。
 
+> Task487 在 2026-08-19 的训练、mask、标定、离线对比和真机验证结论见
+> [TASK487_TRAINING_REPORT_20260819.md](TASK487_TRAINING_REPORT_20260819.md)。
+
 ## 目录结构
 
 ```
