@@ -1,0 +1,41 @@
+# PC 接收端配置
+# ============================================================================
+
+# 监听地址 (0.0.0.0 表示接收所有接口)
+listen_host: "0.0.0.0"
+
+# 推流端地址 (网线直连)
+sender_host: "192.168.1.101"
+clock_sync_port: 7777
+
+# 视频基础端口 (与推流端一致)
+video_base_port: 5000
+
+# 元数据基础端口 (与推流端一致)
+meta_base_port: 6000
+
+# 显示参数
+display:
+  # 每路视频的显示尺寸
+  tile_width: 480
+  tile_height: 480
+  # 网格布局: 3列 × 2行
+  grid_cols: 3
+  grid_rows: 2
+  # 窗口标题
+  window_title: "Thor Camera Stream Viewer"
+
+# 相机标签 (与推流端一致, 用于显示)
+cameras:
+  - label: cam_head_left
+    name: "头部左目"
+  - label: cam_head_right
+    name: "头部右目"
+  - label: cam_hand_l_top
+    name: "左手上方"
+  - label: cam_hand_l_bottom
+    name: "左手下方"
+  - label: cam_hand_r_top
+    name: "右手上方"
+  - label: cam_hand_r_bottom
+    name: "右手下方"

@@ -1,0 +1,47 @@
+schema_version: 1
+calibration_status: manually_adjusted_and_sequence_validated
+transform_direction: camera_from_base
+matrix_semantics: p_camera = T_camera_base * p_base
+units:
+  length: meter
+  angle: radian
+camera_coordinates:
+  x: image_right
+  y: image_down
+  z: camera_forward
+calibration_notes:
+  - Recovered from the final validated capsule_small_tip projection report.
+  - Use as the runtime default for the calibrated physical camera and robot installation.
+  - Recalibrate if the camera or either arm base is moved.
+T_camera_left_base:
+  - [0.035350065993947515, -0.04812676337326644, -0.998215501523312, 0.007999999999999993]
+  - [-0.6811007303293554, 0.7297840232709976, -0.05930492832147199, 0.209]
+  - [0.7313358790453551, 0.6819817402435419, -0.0069812602979615525, -0.040000000000000015]
+  - [0.0, 0.0, 0.0, 1.0]
+T_camera_right_base:
+  - [-0.024539368696716166, -0.01991551644633857, 0.9995004710297251, 0.07700000000000001]
+  - [-0.7017285134581371, -0.711751690996079, -0.03141056771303492, 0.21699999999999997]
+  - [0.7120217080846621, -0.7021487752384801, 0.003490651415223732, -0.020000000000000018]
+  - [0.0, 0.0, 0.0, 1.0]
+joint_mapping:
+  right:
+    Joint1_R: 0
+    Joint2_R: 1
+    Joint3_R: 2
+    Joint4_R: 3
+    Joint5_R: 4
+    Joint6_R: 5
+    Joint7_R: 6
+  left:
+    Joint1_L: 8
+    Joint2_L: 9
+    Joint3_L: 10
+    Joint4_L: 11
+    Joint5_L: 12
+    Joint6_L: 13
+    Joint7_L: 14
+excluded_links:
+  left: [TCP_Link_L]
+  right: [TCP_Link_R]
+  note: Gripper geometry and links after Link7 are outside mask scope.
+

@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3:*)",
+      "Bash(conda env:*)",
+      "Bash(/home/simpleai/anaconda3/envs/umi/bin/python:*)",
+      "Bash(/home/simpleai/anaconda3/envs/umi/bin/pip install:*)",
+      "Bash(apt-cache show:*)",
+      "Bash(sudo apt-get:*)",
+      "Read(//usr/**)",
+      "Bash(ldconfig -p)",
+      "Bash(ln:*)",
+      "Bash(v4l2-ctl --device=/dev/video3 --list-formats-ext 2>/dev/null | grep -A2 \"YUYV\\\\|MJPG\\\\|H264\" | head -30)",
+      "Bash(for d:*)",
+      "Bash(/home/simpleai/anaconda3/envs/umi/bin/pip show:*)",
+      "Bash(lsusb | grep -i -E \"cam|video|capture|elgato|gopro\")"
+    ]
+  }
+}

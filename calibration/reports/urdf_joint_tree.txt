@@ -1,0 +1,44 @@
+URDF joint tree
+Direction convention:
+  origin defines T_parent_link_child_link at q=0.
+  xyz is meters; rpy and joint limits are radians.
+
+Link_Base
+`-- Joint_Stand [fixed] xyz_m=[0.0, 0.0, 0.981] rpy_rad=[0.0, 0.0, 0.0]
+    Link_Stand
+    |-- Joint0_L [fixed] xyz_m=[0.0, 0.037, 0.14] rpy_rad=[-1.5708, 0.0, 0.0]
+    |   Base_L
+    |   `-- Joint1_L [revolute] xyz_m=[0.0, 0.0, 0.1745] rpy_rad=[0.0, 0.0, 0.0]
+    |       Link1_L
+    |       `-- Joint2_L [revolute] xyz_m=[0.0, 0.0, 0.0] rpy_rad=[1.5708, 0.0, 0.0]
+    |           Link2_L
+    |           `-- Joint3_L [revolute] xyz_m=[0.0, 0.287, 0.0] rpy_rad=[-1.5708, 0.0, 0.0]
+    |               Link3_L
+    |               `-- Joint4_L [revolute] xyz_m=[0.018, 0.0, 0.0] rpy_rad=[-1.5708, 0.0, 3.1416]
+    |                   Link4_L
+    |                   `-- Joint5_L [revolute] xyz_m=[0.018, -0.314, 0.0] rpy_rad=[-1.5708, 0.0, 3.1416]
+    |                       Link5_L
+    |                       `-- Joint6_L [revolute] xyz_m=[0.0, 0.0, 0.0] rpy_rad=[1.5708, -1.5708, 0.0]
+    |                           Link6_L
+    |                           `-- Joint7_L [revolute] xyz_m=[0.0, 0.0, 0.0] rpy_rad=[1.5708, -1.5708, 0.0]
+    |                               Link7_L
+    |                               `-- JointTCP_L [fixed] xyz_m=[0.0, -0.095, 0.0] rpy_rad=[1.5708, -1.5708, 0.0]
+    |                                   TCP_Link_L
+    `-- Joint0_R [fixed] xyz_m=[0.0, -0.037, 0.14] rpy_rad=[1.5708, 0.0, 0.0]
+        Base_R
+        `-- Joint1_R [revolute] xyz_m=[0.0, 0.0, 0.1745] rpy_rad=[0.0, 0.0, 0.0]
+            Link1_R
+            `-- Joint2_R [revolute] xyz_m=[0.0, 0.0, 0.0] rpy_rad=[1.5708, 0.0, 0.0]
+                Link2_R
+                `-- Joint3_R [revolute] xyz_m=[0.0, 0.287, 0.0] rpy_rad=[-1.5708, 0.0, 0.0]
+                    Link3_R
+                    `-- Joint4_R [revolute] xyz_m=[0.018, 0.0, 0.0] rpy_rad=[-1.5708, 0.0, 3.1416]
+                        Link4_R
+                        `-- Joint5_R [revolute] xyz_m=[0.018, -0.314, 0.0] rpy_rad=[-1.5708, 0.0, 3.1416]
+                            Link5_R
+                            `-- Joint6_R [revolute] xyz_m=[0.0, 0.0, 0.0] rpy_rad=[1.5708, -1.5708, 0.0]
+                                Link6_R
+                                `-- Joint7_R [revolute] xyz_m=[0.0, 0.0, 0.0] rpy_rad=[1.5708, -1.5708, 0.0]
+                                    Link7_R
+                                    `-- JointTCP_R [fixed] xyz_m=[0.0, -0.095, 0.0] rpy_rad=[1.5708, -1.5708, 0.0]
+                                        TCP_Link_R

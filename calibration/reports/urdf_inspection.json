@@ -1,0 +1,1663 @@
+{
+  "status": "pass",
+  "urdf_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf.urdf",
+  "robot_name": "Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf",
+  "coordinate_convention": {
+    "homogeneous_matrix_shape": [
+      4,
+      4
+    ],
+    "origin_direction": "T_parent_link_child_link at q=0",
+    "length_unit": "meter",
+    "angle_unit": "radian"
+  },
+  "root_link": "Link_Base",
+  "root_link_candidates": [
+    "Link_Base"
+  ],
+  "link_count": 20,
+  "joint_count": 19,
+  "links": [
+    {
+      "name": "Link_Base",
+      "visual_meshes": [
+        {
+          "link_name": "Link_Base",
+          "kind": "visual",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link_Base.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link_Base.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "collision_meshes": [
+        {
+          "link_name": "Link_Base",
+          "kind": "collision",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link_Base.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link_Base.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Link_Stand",
+      "visual_meshes": [
+        {
+          "link_name": "Link_Stand",
+          "kind": "visual",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link_Stand.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link_Stand.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "collision_meshes": [
+        {
+          "link_name": "Link_Stand",
+          "kind": "collision",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link_Stand.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link_Stand.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Base_L",
+      "visual_meshes": [
+        {
+          "link_name": "Base_L",
+          "kind": "visual",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Base_L.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Base_L.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "collision_meshes": [
+        {
+          "link_name": "Base_L",
+          "kind": "collision",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Base_L.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Base_L.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Link1_L",
+      "visual_meshes": [
+        {
+          "link_name": "Link1_L",
+          "kind": "visual",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link1_L.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link1_L.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "collision_meshes": [
+        {
+          "link_name": "Link1_L",
+          "kind": "collision",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link1_L.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link1_L.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Link2_L",
+      "visual_meshes": [
+        {
+          "link_name": "Link2_L",
+          "kind": "visual",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link2_L.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link2_L.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "collision_meshes": [
+        {
+          "link_name": "Link2_L",
+          "kind": "collision",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link2_L.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link2_L.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Link3_L",
+      "visual_meshes": [
+        {
+          "link_name": "Link3_L",
+          "kind": "visual",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link3_L.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link3_L.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "collision_meshes": [
+        {
+          "link_name": "Link3_L",
+          "kind": "collision",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link3_L.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link3_L.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Link4_L",
+      "visual_meshes": [
+        {
+          "link_name": "Link4_L",
+          "kind": "visual",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link4_L.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link4_L.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "collision_meshes": [
+        {
+          "link_name": "Link4_L",
+          "kind": "collision",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link4_L.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link4_L.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Link5_L",
+      "visual_meshes": [
+        {
+          "link_name": "Link5_L",
+          "kind": "visual",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link5_L.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link5_L.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "collision_meshes": [
+        {
+          "link_name": "Link5_L",
+          "kind": "collision",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link5_L.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link5_L.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Link6_L",
+      "visual_meshes": [
+        {
+          "link_name": "Link6_L",
+          "kind": "visual",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link6_L.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link6_L.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "collision_meshes": [
+        {
+          "link_name": "Link6_L",
+          "kind": "collision",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link6_L.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link6_L.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Link7_L",
+      "visual_meshes": [
+        {
+          "link_name": "Link7_L",
+          "kind": "visual",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link7_L.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link7_L.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "collision_meshes": [
+        {
+          "link_name": "Link7_L",
+          "kind": "collision",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link7_L.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link7_L.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      ]
+    },
+    {
+      "name": "TCP_Link_L",
+      "visual_meshes": [
+        {
+          "link_name": "TCP_Link_L",
+          "kind": "visual",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/TCP_Link_L.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\TCP_Link_L.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "collision_meshes": [
+        {
+          "link_name": "TCP_Link_L",
+          "kind": "collision",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/TCP_Link_L.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\TCP_Link_L.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Base_R",
+      "visual_meshes": [
+        {
+          "link_name": "Base_R",
+          "kind": "visual",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Base_R.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Base_R.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "collision_meshes": [
+        {
+          "link_name": "Base_R",
+          "kind": "collision",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Base_R.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Base_R.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Link1_R",
+      "visual_meshes": [
+        {
+          "link_name": "Link1_R",
+          "kind": "visual",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link1_R.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link1_R.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "collision_meshes": [
+        {
+          "link_name": "Link1_R",
+          "kind": "collision",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link1_R.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link1_R.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Link2_R",
+      "visual_meshes": [
+        {
+          "link_name": "Link2_R",
+          "kind": "visual",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link2_R.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link2_R.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "collision_meshes": [
+        {
+          "link_name": "Link2_R",
+          "kind": "collision",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link2_R.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link2_R.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Link3_R",
+      "visual_meshes": [
+        {
+          "link_name": "Link3_R",
+          "kind": "visual",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link3_R.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link3_R.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "collision_meshes": [
+        {
+          "link_name": "Link3_R",
+          "kind": "collision",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link3_R.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link3_R.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Link4_R",
+      "visual_meshes": [
+        {
+          "link_name": "Link4_R",
+          "kind": "visual",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link4_R.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link4_R.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "collision_meshes": [
+        {
+          "link_name": "Link4_R",
+          "kind": "collision",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link4_R.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link4_R.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Link5_R",
+      "visual_meshes": [
+        {
+          "link_name": "Link5_R",
+          "kind": "visual",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link5_R.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link5_R.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "collision_meshes": [
+        {
+          "link_name": "Link5_R",
+          "kind": "collision",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link5_R.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link5_R.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Link6_R",
+      "visual_meshes": [
+        {
+          "link_name": "Link6_R",
+          "kind": "visual",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link6_R.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link6_R.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "collision_meshes": [
+        {
+          "link_name": "Link6_R",
+          "kind": "collision",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link6_R.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link6_R.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Link7_R",
+      "visual_meshes": [
+        {
+          "link_name": "Link7_R",
+          "kind": "visual",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link7_R.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link7_R.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "collision_meshes": [
+        {
+          "link_name": "Link7_R",
+          "kind": "collision",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link7_R.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link7_R.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      ]
+    },
+    {
+      "name": "TCP_Link_R",
+      "visual_meshes": [
+        {
+          "link_name": "TCP_Link_R",
+          "kind": "visual",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/TCP_Link_R.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\TCP_Link_R.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "collision_meshes": [
+        {
+          "link_name": "TCP_Link_R",
+          "kind": "collision",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/TCP_Link_R.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\TCP_Link_R.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      ]
+    }
+  ],
+  "joints": [
+    {
+      "name": "Joint_Stand",
+      "type": "fixed",
+      "parent_link": "Link_Base",
+      "child_link": "Link_Stand",
+      "axis": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "origin": {
+        "xyz_m": [
+          0.0,
+          0.0,
+          0.981
+        ],
+        "rpy_rad": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "limit": null,
+      "mimic": null
+    },
+    {
+      "name": "Joint0_L",
+      "type": "fixed",
+      "parent_link": "Link_Stand",
+      "child_link": "Base_L",
+      "axis": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "origin": {
+        "xyz_m": [
+          0.0,
+          0.037,
+          0.14
+        ],
+        "rpy_rad": [
+          -1.5708,
+          0.0,
+          0.0
+        ]
+      },
+      "limit": null,
+      "mimic": null
+    },
+    {
+      "name": "Joint1_L",
+      "type": "revolute",
+      "parent_link": "Base_L",
+      "child_link": "Link1_L",
+      "axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "origin": {
+        "xyz_m": [
+          0.0,
+          0.0,
+          0.1745
+        ],
+        "rpy_rad": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "limit": {
+        "lower": -3.1067,
+        "upper": 3.1067,
+        "effort": 108.0,
+        "velocity": 3.1416
+      },
+      "mimic": null
+    },
+    {
+      "name": "Joint2_L",
+      "type": "revolute",
+      "parent_link": "Link1_L",
+      "child_link": "Link2_L",
+      "axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "origin": {
+        "xyz_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rpy_rad": [
+          1.5708,
+          0.0,
+          0.0
+        ]
+      },
+      "limit": {
+        "lower": -2.0944,
+        "upper": 2.0944,
+        "effort": 108.0,
+        "velocity": 3.1416
+      },
+      "mimic": null
+    },
+    {
+      "name": "Joint3_L",
+      "type": "revolute",
+      "parent_link": "Link2_L",
+      "child_link": "Link3_L",
+      "axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "origin": {
+        "xyz_m": [
+          0.0,
+          0.287,
+          0.0
+        ],
+        "rpy_rad": [
+          -1.5708,
+          0.0,
+          0.0
+        ]
+      },
+      "limit": {
+        "lower": -3.1067,
+        "upper": 3.1067,
+        "effort": 66.0,
+        "velocity": 3.1416
+      },
+      "mimic": null
+    },
+    {
+      "name": "Joint4_L",
+      "type": "revolute",
+      "parent_link": "Link3_L",
+      "child_link": "Link4_L",
+      "axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "origin": {
+        "xyz_m": [
+          0.018,
+          0.0,
+          0.0
+        ],
+        "rpy_rad": [
+          -1.5708,
+          0.0,
+          3.1416
+        ]
+      },
+      "limit": {
+        "lower": -2.5307,
+        "upper": 1.0472,
+        "effort": 66.0,
+        "velocity": 3.1416
+      },
+      "mimic": null
+    },
+    {
+      "name": "Joint5_L",
+      "type": "revolute",
+      "parent_link": "Link4_L",
+      "child_link": "Link5_L",
+      "axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "origin": {
+        "xyz_m": [
+          0.018,
+          -0.314,
+          0.0
+        ],
+        "rpy_rad": [
+          -1.5708,
+          0.0,
+          3.1416
+        ]
+      },
+      "limit": {
+        "lower": -3.1067,
+        "upper": 3.1067,
+        "effort": 18.0,
+        "velocity": 3.1416
+      },
+      "mimic": null
+    },
+    {
+      "name": "Joint6_L",
+      "type": "revolute",
+      "parent_link": "Link5_L",
+      "child_link": "Link6_L",
+      "axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "origin": {
+        "xyz_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rpy_rad": [
+          1.5708,
+          -1.5708,
+          0.0
+        ]
+      },
+      "limit": {
+        "lower": -1.0472,
+        "upper": 1.0472,
+        "effort": 18.0,
+        "velocity": 3.1416
+      },
+      "mimic": null
+    },
+    {
+      "name": "Joint7_L",
+      "type": "revolute",
+      "parent_link": "Link6_L",
+      "child_link": "Link7_L",
+      "axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "origin": {
+        "xyz_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rpy_rad": [
+          1.5708,
+          -1.5708,
+          0.0
+        ]
+      },
+      "limit": {
+        "lower": -1.5708,
+        "upper": 1.5708,
+        "effort": 18.0,
+        "velocity": 3.1416
+      },
+      "mimic": null
+    },
+    {
+      "name": "JointTCP_L",
+      "type": "fixed",
+      "parent_link": "Link7_L",
+      "child_link": "TCP_Link_L",
+      "axis": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "origin": {
+        "xyz_m": [
+          0.0,
+          -0.095,
+          0.0
+        ],
+        "rpy_rad": [
+          1.5708,
+          -1.5708,
+          0.0
+        ]
+      },
+      "limit": null,
+      "mimic": null
+    },
+    {
+      "name": "Joint0_R",
+      "type": "fixed",
+      "parent_link": "Link_Stand",
+      "child_link": "Base_R",
+      "axis": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "origin": {
+        "xyz_m": [
+          0.0,
+          -0.037,
+          0.14
+        ],
+        "rpy_rad": [
+          1.5708,
+          0.0,
+          0.0
+        ]
+      },
+      "limit": null,
+      "mimic": null
+    },
+    {
+      "name": "Joint1_R",
+      "type": "revolute",
+      "parent_link": "Base_R",
+      "child_link": "Link1_R",
+      "axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "origin": {
+        "xyz_m": [
+          0.0,
+          0.0,
+          0.1745
+        ],
+        "rpy_rad": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "limit": {
+        "lower": -3.1067,
+        "upper": 3.1067,
+        "effort": 108.0,
+        "velocity": 3.1416
+      },
+      "mimic": null
+    },
+    {
+      "name": "Joint2_R",
+      "type": "revolute",
+      "parent_link": "Link1_R",
+      "child_link": "Link2_R",
+      "axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "origin": {
+        "xyz_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rpy_rad": [
+          1.5708,
+          0.0,
+          0.0
+        ]
+      },
+      "limit": {
+        "lower": -2.0944,
+        "upper": 2.0944,
+        "effort": 108.0,
+        "velocity": 3.1416
+      },
+      "mimic": null
+    },
+    {
+      "name": "Joint3_R",
+      "type": "revolute",
+      "parent_link": "Link2_R",
+      "child_link": "Link3_R",
+      "axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "origin": {
+        "xyz_m": [
+          0.0,
+          0.287,
+          0.0
+        ],
+        "rpy_rad": [
+          -1.5708,
+          0.0,
+          0.0
+        ]
+      },
+      "limit": {
+        "lower": -3.1067,
+        "upper": 3.1067,
+        "effort": 66.0,
+        "velocity": 3.1416
+      },
+      "mimic": null
+    },
+    {
+      "name": "Joint4_R",
+      "type": "revolute",
+      "parent_link": "Link3_R",
+      "child_link": "Link4_R",
+      "axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "origin": {
+        "xyz_m": [
+          0.018,
+          0.0,
+          0.0
+        ],
+        "rpy_rad": [
+          -1.5708,
+          0.0,
+          3.1416
+        ]
+      },
+      "limit": {
+        "lower": -2.5307,
+        "upper": 1.0472,
+        "effort": 66.0,
+        "velocity": 3.1416
+      },
+      "mimic": null
+    },
+    {
+      "name": "Joint5_R",
+      "type": "revolute",
+      "parent_link": "Link4_R",
+      "child_link": "Link5_R",
+      "axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "origin": {
+        "xyz_m": [
+          0.018,
+          -0.314,
+          0.0
+        ],
+        "rpy_rad": [
+          -1.5708,
+          0.0,
+          3.1416
+        ]
+      },
+      "limit": {
+        "lower": -3.1067,
+        "upper": 3.1067,
+        "effort": 18.0,
+        "velocity": 3.1416
+      },
+      "mimic": null
+    },
+    {
+      "name": "Joint6_R",
+      "type": "revolute",
+      "parent_link": "Link5_R",
+      "child_link": "Link6_R",
+      "axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "origin": {
+        "xyz_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rpy_rad": [
+          1.5708,
+          -1.5708,
+          0.0
+        ]
+      },
+      "limit": {
+        "lower": -1.0472,
+        "upper": 1.0472,
+        "effort": 18.0,
+        "velocity": 3.1416
+      },
+      "mimic": null
+    },
+    {
+      "name": "Joint7_R",
+      "type": "revolute",
+      "parent_link": "Link6_R",
+      "child_link": "Link7_R",
+      "axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "origin": {
+        "xyz_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rpy_rad": [
+          1.5708,
+          -1.5708,
+          0.0
+        ]
+      },
+      "limit": {
+        "lower": -1.5708,
+        "upper": 1.5708,
+        "effort": 18.0,
+        "velocity": 3.1416
+      },
+      "mimic": null
+    },
+    {
+      "name": "JointTCP_R",
+      "type": "fixed",
+      "parent_link": "Link7_R",
+      "child_link": "TCP_Link_R",
+      "axis": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "origin": {
+        "xyz_m": [
+          0.0,
+          -0.095,
+          0.0
+        ],
+        "rpy_rad": [
+          1.5708,
+          -1.5708,
+          0.0
+        ]
+      },
+      "limit": null,
+      "mimic": null
+    }
+  ],
+  "fixed_joint_count": 5,
+  "fixed_joints": [
+    "Joint_Stand",
+    "Joint0_L",
+    "JointTCP_L",
+    "Joint0_R",
+    "JointTCP_R"
+  ],
+  "mimic_joint_count": 0,
+  "mimic_joints": [],
+  "left_and_right_arms_in_same_urdf": true,
+  "left_arm_links": [
+    "Base_L",
+    "Link1_L",
+    "Link2_L",
+    "Link3_L",
+    "Link4_L",
+    "Link5_L",
+    "Link6_L",
+    "Link7_L",
+    "TCP_Link_L"
+  ],
+  "right_arm_links": [
+    "Base_R",
+    "Link1_R",
+    "Link2_R",
+    "Link3_R",
+    "Link4_R",
+    "Link5_R",
+    "Link6_R",
+    "Link7_R",
+    "TCP_Link_R"
+  ],
+  "orphan_links": []
+}

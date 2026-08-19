@@ -1,0 +1,42 @@
+{
+  "camera_stream": "observation.images.head_main",
+  "calibration_scope": "shared_initial_value_for_same_camera_model",
+  "camera_model": "opencv_fisheye",
+  "distortion_model": "equidistant",
+  "distortion_api": "cv2.fisheye",
+  "distortion_order": ["k1", "k2", "k3", "k4"],
+  "source_image_size_wh": [1920, 1536],
+  "K_camera_head_main_source": [
+    [809.9194971389446, 0.0, 962.2874489372539],
+    [0.0, 806.7245751990637, 745.712125538626],
+    [0.0, 0.0, 1.0]
+  ],
+  "D_camera_head_main_source": [
+    -0.017552553835208505,
+    -0.0030120798718676935,
+    -0.0022629831051437445,
+    0.00042376088255471304
+  ],
+  "image_processing": {
+    "operation": "center_square_then_resize",
+    "output_image_size_wh": [224, 224]
+  },
+  "frames_are_undistorted": false,
+  "requires_per_camera_confirmation": true,
+  "calibration_provenance": {
+    "code_evidence": [
+      "/home/simpleai/data/umi_final_mask_pipeline/umi_final_mask/internal_core/umi_fixed_head_view_demo.py",
+      "/home/simpleai/data/umi_final_mask_pipeline/umi_final_mask/internal_core/umi_hommi_lite_geometry_check.py"
+    ],
+    "observed_apis": [
+      "cv2.fisheye.stereoRectify",
+      "cv2.fisheye.initUndistortRectifyMap"
+    ],
+    "legacy_fallback_rule": "missing distortion_model and len(D) == 4 means fisheye"
+  },
+  "notes": [
+    "The dataset metadata states center_square crop followed by resize to 224x224.",
+    "Using one calibration for multiple units of the same camera model is an initial approximation, not a per-unit calibration.",
+    "Inference frames are distorted source frames, so projection must apply D_camera_head_main_source with cv2.fisheye APIs."
+  ]
+}

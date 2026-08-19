@@ -1,0 +1,97 @@
+# Thor 推流端配置
+# ============================================================================
+
+# 目标接收端IP (网线直连)
+#target_host: "192.168.1.105"
+target_host: "192.168.2.255"
+
+
+# 视频基础端口 (每路相机递增: 5000, 5001, ...)
+video_base_port: 5000
+
+# 元数据基础端口 (每路相机递增: 6000, 6001, ...)
+meta_base_port: 6000
+
+# 同一编码帧复制给独立录制端口。模型继续使用上面的 5000/6000，
+# LeRobot 使用 5100/6100，避免 31.130 上两个 UDP receiver 竞争。
+additional_outputs:
+  - name: "lerobot"
+    host: "192.168.2.255"
+    video_base_port: 5100
+    meta_base_port: 6100
+
+# 编码参数
+encoding:
+  bitrate: 4000000          # 码率 (bps), 4Mbps (高质量)
+  iframeinterval: 15        # I帧间隔
+  preset_id: 1              # 编码预设 (1=最快)
+
+# 相机原生采集帧率 (V4L2协商用, IMX307 GMSL驱动报告60fps)
+cap_fps: 30                # 相机原生采集帧率 (V4L2协商, IMX307当前驱动报告30fps)
+
+# 推流帧率 (通过GPIO FSIN触发控制实际采集帧率, 与UMI数采一致)
+stream_fps: 25
+
+# GPIO FSIN 同步触发配置 (移植自UMI dual_trigger)
+# 通过GPIO方波触发IMX307 FSIN引脚, 实现6路相机同步采集
+gpio_trigger:
+  enabled: true
+  cam_gpio: 659            # PM.00, Jetson Thor相机FSIN触发引脚
+
+# 推流分辨率 (nvvidconv硬件缩放, 不增加CPU开销)
+# 可按需调整: 224x224(模型推理), 480x480(监控清晰), 960x768(高清)
+stream_resolution:
+  width: 640
+  height: 512
+
+# 相机配置 (与UMI camera.yaml一致)
+cameras:
+  - label: cam_head_left
+    enabled: true
+    device_path: /dev/video1
+    width: 1920
+    height: 1536
+
+  - label: cam_head_right
+    enabled: false
+    device_path: /dev/video0
+    width: 1920
+    height: 1536
+
+  - label: cam_hand_l_top
+    device_path: /dev/video3
+    width: 1920
+    height: 1536
+
+  - label: cam_hand_l_bottom
+    enabled: false
+    device_path: /dev/video2
+    width: 1920
+    height: 1536
+
+  - label: cam_hand_r_top
+    device_path: /dev/video5
+    width: 1920
+    height: 1536
+
+  - label: cam_hand_r_bottom
+    enabled: false
+    device_path: /dev/video4
+    width: 1920
+    height: 1536
+
+# ── 推理分流 (tee: v4l2src 之后、nvvidconv 之前) ──
+# 主推流支保持不变(继续发给 44 的 eval); 新增一支硬件缩放到系统内存 RGBA,
+# 经 shmsink 暴露给同机 pi0.5 推理进程 (shmsrc 读)。消费端没连/慢只丢帧,
+# 不回压主推流支 (leaky + wait-for-connection=false)。
+infer_branch:
+  enabled: false
+  width: 640          # 与推流分辨率一致 → 与 4090 eval 的模型输入一致
+  height: 512
+  format: RGBA
+  socket_dir: /tmp    # shmsink socket: /tmp/thor_infer_<label>
+  cameras:            # 只给模型用到的 4 路腕相机分流 (头相机不需要)
+    - cam_hand_r_top      # cam_right_top -> right_wrist_0
+    - cam_hand_r_bottom   # cam_right_btm -> right_wrist_1
+    - cam_hand_l_top      # cam_left_top  -> left_wrist_0
+    - cam_hand_l_bottom   # cam_left_btm  -> left_wrist_1

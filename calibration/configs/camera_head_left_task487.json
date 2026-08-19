@@ -1,0 +1,33 @@
+{
+  "camera_stream": "observation.images.head_main",
+  "physical_camera": "cam_head_left",
+  "video_port": 5000,
+  "meta_port": 6000,
+  "calibration_scope": "shared_initial_value_for_same_camera_model",
+  "camera_model": "opencv_fisheye",
+  "distortion_model": "equidistant",
+  "distortion_api": "cv2.fisheye",
+  "distortion_order": ["k1", "k2", "k3", "k4"],
+  "source_image_size_wh": [1920, 1536],
+  "K_camera_head_main_source": [
+    [809.9194971389446, 0.0, 962.2874489372539],
+    [0.0, 806.7245751990637, 745.712125538626],
+    [0.0, 0.0, 1.0]
+  ],
+  "D_camera_head_main_source": [
+    -0.017552553835208505,
+    -0.0030120798718676935,
+    -0.0022629831051437445,
+    0.00042376088255471304
+  ],
+  "image_processing": {
+    "operation": "resize_with_pad",
+    "output_image_size_wh": [224, 224]
+  },
+  "frames_are_undistorted": false,
+  "requires_per_camera_confirmation": true,
+  "notes": [
+    "Task487 training head_main and deployment both use cam_head_left on 5000/6000.",
+    "The full 640x512 field of view is resized with aspect ratio preserved and zero padded."
+  ]
+}

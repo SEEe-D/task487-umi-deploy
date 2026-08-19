@@ -1,0 +1,2487 @@
+{
+  "status": "warning",
+  "urdf_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf.urdf",
+  "mesh_file_count": 20,
+  "mesh_reference_count": 40,
+  "format_counts": {
+    ".stl": 20
+  },
+  "unit_vote_counts": {
+    "meter": 18,
+    "uncertain": 2
+  },
+  "unit_conclusion": "Mixed or uncertain mesh units; inspect per-file assessments.",
+  "missing_mesh_files": [],
+  "suspicious_size_meshes": [
+    "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\TCP_Link_L.STL",
+    "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\TCP_Link_R.STL"
+  ],
+  "abnormal_scale_references": [],
+  "links_missing_visual_mesh": [],
+  "links_missing_collision_mesh": [],
+  "visual_collision_comparison": [
+    {
+      "link_name": "Link_Base",
+      "has_visual_mesh": true,
+      "has_collision_mesh": true,
+      "same_mesh_files": true,
+      "visual_mesh_paths": [
+        "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link_Base.STL"
+      ],
+      "collision_mesh_paths": [
+        "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link_Base.STL"
+      ]
+    },
+    {
+      "link_name": "Link_Stand",
+      "has_visual_mesh": true,
+      "has_collision_mesh": true,
+      "same_mesh_files": true,
+      "visual_mesh_paths": [
+        "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link_Stand.STL"
+      ],
+      "collision_mesh_paths": [
+        "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link_Stand.STL"
+      ]
+    },
+    {
+      "link_name": "Base_L",
+      "has_visual_mesh": true,
+      "has_collision_mesh": true,
+      "same_mesh_files": true,
+      "visual_mesh_paths": [
+        "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Base_L.STL"
+      ],
+      "collision_mesh_paths": [
+        "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Base_L.STL"
+      ]
+    },
+    {
+      "link_name": "Link1_L",
+      "has_visual_mesh": true,
+      "has_collision_mesh": true,
+      "same_mesh_files": true,
+      "visual_mesh_paths": [
+        "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link1_L.STL"
+      ],
+      "collision_mesh_paths": [
+        "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link1_L.STL"
+      ]
+    },
+    {
+      "link_name": "Link2_L",
+      "has_visual_mesh": true,
+      "has_collision_mesh": true,
+      "same_mesh_files": true,
+      "visual_mesh_paths": [
+        "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link2_L.STL"
+      ],
+      "collision_mesh_paths": [
+        "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link2_L.STL"
+      ]
+    },
+    {
+      "link_name": "Link3_L",
+      "has_visual_mesh": true,
+      "has_collision_mesh": true,
+      "same_mesh_files": true,
+      "visual_mesh_paths": [
+        "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link3_L.STL"
+      ],
+      "collision_mesh_paths": [
+        "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link3_L.STL"
+      ]
+    },
+    {
+      "link_name": "Link4_L",
+      "has_visual_mesh": true,
+      "has_collision_mesh": true,
+      "same_mesh_files": true,
+      "visual_mesh_paths": [
+        "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link4_L.STL"
+      ],
+      "collision_mesh_paths": [
+        "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link4_L.STL"
+      ]
+    },
+    {
+      "link_name": "Link5_L",
+      "has_visual_mesh": true,
+      "has_collision_mesh": true,
+      "same_mesh_files": true,
+      "visual_mesh_paths": [
+        "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link5_L.STL"
+      ],
+      "collision_mesh_paths": [
+        "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link5_L.STL"
+      ]
+    },
+    {
+      "link_name": "Link6_L",
+      "has_visual_mesh": true,
+      "has_collision_mesh": true,
+      "same_mesh_files": true,
+      "visual_mesh_paths": [
+        "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link6_L.STL"
+      ],
+      "collision_mesh_paths": [
+        "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link6_L.STL"
+      ]
+    },
+    {
+      "link_name": "Link7_L",
+      "has_visual_mesh": true,
+      "has_collision_mesh": true,
+      "same_mesh_files": true,
+      "visual_mesh_paths": [
+        "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link7_L.STL"
+      ],
+      "collision_mesh_paths": [
+        "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link7_L.STL"
+      ]
+    },
+    {
+      "link_name": "TCP_Link_L",
+      "has_visual_mesh": true,
+      "has_collision_mesh": true,
+      "same_mesh_files": true,
+      "visual_mesh_paths": [
+        "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\TCP_Link_L.STL"
+      ],
+      "collision_mesh_paths": [
+        "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\TCP_Link_L.STL"
+      ]
+    },
+    {
+      "link_name": "Base_R",
+      "has_visual_mesh": true,
+      "has_collision_mesh": true,
+      "same_mesh_files": true,
+      "visual_mesh_paths": [
+        "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Base_R.STL"
+      ],
+      "collision_mesh_paths": [
+        "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Base_R.STL"
+      ]
+    },
+    {
+      "link_name": "Link1_R",
+      "has_visual_mesh": true,
+      "has_collision_mesh": true,
+      "same_mesh_files": true,
+      "visual_mesh_paths": [
+        "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link1_R.STL"
+      ],
+      "collision_mesh_paths": [
+        "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link1_R.STL"
+      ]
+    },
+    {
+      "link_name": "Link2_R",
+      "has_visual_mesh": true,
+      "has_collision_mesh": true,
+      "same_mesh_files": true,
+      "visual_mesh_paths": [
+        "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link2_R.STL"
+      ],
+      "collision_mesh_paths": [
+        "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link2_R.STL"
+      ]
+    },
+    {
+      "link_name": "Link3_R",
+      "has_visual_mesh": true,
+      "has_collision_mesh": true,
+      "same_mesh_files": true,
+      "visual_mesh_paths": [
+        "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link3_R.STL"
+      ],
+      "collision_mesh_paths": [
+        "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link3_R.STL"
+      ]
+    },
+    {
+      "link_name": "Link4_R",
+      "has_visual_mesh": true,
+      "has_collision_mesh": true,
+      "same_mesh_files": true,
+      "visual_mesh_paths": [
+        "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link4_R.STL"
+      ],
+      "collision_mesh_paths": [
+        "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link4_R.STL"
+      ]
+    },
+    {
+      "link_name": "Link5_R",
+      "has_visual_mesh": true,
+      "has_collision_mesh": true,
+      "same_mesh_files": true,
+      "visual_mesh_paths": [
+        "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link5_R.STL"
+      ],
+      "collision_mesh_paths": [
+        "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link5_R.STL"
+      ]
+    },
+    {
+      "link_name": "Link6_R",
+      "has_visual_mesh": true,
+      "has_collision_mesh": true,
+      "same_mesh_files": true,
+      "visual_mesh_paths": [
+        "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link6_R.STL"
+      ],
+      "collision_mesh_paths": [
+        "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link6_R.STL"
+      ]
+    },
+    {
+      "link_name": "Link7_R",
+      "has_visual_mesh": true,
+      "has_collision_mesh": true,
+      "same_mesh_files": true,
+      "visual_mesh_paths": [
+        "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link7_R.STL"
+      ],
+      "collision_mesh_paths": [
+        "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link7_R.STL"
+      ]
+    },
+    {
+      "link_name": "TCP_Link_R",
+      "has_visual_mesh": true,
+      "has_collision_mesh": true,
+      "same_mesh_files": true,
+      "visual_mesh_paths": [
+        "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\TCP_Link_R.STL"
+      ],
+      "collision_mesh_paths": [
+        "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\TCP_Link_R.STL"
+      ]
+    }
+  ],
+  "meshes": [
+    {
+      "path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Base_L.STL",
+      "exists": true,
+      "extension": ".stl",
+      "file_size_bytes": 204584,
+      "stl_encoding": "binary",
+      "header_ascii": "",
+      "triangle_count": 4090,
+      "degenerate_triangle_count": 0,
+      "bbox_min_raw": [
+        -0.050999999046325684,
+        -0.05649999901652336,
+        -0.006000000052154064
+      ],
+      "bbox_max_raw": [
+        0.05649999901652336,
+        0.05649999901652336,
+        0.08420000225305557
+      ],
+      "bbox_extent_raw": [
+        0.10749999806284904,
+        0.11299999803304672,
+        0.09020000230520964
+      ],
+      "max_extent_raw": 0.11299999803304672,
+      "unit_assessment": {
+        "likely_unit": "meter",
+        "confidence": "high",
+        "reason": "Raw mesh extent is within a plausible robot-link range in meters."
+      },
+      "size_assessment": "plausible_robot_geometry",
+      "references": [
+        {
+          "link_name": "Base_L",
+          "kind": "visual",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Base_L.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Base_L.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "link_name": "Base_L",
+          "kind": "collision",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Base_L.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Base_L.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "effective_bbox_extents_m_if_urdf_units_are_correct": [
+        [
+          0.10749999806284904,
+          0.11299999803304672,
+          0.09020000230520964
+        ],
+        [
+          0.10749999806284904,
+          0.11299999803304672,
+          0.09020000230520964
+        ]
+      ],
+      "abnormal_scale_references": [],
+      "visual_origin_assessment": [
+        {
+          "link_name": "Base_L",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "assessment": "Mesh is used directly in the link frame."
+        }
+      ]
+    },
+    {
+      "path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Base_R.STL",
+      "exists": true,
+      "extension": ".stl",
+      "file_size_bytes": 204584,
+      "stl_encoding": "binary",
+      "header_ascii": "",
+      "triangle_count": 4090,
+      "degenerate_triangle_count": 0,
+      "bbox_min_raw": [
+        -0.050999999046325684,
+        -0.05649999901652336,
+        -0.006000000052154064
+      ],
+      "bbox_max_raw": [
+        0.05649999901652336,
+        0.05649999901652336,
+        0.08420000225305557
+      ],
+      "bbox_extent_raw": [
+        0.10749999806284904,
+        0.11299999803304672,
+        0.09020000230520964
+      ],
+      "max_extent_raw": 0.11299999803304672,
+      "unit_assessment": {
+        "likely_unit": "meter",
+        "confidence": "high",
+        "reason": "Raw mesh extent is within a plausible robot-link range in meters."
+      },
+      "size_assessment": "plausible_robot_geometry",
+      "references": [
+        {
+          "link_name": "Base_R",
+          "kind": "visual",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Base_R.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Base_R.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "link_name": "Base_R",
+          "kind": "collision",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Base_R.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Base_R.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "effective_bbox_extents_m_if_urdf_units_are_correct": [
+        [
+          0.10749999806284904,
+          0.11299999803304672,
+          0.09020000230520964
+        ],
+        [
+          0.10749999806284904,
+          0.11299999803304672,
+          0.09020000230520964
+        ]
+      ],
+      "abnormal_scale_references": [],
+      "visual_origin_assessment": [
+        {
+          "link_name": "Base_R",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "assessment": "Mesh is used directly in the link frame."
+        }
+      ]
+    },
+    {
+      "path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link1_L.STL",
+      "exists": true,
+      "extension": ".stl",
+      "file_size_bytes": 563584,
+      "stl_encoding": "binary",
+      "header_ascii": "",
+      "triangle_count": 11270,
+      "degenerate_triangle_count": 0,
+      "bbox_min_raw": [
+        -0.05582326650619507,
+        -0.04871578514575958,
+        -0.09549999982118607
+      ],
+      "bbox_max_raw": [
+        0.055821750313043594,
+        0.04870787635445595,
+        0.055821795016527176
+      ],
+      "bbox_extent_raw": [
+        0.11164501681923866,
+        0.09742366150021553,
+        0.15132179483771324
+      ],
+      "max_extent_raw": 0.15132179483771324,
+      "unit_assessment": {
+        "likely_unit": "meter",
+        "confidence": "high",
+        "reason": "Raw mesh extent is within a plausible robot-link range in meters."
+      },
+      "size_assessment": "plausible_robot_geometry",
+      "references": [
+        {
+          "link_name": "Link1_L",
+          "kind": "visual",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link1_L.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link1_L.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "link_name": "Link1_L",
+          "kind": "collision",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link1_L.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link1_L.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "effective_bbox_extents_m_if_urdf_units_are_correct": [
+        [
+          0.11164501681923866,
+          0.09742366150021553,
+          0.15132179483771324
+        ],
+        [
+          0.11164501681923866,
+          0.09742366150021553,
+          0.15132179483771324
+        ]
+      ],
+      "abnormal_scale_references": [],
+      "visual_origin_assessment": [
+        {
+          "link_name": "Link1_L",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "assessment": "Mesh is used directly in the link frame."
+        }
+      ]
+    },
+    {
+      "path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link1_R.STL",
+      "exists": true,
+      "extension": ".stl",
+      "file_size_bytes": 563584,
+      "stl_encoding": "binary",
+      "header_ascii": "",
+      "triangle_count": 11270,
+      "degenerate_triangle_count": 0,
+      "bbox_min_raw": [
+        -0.05582326650619507,
+        -0.04871578514575958,
+        -0.09549999982118607
+      ],
+      "bbox_max_raw": [
+        0.055821750313043594,
+        0.04870787635445595,
+        0.055821795016527176
+      ],
+      "bbox_extent_raw": [
+        0.11164501681923866,
+        0.09742366150021553,
+        0.15132179483771324
+      ],
+      "max_extent_raw": 0.15132179483771324,
+      "unit_assessment": {
+        "likely_unit": "meter",
+        "confidence": "high",
+        "reason": "Raw mesh extent is within a plausible robot-link range in meters."
+      },
+      "size_assessment": "plausible_robot_geometry",
+      "references": [
+        {
+          "link_name": "Link1_R",
+          "kind": "visual",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link1_R.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link1_R.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "link_name": "Link1_R",
+          "kind": "collision",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link1_R.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link1_R.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "effective_bbox_extents_m_if_urdf_units_are_correct": [
+        [
+          0.11164501681923866,
+          0.09742366150021553,
+          0.15132179483771324
+        ],
+        [
+          0.11164501681923866,
+          0.09742366150021553,
+          0.15132179483771324
+        ]
+      ],
+      "abnormal_scale_references": [],
+      "visual_origin_assessment": [
+        {
+          "link_name": "Link1_R",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "assessment": "Mesh is used directly in the link frame."
+        }
+      ]
+    },
+    {
+      "path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link2_L.STL",
+      "exists": true,
+      "extension": ".stl",
+      "file_size_bytes": 1278784,
+      "stl_encoding": "binary",
+      "header_ascii": "",
+      "triangle_count": 25574,
+      "degenerate_triangle_count": 0,
+      "bbox_min_raw": [
+        -0.057725824415683746,
+        -0.05734836310148239,
+        -0.06354539096355438
+      ],
+      "bbox_max_raw": [
+        0.05773492157459259,
+        0.14800000190734863,
+        0.06354539096355438
+      ],
+      "bbox_extent_raw": [
+        0.11546074599027634,
+        0.20534836500883102,
+        0.12709078192710876
+      ],
+      "max_extent_raw": 0.20534836500883102,
+      "unit_assessment": {
+        "likely_unit": "meter",
+        "confidence": "high",
+        "reason": "Raw mesh extent is within a plausible robot-link range in meters."
+      },
+      "size_assessment": "plausible_robot_geometry",
+      "references": [
+        {
+          "link_name": "Link2_L",
+          "kind": "visual",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link2_L.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link2_L.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "link_name": "Link2_L",
+          "kind": "collision",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link2_L.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link2_L.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "effective_bbox_extents_m_if_urdf_units_are_correct": [
+        [
+          0.11546074599027634,
+          0.20534836500883102,
+          0.12709078192710876
+        ],
+        [
+          0.11546074599027634,
+          0.20534836500883102,
+          0.12709078192710876
+        ]
+      ],
+      "abnormal_scale_references": [],
+      "visual_origin_assessment": [
+        {
+          "link_name": "Link2_L",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "assessment": "Mesh is used directly in the link frame."
+        }
+      ]
+    },
+    {
+      "path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link2_R.STL",
+      "exists": true,
+      "extension": ".stl",
+      "file_size_bytes": 1278784,
+      "stl_encoding": "binary",
+      "header_ascii": "",
+      "triangle_count": 25574,
+      "degenerate_triangle_count": 0,
+      "bbox_min_raw": [
+        -0.057725824415683746,
+        -0.05734836310148239,
+        -0.06354539096355438
+      ],
+      "bbox_max_raw": [
+        0.05773492157459259,
+        0.14800000190734863,
+        0.06354539096355438
+      ],
+      "bbox_extent_raw": [
+        0.11546074599027634,
+        0.20534836500883102,
+        0.12709078192710876
+      ],
+      "max_extent_raw": 0.20534836500883102,
+      "unit_assessment": {
+        "likely_unit": "meter",
+        "confidence": "high",
+        "reason": "Raw mesh extent is within a plausible robot-link range in meters."
+      },
+      "size_assessment": "plausible_robot_geometry",
+      "references": [
+        {
+          "link_name": "Link2_R",
+          "kind": "visual",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link2_R.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link2_R.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "link_name": "Link2_R",
+          "kind": "collision",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link2_R.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link2_R.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "effective_bbox_extents_m_if_urdf_units_are_correct": [
+        [
+          0.11546074599027634,
+          0.20534836500883102,
+          0.12709078192710876
+        ],
+        [
+          0.11546074599027634,
+          0.20534836500883102,
+          0.12709078192710876
+        ]
+      ],
+      "abnormal_scale_references": [],
+      "visual_origin_assessment": [
+        {
+          "link_name": "Link2_R",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "assessment": "Mesh is used directly in the link frame."
+        }
+      ]
+    },
+    {
+      "path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link3_L.STL",
+      "exists": true,
+      "extension": ".stl",
+      "file_size_bytes": 635484,
+      "stl_encoding": "binary",
+      "header_ascii": "",
+      "triangle_count": 12708,
+      "degenerate_triangle_count": 0,
+      "bbox_min_raw": [
+        -0.04624288156628609,
+        -0.04625484347343445,
+        -0.14350000023841858
+      ],
+      "bbox_max_raw": [
+        0.06837350875139236,
+        0.04625484347343445,
+        0.05037674307823181
+      ],
+      "bbox_extent_raw": [
+        0.11461639031767845,
+        0.0925096869468689,
+        0.1938767433166504
+      ],
+      "max_extent_raw": 0.1938767433166504,
+      "unit_assessment": {
+        "likely_unit": "meter",
+        "confidence": "high",
+        "reason": "Raw mesh extent is within a plausible robot-link range in meters."
+      },
+      "size_assessment": "plausible_robot_geometry",
+      "references": [
+        {
+          "link_name": "Link3_L",
+          "kind": "visual",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link3_L.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link3_L.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "link_name": "Link3_L",
+          "kind": "collision",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link3_L.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link3_L.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "effective_bbox_extents_m_if_urdf_units_are_correct": [
+        [
+          0.11461639031767845,
+          0.0925096869468689,
+          0.1938767433166504
+        ],
+        [
+          0.11461639031767845,
+          0.0925096869468689,
+          0.1938767433166504
+        ]
+      ],
+      "abnormal_scale_references": [],
+      "visual_origin_assessment": [
+        {
+          "link_name": "Link3_L",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "assessment": "Mesh is used directly in the link frame."
+        }
+      ]
+    },
+    {
+      "path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link3_R.STL",
+      "exists": true,
+      "extension": ".stl",
+      "file_size_bytes": 635484,
+      "stl_encoding": "binary",
+      "header_ascii": "",
+      "triangle_count": 12708,
+      "degenerate_triangle_count": 0,
+      "bbox_min_raw": [
+        -0.04624288156628609,
+        -0.04625484347343445,
+        -0.14350000023841858
+      ],
+      "bbox_max_raw": [
+        0.06837350875139236,
+        0.04625484347343445,
+        0.05037674307823181
+      ],
+      "bbox_extent_raw": [
+        0.11461639031767845,
+        0.0925096869468689,
+        0.1938767433166504
+      ],
+      "max_extent_raw": 0.1938767433166504,
+      "unit_assessment": {
+        "likely_unit": "meter",
+        "confidence": "high",
+        "reason": "Raw mesh extent is within a plausible robot-link range in meters."
+      },
+      "size_assessment": "plausible_robot_geometry",
+      "references": [
+        {
+          "link_name": "Link3_R",
+          "kind": "visual",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link3_R.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link3_R.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "link_name": "Link3_R",
+          "kind": "collision",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link3_R.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link3_R.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "effective_bbox_extents_m_if_urdf_units_are_correct": [
+        [
+          0.11461639031767845,
+          0.0925096869468689,
+          0.1938767433166504
+        ],
+        [
+          0.11461639031767845,
+          0.0925096869468689,
+          0.1938767433166504
+        ]
+      ],
+      "abnormal_scale_references": [],
+      "visual_origin_assessment": [
+        {
+          "link_name": "Link3_R",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "assessment": "Mesh is used directly in the link frame."
+        }
+      ]
+    },
+    {
+      "path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link4_L.STL",
+      "exists": true,
+      "extension": ".stl",
+      "file_size_bytes": 1263484,
+      "stl_encoding": "binary",
+      "header_ascii": "",
+      "triangle_count": 25268,
+      "degenerate_triangle_count": 1,
+      "bbox_min_raw": [
+        -0.05045541748404503,
+        -0.12099999934434891,
+        -0.057999998331069946
+      ],
+      "bbox_max_raw": [
+        0.05900000035762787,
+        0.050422314554452896,
+        0.057999998331069946
+      ],
+      "bbox_extent_raw": [
+        0.1094554178416729,
+        0.1714223138988018,
+        0.11599999666213989
+      ],
+      "max_extent_raw": 0.1714223138988018,
+      "unit_assessment": {
+        "likely_unit": "meter",
+        "confidence": "high",
+        "reason": "Raw mesh extent is within a plausible robot-link range in meters."
+      },
+      "size_assessment": "plausible_robot_geometry",
+      "references": [
+        {
+          "link_name": "Link4_L",
+          "kind": "visual",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link4_L.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link4_L.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "link_name": "Link4_L",
+          "kind": "collision",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link4_L.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link4_L.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "effective_bbox_extents_m_if_urdf_units_are_correct": [
+        [
+          0.1094554178416729,
+          0.1714223138988018,
+          0.11599999666213989
+        ],
+        [
+          0.1094554178416729,
+          0.1714223138988018,
+          0.11599999666213989
+        ]
+      ],
+      "abnormal_scale_references": [],
+      "visual_origin_assessment": [
+        {
+          "link_name": "Link4_L",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "assessment": "Mesh is used directly in the link frame."
+        }
+      ]
+    },
+    {
+      "path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link4_R.STL",
+      "exists": true,
+      "extension": ".stl",
+      "file_size_bytes": 1263484,
+      "stl_encoding": "binary",
+      "header_ascii": "",
+      "triangle_count": 25268,
+      "degenerate_triangle_count": 1,
+      "bbox_min_raw": [
+        -0.05045541748404503,
+        -0.12099999934434891,
+        -0.057999998331069946
+      ],
+      "bbox_max_raw": [
+        0.05900000035762787,
+        0.050422314554452896,
+        0.057999998331069946
+      ],
+      "bbox_extent_raw": [
+        0.1094554178416729,
+        0.1714223138988018,
+        0.11599999666213989
+      ],
+      "max_extent_raw": 0.1714223138988018,
+      "unit_assessment": {
+        "likely_unit": "meter",
+        "confidence": "high",
+        "reason": "Raw mesh extent is within a plausible robot-link range in meters."
+      },
+      "size_assessment": "plausible_robot_geometry",
+      "references": [
+        {
+          "link_name": "Link4_R",
+          "kind": "visual",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link4_R.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link4_R.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "link_name": "Link4_R",
+          "kind": "collision",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link4_R.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link4_R.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "effective_bbox_extents_m_if_urdf_units_are_correct": [
+        [
+          0.1094554178416729,
+          0.1714223138988018,
+          0.11599999666213989
+        ],
+        [
+          0.1094554178416729,
+          0.1714223138988018,
+          0.11599999666213989
+        ]
+      ],
+      "abnormal_scale_references": [],
+      "visual_origin_assessment": [
+        {
+          "link_name": "Link4_R",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "assessment": "Mesh is used directly in the link frame."
+        }
+      ]
+    },
+    {
+      "path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link5_L.STL",
+      "exists": true,
+      "extension": ".stl",
+      "file_size_bytes": 1176084,
+      "stl_encoding": "binary",
+      "header_ascii": "",
+      "triangle_count": 23520,
+      "degenerate_triangle_count": 1,
+      "bbox_min_raw": [
+        -0.04399995505809784,
+        -0.05849999934434891,
+        -0.1979999989271164
+      ],
+      "bbox_max_raw": [
+        0.04399988800287247,
+        0.05849999934434891,
+        0.023495953530073166
+      ],
+      "bbox_extent_raw": [
+        0.0879998430609703,
+        0.11699999868869781,
+        0.22149595245718956
+      ],
+      "max_extent_raw": 0.22149595245718956,
+      "unit_assessment": {
+        "likely_unit": "meter",
+        "confidence": "high",
+        "reason": "Raw mesh extent is within a plausible robot-link range in meters."
+      },
+      "size_assessment": "plausible_robot_geometry",
+      "references": [
+        {
+          "link_name": "Link5_L",
+          "kind": "visual",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link5_L.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link5_L.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "link_name": "Link5_L",
+          "kind": "collision",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link5_L.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link5_L.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "effective_bbox_extents_m_if_urdf_units_are_correct": [
+        [
+          0.0879998430609703,
+          0.11699999868869781,
+          0.22149595245718956
+        ],
+        [
+          0.0879998430609703,
+          0.11699999868869781,
+          0.22149595245718956
+        ]
+      ],
+      "abnormal_scale_references": [],
+      "visual_origin_assessment": [
+        {
+          "link_name": "Link5_L",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "assessment": "Mesh is used directly in the link frame."
+        }
+      ]
+    },
+    {
+      "path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link5_R.STL",
+      "exists": true,
+      "extension": ".stl",
+      "file_size_bytes": 1196684,
+      "stl_encoding": "binary",
+      "header_ascii": "",
+      "triangle_count": 23932,
+      "degenerate_triangle_count": 33,
+      "bbox_min_raw": [
+        -0.04399995505809784,
+        -0.05849999934434891,
+        -0.1979999989271164
+      ],
+      "bbox_max_raw": [
+        0.04399988800287247,
+        0.05849999934434891,
+        0.023495953530073166
+      ],
+      "bbox_extent_raw": [
+        0.0879998430609703,
+        0.11699999868869781,
+        0.22149595245718956
+      ],
+      "max_extent_raw": 0.22149595245718956,
+      "unit_assessment": {
+        "likely_unit": "meter",
+        "confidence": "high",
+        "reason": "Raw mesh extent is within a plausible robot-link range in meters."
+      },
+      "size_assessment": "plausible_robot_geometry",
+      "references": [
+        {
+          "link_name": "Link5_R",
+          "kind": "visual",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link5_R.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link5_R.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "link_name": "Link5_R",
+          "kind": "collision",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link5_R.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link5_R.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "effective_bbox_extents_m_if_urdf_units_are_correct": [
+        [
+          0.0879998430609703,
+          0.11699999868869781,
+          0.22149595245718956
+        ],
+        [
+          0.0879998430609703,
+          0.11699999868869781,
+          0.22149595245718956
+        ]
+      ],
+      "abnormal_scale_references": [],
+      "visual_origin_assessment": [
+        {
+          "link_name": "Link5_R",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "assessment": "Mesh is used directly in the link frame."
+        }
+      ]
+    },
+    {
+      "path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link6_L.STL",
+      "exists": true,
+      "extension": ".stl",
+      "file_size_bytes": 310884,
+      "stl_encoding": "binary",
+      "header_ascii": "",
+      "triangle_count": 6216,
+      "degenerate_triangle_count": 0,
+      "bbox_min_raw": [
+        -0.038492389023303986,
+        -0.030500000342726707,
+        -0.04500000178813934
+      ],
+      "bbox_max_raw": [
+        0.038492389023303986,
+        0.03500000014901161,
+        0.04500000178813934
+      ],
+      "bbox_extent_raw": [
+        0.07698477804660797,
+        0.06550000049173832,
+        0.09000000357627869
+      ],
+      "max_extent_raw": 0.09000000357627869,
+      "unit_assessment": {
+        "likely_unit": "meter",
+        "confidence": "high",
+        "reason": "Raw mesh extent is within a plausible robot-link range in meters."
+      },
+      "size_assessment": "plausible_robot_geometry",
+      "references": [
+        {
+          "link_name": "Link6_L",
+          "kind": "visual",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link6_L.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link6_L.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "link_name": "Link6_L",
+          "kind": "collision",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link6_L.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link6_L.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "effective_bbox_extents_m_if_urdf_units_are_correct": [
+        [
+          0.07698477804660797,
+          0.06550000049173832,
+          0.09000000357627869
+        ],
+        [
+          0.07698477804660797,
+          0.06550000049173832,
+          0.09000000357627869
+        ]
+      ],
+      "abnormal_scale_references": [],
+      "visual_origin_assessment": [
+        {
+          "link_name": "Link6_L",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "assessment": "Mesh is used directly in the link frame."
+        }
+      ]
+    },
+    {
+      "path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link6_R.STL",
+      "exists": true,
+      "extension": ".stl",
+      "file_size_bytes": 310884,
+      "stl_encoding": "binary",
+      "header_ascii": "",
+      "triangle_count": 6216,
+      "degenerate_triangle_count": 0,
+      "bbox_min_raw": [
+        -0.038492389023303986,
+        -0.030500000342726707,
+        -0.04500000178813934
+      ],
+      "bbox_max_raw": [
+        0.038492389023303986,
+        0.03500000014901161,
+        0.04500000178813934
+      ],
+      "bbox_extent_raw": [
+        0.07698477804660797,
+        0.06550000049173832,
+        0.09000000357627869
+      ],
+      "max_extent_raw": 0.09000000357627869,
+      "unit_assessment": {
+        "likely_unit": "meter",
+        "confidence": "high",
+        "reason": "Raw mesh extent is within a plausible robot-link range in meters."
+      },
+      "size_assessment": "plausible_robot_geometry",
+      "references": [
+        {
+          "link_name": "Link6_R",
+          "kind": "visual",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link6_R.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link6_R.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "link_name": "Link6_R",
+          "kind": "collision",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link6_R.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link6_R.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "effective_bbox_extents_m_if_urdf_units_are_correct": [
+        [
+          0.07698477804660797,
+          0.06550000049173832,
+          0.09000000357627869
+        ],
+        [
+          0.07698477804660797,
+          0.06550000049173832,
+          0.09000000357627869
+        ]
+      ],
+      "abnormal_scale_references": [],
+      "visual_origin_assessment": [
+        {
+          "link_name": "Link6_R",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "assessment": "Mesh is used directly in the link frame."
+        }
+      ]
+    },
+    {
+      "path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link7_L.STL",
+      "exists": true,
+      "extension": ".stl",
+      "file_size_bytes": 2557184,
+      "stl_encoding": "binary",
+      "header_ascii": "",
+      "triangle_count": 51142,
+      "degenerate_triangle_count": 57,
+      "bbox_min_raw": [
+        -0.04100004956126213,
+        -0.0949999988079071,
+        -0.05399968475103378
+      ],
+      "bbox_max_raw": [
+        0.041000086814165115,
+        0.03835812956094742,
+        0.05249999836087227
+      ],
+      "bbox_extent_raw": [
+        0.08200013637542725,
+        0.13335812836885452,
+        0.10649968311190605
+      ],
+      "max_extent_raw": 0.13335812836885452,
+      "unit_assessment": {
+        "likely_unit": "meter",
+        "confidence": "high",
+        "reason": "Raw mesh extent is within a plausible robot-link range in meters."
+      },
+      "size_assessment": "plausible_robot_geometry",
+      "references": [
+        {
+          "link_name": "Link7_L",
+          "kind": "visual",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link7_L.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link7_L.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "link_name": "Link7_L",
+          "kind": "collision",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link7_L.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link7_L.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "effective_bbox_extents_m_if_urdf_units_are_correct": [
+        [
+          0.08200013637542725,
+          0.13335812836885452,
+          0.10649968311190605
+        ],
+        [
+          0.08200013637542725,
+          0.13335812836885452,
+          0.10649968311190605
+        ]
+      ],
+      "abnormal_scale_references": [],
+      "visual_origin_assessment": [
+        {
+          "link_name": "Link7_L",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "assessment": "Mesh is used directly in the link frame."
+        }
+      ]
+    },
+    {
+      "path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link7_R.STL",
+      "exists": true,
+      "extension": ".stl",
+      "file_size_bytes": 2577384,
+      "stl_encoding": "binary",
+      "header_ascii": "",
+      "triangle_count": 51546,
+      "degenerate_triangle_count": 53,
+      "bbox_min_raw": [
+        -0.04100004956126213,
+        -0.0949999988079071,
+        -0.05399968475103378
+      ],
+      "bbox_max_raw": [
+        0.041000086814165115,
+        0.03835812956094742,
+        0.05249999836087227
+      ],
+      "bbox_extent_raw": [
+        0.08200013637542725,
+        0.13335812836885452,
+        0.10649968311190605
+      ],
+      "max_extent_raw": 0.13335812836885452,
+      "unit_assessment": {
+        "likely_unit": "meter",
+        "confidence": "high",
+        "reason": "Raw mesh extent is within a plausible robot-link range in meters."
+      },
+      "size_assessment": "plausible_robot_geometry",
+      "references": [
+        {
+          "link_name": "Link7_R",
+          "kind": "visual",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link7_R.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link7_R.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "link_name": "Link7_R",
+          "kind": "collision",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link7_R.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link7_R.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "effective_bbox_extents_m_if_urdf_units_are_correct": [
+        [
+          0.08200013637542725,
+          0.13335812836885452,
+          0.10649968311190605
+        ],
+        [
+          0.08200013637542725,
+          0.13335812836885452,
+          0.10649968311190605
+        ]
+      ],
+      "abnormal_scale_references": [],
+      "visual_origin_assessment": [
+        {
+          "link_name": "Link7_R",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "assessment": "Mesh is used directly in the link frame."
+        }
+      ]
+    },
+    {
+      "path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link_Base.STL",
+      "exists": true,
+      "extension": ".stl",
+      "file_size_bytes": 7949184,
+      "stl_encoding": "binary",
+      "header_ascii": "",
+      "triangle_count": 158982,
+      "degenerate_triangle_count": 0,
+      "bbox_min_raw": [
+        -0.37712201476097107,
+        -0.37712201476097107,
+        -0.0820000022649765
+      ],
+      "bbox_max_raw": [
+        0.37712201476097107,
+        0.37712201476097107,
+        0.9810000061988831
+      ],
+      "bbox_extent_raw": [
+        0.7542440295219421,
+        0.7542440295219421,
+        1.0630000084638596
+      ],
+      "max_extent_raw": 1.0630000084638596,
+      "unit_assessment": {
+        "likely_unit": "meter",
+        "confidence": "high",
+        "reason": "Raw mesh extent is within a plausible robot-link range in meters."
+      },
+      "size_assessment": "plausible_robot_geometry",
+      "references": [
+        {
+          "link_name": "Link_Base",
+          "kind": "visual",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link_Base.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link_Base.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "link_name": "Link_Base",
+          "kind": "collision",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link_Base.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link_Base.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "effective_bbox_extents_m_if_urdf_units_are_correct": [
+        [
+          0.7542440295219421,
+          0.7542440295219421,
+          1.0630000084638596
+        ],
+        [
+          0.7542440295219421,
+          0.7542440295219421,
+          1.0630000084638596
+        ]
+      ],
+      "abnormal_scale_references": [],
+      "visual_origin_assessment": [
+        {
+          "link_name": "Link_Base",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "assessment": "Mesh is used directly in the link frame."
+        }
+      ]
+    },
+    {
+      "path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link_Stand.STL",
+      "exists": true,
+      "extension": ".stl",
+      "file_size_bytes": 1263384,
+      "stl_encoding": "binary",
+      "header_ascii": "",
+      "triangle_count": 25266,
+      "degenerate_triangle_count": 0,
+      "bbox_min_raw": [
+        -0.08500000089406967,
+        -0.08489090204238892,
+        -0.015000000596046448
+      ],
+      "bbox_max_raw": [
+        0.08500000089406967,
+        0.08489090204238892,
+        0.20000000298023224
+      ],
+      "bbox_extent_raw": [
+        0.17000000178813934,
+        0.16978180408477783,
+        0.2150000035762787
+      ],
+      "max_extent_raw": 0.2150000035762787,
+      "unit_assessment": {
+        "likely_unit": "meter",
+        "confidence": "high",
+        "reason": "Raw mesh extent is within a plausible robot-link range in meters."
+      },
+      "size_assessment": "plausible_robot_geometry",
+      "references": [
+        {
+          "link_name": "Link_Stand",
+          "kind": "visual",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link_Stand.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link_Stand.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "link_name": "Link_Stand",
+          "kind": "collision",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link_Stand.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\Link_Stand.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "effective_bbox_extents_m_if_urdf_units_are_correct": [
+        [
+          0.17000000178813934,
+          0.16978180408477783,
+          0.2150000035762787
+        ],
+        [
+          0.17000000178813934,
+          0.16978180408477783,
+          0.2150000035762787
+        ]
+      ],
+      "abnormal_scale_references": [],
+      "visual_origin_assessment": [
+        {
+          "link_name": "Link_Stand",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "assessment": "Mesh is used directly in the link frame."
+        }
+      ]
+    },
+    {
+      "path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\TCP_Link_L.STL",
+      "exists": true,
+      "extension": ".stl",
+      "file_size_bytes": 6284,
+      "stl_encoding": "binary",
+      "header_ascii": "",
+      "triangle_count": 124,
+      "degenerate_triangle_count": 124,
+      "bbox_min_raw": [
+        -4.901744432572741e-06,
+        -4.96057373311487e-06,
+        -4.911436462862184e-06
+      ],
+      "bbox_max_raw": [
+        4.901744432572741e-06,
+        4.842915586777963e-06,
+        4.911436462862184e-06
+      ],
+      "bbox_extent_raw": [
+        9.803488865145482e-06,
+        9.803489319892833e-06,
+        9.822872925724369e-06
+      ],
+      "max_extent_raw": 9.822872925724369e-06,
+      "unit_assessment": {
+        "likely_unit": "uncertain",
+        "confidence": "low",
+        "reason": "Extent is outside the normal heuristic ranges; manual confirmation is required."
+      },
+      "size_assessment": "suspiciously_small_placeholder_geometry",
+      "references": [
+        {
+          "link_name": "TCP_Link_L",
+          "kind": "visual",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/TCP_Link_L.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\TCP_Link_L.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "link_name": "TCP_Link_L",
+          "kind": "collision",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/TCP_Link_L.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\TCP_Link_L.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "effective_bbox_extents_m_if_urdf_units_are_correct": [
+        [
+          9.803488865145482e-06,
+          9.803489319892833e-06,
+          9.822872925724369e-06
+        ],
+        [
+          9.803488865145482e-06,
+          9.803489319892833e-06,
+          9.822872925724369e-06
+        ]
+      ],
+      "abnormal_scale_references": [],
+      "visual_origin_assessment": [
+        {
+          "link_name": "TCP_Link_L",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "assessment": "Mesh is used directly in the link frame."
+        }
+      ]
+    },
+    {
+      "path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\TCP_Link_R.STL",
+      "exists": true,
+      "extension": ".stl",
+      "file_size_bytes": 6284,
+      "stl_encoding": "binary",
+      "header_ascii": "",
+      "triangle_count": 124,
+      "degenerate_triangle_count": 124,
+      "bbox_min_raw": [
+        -4.901744432572741e-06,
+        -4.96057373311487e-06,
+        -4.911436462862184e-06
+      ],
+      "bbox_max_raw": [
+        4.901744432572741e-06,
+        4.842915586777963e-06,
+        4.911436462862184e-06
+      ],
+      "bbox_extent_raw": [
+        9.803488865145482e-06,
+        9.803489319892833e-06,
+        9.822872925724369e-06
+      ],
+      "max_extent_raw": 9.822872925724369e-06,
+      "unit_assessment": {
+        "likely_unit": "uncertain",
+        "confidence": "low",
+        "reason": "Extent is outside the normal heuristic ranges; manual confirmation is required."
+      },
+      "size_assessment": "suspiciously_small_placeholder_geometry",
+      "references": [
+        {
+          "link_name": "TCP_Link_R",
+          "kind": "visual",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/TCP_Link_R.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\TCP_Link_R.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "link_name": "TCP_Link_R",
+          "kind": "collision",
+          "uri": "package://Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/TCP_Link_R.STL",
+          "resolved_path": "D:\\Study\\研究生\\实习\\simple\\model\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf\\meshes\\TCP_Link_R.STL",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "effective_bbox_extents_m_if_urdf_units_are_correct": [
+        [
+          9.803488865145482e-06,
+          9.803489319892833e-06,
+          9.822872925724369e-06
+        ],
+        [
+          9.803488865145482e-06,
+          9.803489319892833e-06,
+          9.822872925724369e-06
+        ]
+      ],
+      "abnormal_scale_references": [],
+      "visual_origin_assessment": [
+        {
+          "link_name": "TCP_Link_R",
+          "origin": {
+            "xyz_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rpy_rad": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "assessment": "Mesh is used directly in the link frame."
+        }
+      ]
+    }
+  ],
+  "occlusion_scope_note": "Triangle rasterization can resolve robot self-occlusion. Without scene depth, it cannot resolve occlusion by tables or manipulated objects."
+}

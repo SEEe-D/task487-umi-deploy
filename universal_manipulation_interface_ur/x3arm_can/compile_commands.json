@@ -1,0 +1,98 @@
+[
+{
+  "directory": "/home/simpleai/all/can_h730/x3arm_can/build",
+  "command": "/usr/bin/c++  -I/home/simpleai/all/can_h730/x3arm_can/include -std=gnu++17 -fPIC -Wall -Wextra -Wpedantic -o CMakeFiles/x3arm_can.dir/src/x3arm/can/socket/arm_component.cpp.o -c /home/simpleai/all/can_h730/x3arm_can/src/x3arm/can/socket/arm_component.cpp",
+  "file": "/home/simpleai/all/can_h730/x3arm_can/src/x3arm/can/socket/arm_component.cpp",
+  "output": "CMakeFiles/x3arm_can.dir/src/x3arm/can/socket/arm_component.cpp.o"
+},
+{
+  "directory": "/home/simpleai/all/can_h730/x3arm_can/build",
+  "command": "/usr/bin/c++  -I/home/simpleai/all/can_h730/x3arm_can/include -std=gnu++17 -fPIC -Wall -Wextra -Wpedantic -o CMakeFiles/x3arm_can.dir/src/x3arm/can/socket/gripper_component.cpp.o -c /home/simpleai/all/can_h730/x3arm_can/src/x3arm/can/socket/gripper_component.cpp",
+  "file": "/home/simpleai/all/can_h730/x3arm_can/src/x3arm/can/socket/gripper_component.cpp",
+  "output": "CMakeFiles/x3arm_can.dir/src/x3arm/can/socket/gripper_component.cpp.o"
+},
+{
+  "directory": "/home/simpleai/all/can_h730/x3arm_can/build",
+  "command": "/usr/bin/c++  -I/home/simpleai/all/can_h730/x3arm_can/include -std=gnu++17 -fPIC -Wall -Wextra -Wpedantic -o CMakeFiles/x3arm_can.dir/src/x3arm/can/socket/x3arm.cpp.o -c /home/simpleai/all/can_h730/x3arm_can/src/x3arm/can/socket/x3arm.cpp",
+  "file": "/home/simpleai/all/can_h730/x3arm_can/src/x3arm/can/socket/x3arm.cpp",
+  "output": "CMakeFiles/x3arm_can.dir/src/x3arm/can/socket/x3arm.cpp.o"
+},
+{
+  "directory": "/home/simpleai/all/can_h730/x3arm_can/build",
+  "command": "/usr/bin/c++  -I/home/simpleai/all/can_h730/x3arm_can/include -std=gnu++17 -fPIC -Wall -Wextra -Wpedantic -o CMakeFiles/x3arm_can.dir/src/x3arm/canbus/can_device_collection.cpp.o -c /home/simpleai/all/can_h730/x3arm_can/src/x3arm/canbus/can_device_collection.cpp",
+  "file": "/home/simpleai/all/can_h730/x3arm_can/src/x3arm/canbus/can_device_collection.cpp",
+  "output": "CMakeFiles/x3arm_can.dir/src/x3arm/canbus/can_device_collection.cpp.o"
+},
+{
+  "directory": "/home/simpleai/all/can_h730/x3arm_can/build",
+  "command": "/usr/bin/c++  -I/home/simpleai/all/can_h730/x3arm_can/include -std=gnu++17 -fPIC -Wall -Wextra -Wpedantic -o CMakeFiles/x3arm_can.dir/src/x3arm/canbus/can_socket.cpp.o -c /home/simpleai/all/can_h730/x3arm_can/src/x3arm/canbus/can_socket.cpp",
+  "file": "/home/simpleai/all/can_h730/x3arm_can/src/x3arm/canbus/can_socket.cpp",
+  "output": "CMakeFiles/x3arm_can.dir/src/x3arm/canbus/can_socket.cpp.o"
+},
+{
+  "directory": "/home/simpleai/all/can_h730/x3arm_can/build",
+  "command": "/usr/bin/c++  -I/home/simpleai/all/can_h730/x3arm_can/include -std=gnu++17 -fPIC -Wall -Wextra -Wpedantic -o CMakeFiles/x3arm_can.dir/src/x3arm/maita_motor/maita_motor.cpp.o -c /home/simpleai/all/can_h730/x3arm_can/src/x3arm/maita_motor/maita_motor.cpp",
+  "file": "/home/simpleai/all/can_h730/x3arm_can/src/x3arm/maita_motor/maita_motor.cpp",
+  "output": "CMakeFiles/x3arm_can.dir/src/x3arm/maita_motor/maita_motor.cpp.o"
+},
+{
+  "directory": "/home/simpleai/all/can_h730/x3arm_can/build",
+  "command": "/usr/bin/c++  -I/home/simpleai/all/can_h730/x3arm_can/include -std=gnu++17 -fPIC -Wall -Wextra -Wpedantic -o CMakeFiles/x3arm_can.dir/src/x3arm/maita_motor/maita_motor_control.cpp.o -c /home/simpleai/all/can_h730/x3arm_can/src/x3arm/maita_motor/maita_motor_control.cpp",
+  "file": "/home/simpleai/all/can_h730/x3arm_can/src/x3arm/maita_motor/maita_motor_control.cpp",
+  "output": "CMakeFiles/x3arm_can.dir/src/x3arm/maita_motor/maita_motor_control.cpp.o"
+},
+{
+  "directory": "/home/simpleai/all/can_h730/x3arm_can/build",
+  "command": "/usr/bin/c++  -I/home/simpleai/all/can_h730/x3arm_can/include -std=gnu++17 -fPIC -Wall -Wextra -Wpedantic -o CMakeFiles/x3arm_can.dir/src/x3arm/maita_motor/maita_motor_device.cpp.o -c /home/simpleai/all/can_h730/x3arm_can/src/x3arm/maita_motor/maita_motor_device.cpp",
+  "file": "/home/simpleai/all/can_h730/x3arm_can/src/x3arm/maita_motor/maita_motor_device.cpp",
+  "output": "CMakeFiles/x3arm_can.dir/src/x3arm/maita_motor/maita_motor_device.cpp.o"
+},
+{
+  "directory": "/home/simpleai/all/can_h730/x3arm_can/build",
+  "command": "/usr/bin/c++  -I/home/simpleai/all/can_h730/x3arm_can/include -std=gnu++17 -fPIC -Wall -Wextra -Wpedantic -o CMakeFiles/x3arm_can.dir/src/x3arm/maita_motor/maita_motor_device_collection.cpp.o -c /home/simpleai/all/can_h730/x3arm_can/src/x3arm/maita_motor/maita_motor_device_collection.cpp",
+  "file": "/home/simpleai/all/can_h730/x3arm_can/src/x3arm/maita_motor/maita_motor_device_collection.cpp",
+  "output": "CMakeFiles/x3arm_can.dir/src/x3arm/maita_motor/maita_motor_device_collection.cpp.o"
+},
+{
+  "directory": "/home/simpleai/all/can_h730/x3arm_can/build",
+  "command": "/usr/bin/c++  -I/home/simpleai/all/can_h730/x3arm_can/include -std=gnu++17 -fPIC -Wall -Wextra -Wpedantic -o CMakeFiles/x3arm_can.dir/src/x3arm/livelybot_motor/livelybot_motor.cpp.o -c /home/simpleai/all/can_h730/x3arm_can/src/x3arm/livelybot_motor/livelybot_motor.cpp",
+  "file": "/home/simpleai/all/can_h730/x3arm_can/src/x3arm/livelybot_motor/livelybot_motor.cpp",
+  "output": "CMakeFiles/x3arm_can.dir/src/x3arm/livelybot_motor/livelybot_motor.cpp.o"
+},
+{
+  "directory": "/home/simpleai/all/can_h730/x3arm_can/build",
+  "command": "/usr/bin/c++  -I/home/simpleai/all/can_h730/x3arm_can/include -std=gnu++17 -fPIC -Wall -Wextra -Wpedantic -o CMakeFiles/x3arm_can.dir/src/x3arm/livelybot_motor/livelybot_motor_control.cpp.o -c /home/simpleai/all/can_h730/x3arm_can/src/x3arm/livelybot_motor/livelybot_motor_control.cpp",
+  "file": "/home/simpleai/all/can_h730/x3arm_can/src/x3arm/livelybot_motor/livelybot_motor_control.cpp",
+  "output": "CMakeFiles/x3arm_can.dir/src/x3arm/livelybot_motor/livelybot_motor_control.cpp.o"
+},
+{
+  "directory": "/home/simpleai/all/can_h730/x3arm_can/build",
+  "command": "/usr/bin/c++  -I/home/simpleai/all/can_h730/x3arm_can/include -std=gnu++17 -fPIC -Wall -Wextra -Wpedantic -o CMakeFiles/x3arm_can.dir/src/x3arm/livelybot_motor/livelybot_motor_device.cpp.o -c /home/simpleai/all/can_h730/x3arm_can/src/x3arm/livelybot_motor/livelybot_motor_device.cpp",
+  "file": "/home/simpleai/all/can_h730/x3arm_can/src/x3arm/livelybot_motor/livelybot_motor_device.cpp",
+  "output": "CMakeFiles/x3arm_can.dir/src/x3arm/livelybot_motor/livelybot_motor_device.cpp.o"
+},
+{
+  "directory": "/home/simpleai/all/can_h730/x3arm_can/build",
+  "command": "/usr/bin/c++  -I/home/simpleai/all/can_h730/x3arm_can/include -std=gnu++17 -Wall -Wextra -Wpedantic -o CMakeFiles/x3arm-can-demo.dir/examples/demo.cpp.o -c /home/simpleai/all/can_h730/x3arm_can/examples/demo.cpp",
+  "file": "/home/simpleai/all/can_h730/x3arm_can/examples/demo.cpp",
+  "output": "CMakeFiles/x3arm-can-demo.dir/examples/demo.cpp.o"
+},
+{
+  "directory": "/home/simpleai/all/can_h730/x3arm_can/build",
+  "command": "/usr/bin/c++  -I/home/simpleai/all/can_h730/x3arm_can/include -std=gnu++17 -Wall -Wextra -Wpedantic -o CMakeFiles/x3arm-can-demo-mtrh32.dir/examples/demo_mtrh32.cpp.o -c /home/simpleai/all/can_h730/x3arm_can/examples/demo_mtrh32.cpp",
+  "file": "/home/simpleai/all/can_h730/x3arm_can/examples/demo_mtrh32.cpp",
+  "output": "CMakeFiles/x3arm-can-demo-mtrh32.dir/examples/demo_mtrh32.cpp.o"
+},
+{
+  "directory": "/home/simpleai/all/can_h730/x3arm_can/build",
+  "command": "/usr/bin/c++  -I/home/simpleai/all/can_h730/x3arm_can/include -std=gnu++17 -Wall -Wextra -Wpedantic -o CMakeFiles/x3arm-can-demo-gripper.dir/examples/demo_gripper.cpp.o -c /home/simpleai/all/can_h730/x3arm_can/examples/demo_gripper.cpp",
+  "file": "/home/simpleai/all/can_h730/x3arm_can/examples/demo_gripper.cpp",
+  "output": "CMakeFiles/x3arm-can-demo-gripper.dir/examples/demo_gripper.cpp.o"
+},
+{
+  "directory": "/home/simpleai/all/can_h730/x3arm_can/build",
+  "command": "/usr/bin/c++  -I/home/simpleai/all/can_h730/x3arm_can/include -std=gnu++17 -Wall -Wextra -Wpedantic -o CMakeFiles/x3arm-can-demo-arm-gripper.dir/examples/demo_arm_gripper.cpp.o -c /home/simpleai/all/can_h730/x3arm_can/examples/demo_arm_gripper.cpp",
+  "file": "/home/simpleai/all/can_h730/x3arm_can/examples/demo_arm_gripper.cpp",
+  "output": "CMakeFiles/x3arm-can-demo-arm-gripper.dir/examples/demo_arm_gripper.cpp.o"
+}
+]

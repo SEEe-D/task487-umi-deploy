@@ -1,0 +1,258 @@
+{
+    "package":  "dual_arm_urdf_manual_calibration_pipeline_20260811",
+    "version":  "1.0.0",
+    "created_date":  "2026-08-11",
+    "file_count":  50,
+    "files":  [
+                  {
+                      "path":  "configs/camera_head_main.json",
+                      "size_bytes":  1657,
+                      "sha256":  "0448f25a46a2bfbfdfae3e412689a3ab455826721af970367e85cafa39bb0604"
+                  },
+                  {
+                      "path":  "configs/dual_arm_extrinsics_calibrated_reference.yaml",
+                      "size_bytes":  1537,
+                      "sha256":  "c77ef1c900b8e8414248773cae5279921c87ebca2a11180c08c8b764f61bba6b"
+                  },
+                  {
+                      "path":  "configs/dual_arm_extrinsics_initial.yaml",
+                      "size_bytes":  1864,
+                      "sha256":  "6d0f963cb6dc837fd25fb762ea697aa555c6c4c79495b1925dc56174f3df0c7b"
+                  },
+                  {
+                      "path":  "examples/reference/combined_mask.png",
+                      "size_bytes":  1132,
+                      "sha256":  "da13778b1d67153323ccbff5ceb406e81a8d75f966a396c81ed9985400455ec9"
+                  },
+                  {
+                      "path":  "examples/reference/episode_combined_mask.mp4",
+                      "size_bytes":  161276,
+                      "sha256":  "a92e196fe3e0bf3b50c5049897622e5413c0b8ae8bf49eb5088a85e2e084f2f0"
+                  },
+                  {
+                      "path":  "examples/reference/episode_overlay.mp4",
+                      "size_bytes":  213655,
+                      "sha256":  "26c932326d66dab1ddd3fbe896fe73152304ee8d95f33ce92ab7f5c6e3ab0216"
+                  },
+                  {
+                      "path":  "examples/reference/overlay.png",
+                      "size_bytes":  80260,
+                      "sha256":  "6722c33d4b3a633b2a29be24bd262713b5cc765585bcd74dc1274bb32873e7a8"
+                  },
+                  {
+                      "path":  "examples/reference/source.png",
+                      "size_bytes":  80831,
+                      "sha256":  "92984e7ddf24d00282f97a515c446aa4bd372663bcdf70a88eb9723997c8f4de"
+                  },
+                  {
+                      "path":  "pyproject.toml",
+                      "size_bytes":  401,
+                      "sha256":  "f5623df2309421c0d70272b1d7c268c079f8ed0e9cb9d3db27160fd6fa08dd74"
+                  },
+                  {
+                      "path":  "README.md",
+                      "size_bytes":  3676,
+                      "sha256":  "2ba1c66aedb326a527abd304972cf658ebe8bba68b0334c82ac28c71295e43a3"
+                  },
+                  {
+                      "path":  "RELEASE_NOTES.md",
+                      "size_bytes":  696,
+                      "sha256":  "b62473b822845d00896a2cd8f55955ccc5d322dfeaaf5911cde828a44e8be0ce"
+                  },
+                  {
+                      "path":  "reports/camera_intrinsics_inspection.json",
+                      "size_bytes":  2396,
+                      "sha256":  "2a2f6bcee3a8bdf252eac7c025b9298cd01819f649a0caa78b688f8b93df0ab5"
+                  },
+                  {
+                      "path":  "reports/mesh_inspection.json",
+                      "size_bytes":  78712,
+                      "sha256":  "f7020663c789bbda8a879712df921e81de7764fa1d034e73c530e69b9d476e13"
+                  },
+                  {
+                      "path":  "reports/urdf_inspection.json",
+                      "size_bytes":  41866,
+                      "sha256":  "2218d6acfe840d6d958ab331d165092a05c4926b1a26bc663784c55d23eb0696"
+                  },
+                  {
+                      "path":  "reports/urdf_joint_tree.txt",
+                      "size_bytes":  2601,
+                      "sha256":  "f4d2dd44c76c188894f98b031305e3465434d4176f93fa9d75bf0303ca84bc22"
+                  },
+                  {
+                      "path":  "robot_model/Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Base_L.STL",
+                      "size_bytes":  204584,
+                      "sha256":  "f22c309ed8cacd2fc776e2f72a2fc5618d9da84315267377edd3205e91ebbcb5"
+                  },
+                  {
+                      "path":  "robot_model/Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Base_R.STL",
+                      "size_bytes":  204584,
+                      "sha256":  "f22c309ed8cacd2fc776e2f72a2fc5618d9da84315267377edd3205e91ebbcb5"
+                  },
+                  {
+                      "path":  "robot_model/Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link_Base.STL",
+                      "size_bytes":  7949184,
+                      "sha256":  "95b3f71bb8c0c1236a62dd622a2973252be0817880d13bdda1daabc6e1e11433"
+                  },
+                  {
+                      "path":  "robot_model/Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link_Stand.STL",
+                      "size_bytes":  1263384,
+                      "sha256":  "5b550a122b8f819a5237fff1bba3568ccf4a56ce19305de0e897fbdb72148113"
+                  },
+                  {
+                      "path":  "robot_model/Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link1_L.STL",
+                      "size_bytes":  563584,
+                      "sha256":  "d00097eec49600a4111ee5a124d6636f50ea09a7a1dc8486d98f4370dde7a932"
+                  },
+                  {
+                      "path":  "robot_model/Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link1_R.STL",
+                      "size_bytes":  563584,
+                      "sha256":  "fdb1075fe0b41e5c2cb7c2fe13c9d2e62ff4dd6eb540ea841b8603db28369dd0"
+                  },
+                  {
+                      "path":  "robot_model/Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link2_L.STL",
+                      "size_bytes":  1278784,
+                      "sha256":  "4776a6a2086ddc61b1643aff93386e545baccef2751db29d863fe027a76f325e"
+                  },
+                  {
+                      "path":  "robot_model/Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link2_R.STL",
+                      "size_bytes":  1278784,
+                      "sha256":  "53eb9fc69c939d2ebd4f32c1df341c1c42bc3d9d0911db0c9fcee70aa2701b34"
+                  },
+                  {
+                      "path":  "robot_model/Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link3_L.STL",
+                      "size_bytes":  635484,
+                      "sha256":  "d58f1039bd3eb2ccc1a1959b89d2de7ae714344ad8cb8b78ef97b92dcd317d26"
+                  },
+                  {
+                      "path":  "robot_model/Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link3_R.STL",
+                      "size_bytes":  635484,
+                      "sha256":  "122456d8fc3e81694f352fc1f29d0bc19066f7f3d7572857a1be1e7c030dec9c"
+                  },
+                  {
+                      "path":  "robot_model/Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link4_L.STL",
+                      "size_bytes":  1263484,
+                      "sha256":  "77f18566339f38acac1785fae517b05ff1e5247b95404ce26536d215bbed9cd7"
+                  },
+                  {
+                      "path":  "robot_model/Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link4_R.STL",
+                      "size_bytes":  1263484,
+                      "sha256":  "77f18566339f38acac1785fae517b05ff1e5247b95404ce26536d215bbed9cd7"
+                  },
+                  {
+                      "path":  "robot_model/Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link5_L.STL",
+                      "size_bytes":  1176084,
+                      "sha256":  "573f15ee62b0a9b2d62aceeb756800fd86969a685535e91416b73d51f1c57613"
+                  },
+                  {
+                      "path":  "robot_model/Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link5_R.STL",
+                      "size_bytes":  1196684,
+                      "sha256":  "2de51a340695c89b2fd58b1171dfacc4d85aa4e6cd50879e021a2d0bde8599a8"
+                  },
+                  {
+                      "path":  "robot_model/Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link6_L.STL",
+                      "size_bytes":  310884,
+                      "sha256":  "b6b7570d8ebf1d2acb01baf8941b892f5a5f72aaa05503ab8340da8a2a7b2c13"
+                  },
+                  {
+                      "path":  "robot_model/Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link6_R.STL",
+                      "size_bytes":  310884,
+                      "sha256":  "49722d14b9ac34a84a41c95f49bd0b2a8859d4a05f66b247822bf36b0a703cd5"
+                  },
+                  {
+                      "path":  "robot_model/Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link7_L.STL",
+                      "size_bytes":  2557184,
+                      "sha256":  "126cc7d41c37049ce34d2636bfe2d460c21e3429ed080877d1c5e983109ef798"
+                  },
+                  {
+                      "path":  "robot_model/Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/Link7_R.STL",
+                      "size_bytes":  2577384,
+                      "sha256":  "6eb75b059ff383e90a153be840bcce84b23d8f8afd074b1bc9dfec1b18c2351f"
+                  },
+                  {
+                      "path":  "robot_model/Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/TCP_Link_L.STL",
+                      "size_bytes":  6284,
+                      "sha256":  "131ee3817f88b2f8e72f7f4831b8779f4dfae2afabaf170a7a0a7306a2e2e309"
+                  },
+                  {
+                      "path":  "robot_model/Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/meshes/TCP_Link_R.STL",
+                      "size_bytes":  6284,
+                      "sha256":  "131ee3817f88b2f8e72f7f4831b8779f4dfae2afabaf170a7a0a7306a2e2e309"
+                  },
+                  {
+                      "path":  "robot_model/Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf/urdf/Marvin M6-S-CCS-696-V4.0_Base_and_Stand_Asm urdf.urdf",
+                      "size_bytes":  25631,
+                      "sha256":  "908ea2efea8270d2e02f0d8a3ad5ea38c36527a3702b9f613e5f6727e91b55f0"
+                  },
+                  {
+                      "path":  "scripts/calibrate_dual_arm_extrinsics.py",
+                      "size_bytes":  22369,
+                      "sha256":  "d26da8302591c547ca51e9965a51627acd544e430745622dbc3165e01678ea5b"
+                  },
+                  {
+                      "path":  "scripts/derive_processed_camera_intrinsics.py",
+                      "size_bytes":  3771,
+                      "sha256":  "dadd1c0fac008d09d8861a6b914f81b1a24baab594b0de8a002fcec86dd1783f"
+                  },
+                  {
+                      "path":  "scripts/inspect_projection_dataset.py",
+                      "size_bytes":  19418,
+                      "sha256":  "72949832fcf17e36e78c8ddb1a934f6294594519f4532a6cf32bb32029358107"
+                  },
+                  {
+                      "path":  "scripts/inspect_urdf_and_meshes.py",
+                      "size_bytes":  18432,
+                      "sha256":  "192d1a0c823d3e43e585ca739f6342f6db5f797b5d8b7fe9f9b13d4ce0e094b2"
+                  },
+                  {
+                      "path":  "scripts/render_dual_arm_projection.py",
+                      "size_bytes":  13578,
+                      "sha256":  "dddae552811bc07d018eae438de1074b2cee8d6811659e3b93edd8b3c703b7fe"
+                  },
+                  {
+                      "path":  "scripts/run_manual_calibration.py",
+                      "size_bytes":  3321,
+                      "sha256":  "c24dfb3a498a87cfc93efba3fbc7ff81f4a3362274835418c38743bfc26dc20c"
+                  },
+                  {
+                      "path":  "scripts/validate_saved_calibration.py",
+                      "size_bytes":  2654,
+                      "sha256":  "a7a9997b7e986aa29704727c98bf8607fb5dc6f6e2dd2fe3ae0bca83e7de8b57"
+                  },
+                  {
+                      "path":  "tools/dual_arm_projection/__init__.py",
+                      "size_bytes":  75,
+                      "sha256":  "0f40845ac9f606aea4820356ca2a49b4099ce8c886ce7ecf5b9c0f1d72947909"
+                  },
+                  {
+                      "path":  "tools/dual_arm_projection/configuration.py",
+                      "size_bytes":  4341,
+                      "sha256":  "526db1c4fa8f73517f16851e7c62abc617a9e7f3473c3d90a1f31c90b8a91f09"
+                  },
+                  {
+                      "path":  "tools/dual_arm_projection/dataset.py",
+                      "size_bytes":  5183,
+                      "sha256":  "916aef5847f639f844924507082588836dd59a8a73ceb2de04063a8a599be126"
+                  },
+                  {
+                      "path":  "tools/dual_arm_projection/rasterizer.py",
+                      "size_bytes":  10967,
+                      "sha256":  "f6df818069abb1f4d85b225b125d1c4b917c66e910e8fabf105c6f8756239d91"
+                  },
+                  {
+                      "path":  "tools/dual_arm_projection/transforms.py",
+                      "size_bytes":  3704,
+                      "sha256":  "319a52eb841094c78f51f27788a2ee0ebd43c1b836d18efd82a74a1156c442eb"
+                  },
+                  {
+                      "path":  "tools/dual_arm_projection/urdf_model.py",
+                      "size_bytes":  14904,
+                      "sha256":  "ec42076503734e8f4c73393e22244a44dcb7a1752197194dddfe93407c6e4996"
+                  },
+                  {
+                      "path":  "uv.lock",
+                      "size_bytes":  75069,
+                      "sha256":  "e8db3d616210edf57782f581668a255a577cd6a809f607d8940528206139d9b0"
+                  }
+              ]
+}

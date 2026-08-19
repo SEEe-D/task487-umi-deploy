@@ -1,0 +1,33 @@
+# Task487 inference sidecar: expose the training head camera without touching
+# the existing root-owned three-camera sender on Thor.
+target_host: "192.168.2.255"
+video_base_port: 5000
+meta_base_port: 6000
+clock_sync_port: 7778
+additional_outputs: []
+
+encoding:
+  bitrate: 4000000
+  iframeinterval: 15
+  preset_id: 1
+
+cap_fps: 30
+stream_fps: 25
+
+# The main sender already drives the shared FSIN line at 25 Hz.
+gpio_trigger:
+  enabled: false
+
+stream_resolution:
+  width: 640
+  height: 512
+
+cameras:
+  - label: cam_head_left
+    enabled: true
+    device_path: /dev/video1
+    width: 1920
+    height: 1536
+
+infer_branch:
+  enabled: false

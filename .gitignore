@@ -1,0 +1,45 @@
+# Runtime artifacts and private data
+checkpoints/
+datasets/
+task487_logs/
+logs/
+outputs/
+wandb/
+*.log
+*.pid
+
+# Model and recording artifacts
+*.ckpt
+*.safetensors
+*.pt
+*.pth
+*.onnx
+*.mp4
+*.npz
+*.npy
+*.tar
+*.tar.gz
+*.zip
+
+# Local environments and caches
+.env
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+
+# Generated ROS/colcon workspaces
+build/
+install/
+log/
+build_ws/
+
+# Generated offline-evaluation captures and reports
+offline_eval/task*/
+
+# IDE and OS metadata
+.idea/
+.vscode/
+.DS_Store

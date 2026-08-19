@@ -1,0 +1,68 @@
+schema_version: 1
+calibration_status: candidate_initialization_only
+transform_direction: camera_from_base
+matrix_semantics: p_camera = T_camera_base * p_base
+units:
+  length: meter
+  angle: radian
+camera_coordinates:
+  x: image_right
+  y: image_down
+  z: camera_forward
+rotation_convention:
+  adjustment: R_camera_base_current = R_camera_adjustment_rpy * R_camera_base_initial
+  rpy_order: Rz_yaw * Ry_pitch * Rx_roll
+initialization_basis:
+  robot_installation_axes:
+    x: robot_forward
+    y: robot_left
+    z: robot_up
+  camera_from_installation_axis_mapping:
+    camera_x: -robot_y
+    camera_y: -robot_z
+    camera_z: robot_x
+  urdf_fixed_mounts:
+    left: Joint0_L has rpy [-pi/2, 0, 0]
+    right: Joint0_R has rpy [pi/2, 0, 0]
+  measurement_note: Translation is a hand-measured candidate and must be adjusted from multi-frame overlays.
+initial_measurement:
+  T_camera_left_base_translation_m: [-0.135, 0.150, 0.120]
+  T_camera_right_base_translation_m: [0.135, 0.150, 0.120]
+T_camera_left_base:
+  - [0.0, 0.0, -1.0, -0.135]
+  - [0.0, 1.0, 0.0, 0.150]
+  - [1.0, 0.0, 0.0, 0.120]
+  - [0.0, 0.0, 0.0, 1.0]
+T_camera_right_base:
+  - [0.0, 0.0, 1.0, 0.135]
+  - [0.0, -1.0, 0.0, 0.150]
+  - [1.0, 0.0, 0.0, 0.120]
+  - [0.0, 0.0, 0.0, 1.0]
+joint_mapping:
+  right:
+    Joint1_R: 0
+    Joint2_R: 1
+    Joint3_R: 2
+    Joint4_R: 3
+    Joint5_R: 4
+    Joint6_R: 5
+    Joint7_R: 6
+  left:
+    Joint1_L: 8
+    Joint2_L: 9
+    Joint3_L: 10
+    Joint4_L: 11
+    Joint5_L: 12
+    Joint6_L: 13
+    Joint7_L: 14
+excluded_links:
+  left: [TCP_Link_L]
+  right: [TCP_Link_R]
+  note: Gripper geometry and links after Link7 are outside mask scope.
+interactive_adjustment:
+  translation_range_from_initial_m: 0.40
+  rotation_range_from_initial_deg: 90.0
+  translation_fine_step_m: 0.001
+  translation_coarse_step_m: 0.010
+  rotation_fine_step_deg: 0.2
+  rotation_coarse_step_deg: 2.0
