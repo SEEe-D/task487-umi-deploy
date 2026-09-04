@@ -1,36 +1,137 @@
-# 部署常用指令
+# Task487 部署常用指令
 
-## 1. 初始化
+当前部署架构：
 
-### CAN 总线
-sudo slcand -o -c -s8 /dev/ttyACM0 can3 && sudo ip link set up can3
+```
+GPU 机器
+    |
+    | WebSocket :8000
+    |
+    v
+机器人 PC
+    |
+    ├── Thor camera
+    ├── task487_client.py
+    └── Tianji/Marvin Mink ROS bridge
+            |
+            v
+          真机
+```
 
-### 机器人路由
-sudo ip route add 192.168.3.254/32 dev enx6c1ff7bbfc25
+当前后端为 **Tianji/Marvin Mink ROS bridge**，不是 UR7e/UR RTDE。
 
-## 2. 启动模型 Server
+---
 
-### BB 31k (积木)
-source ~/anaconda3/etc/profile.d/conda.sh && conda activate openpi && cd ~/pi05-deploy/openpi-official && python scripts/serve_policy.py --default-prompt 'building blocks into box' --port 8000 policy:checkpoint --policy.config pi05_umi6_bb_h20 --policy.dir ~/pi05-deploy/checkpoint_bb_h20_31k/31000
+## 1. 启动机器人后端
 
-### BB 24k
-source ~/anaconda3/etc/profile.d/conda.sh && conda activate openpi && cd ~/pi05-deploy/openpi-official && python scripts/serve_policy.py --default-prompt 'building blocks into box' --port 8000 policy:checkpoint --policy.config pi05_umi6_bb_h20 --policy.dir ~/pi05-deploy/checkpoint_bb_h20_24k/24000
+在机器人 PC 上启动 Marvin/Mink 控制桥：
 
-## 3. 运行
+```bash
+cd /home/simpleai/Code/mjm/eval_mink
 
-### 16步 + 旋转0.05 (推荐)
-cd ~/pi05-deploy && python3 ur7e_main_simple.py --cam-right-id 0 --steps-per-inference 16 --max-rot-step 0.05 --server-port 8000 --prompt 'building blocks into box'
+./start_teleop_replay_impedance.sh enable_intervention:=false
+```
 
-### 16步 + 冻结旋转
-cd ~/pi05-deploy && python3 ur7e_main_simple.py --cam-right-id 0 --steps-per-inference 16 --max-rot-step 0.0 --server-port 8000 --prompt 'building blocks into box'
+启动成功应确认双臂进入阻抗模式。
 
-### 8步
-cd ~/pi05-deploy && python3 ur7e_main_simple.py --cam-right-id 0 --steps-per-inference 8 --max-rot-step 0.05 --server-port 8000 --prompt 'building blocks into box'
+---
 
-## 4. 夹爪
+## 2. 启动 Pi0.5 Policy Server
 
-### 打开
-cd ~/pi05-deploy && echo -e 'SET -700.00\nQUIT' | ./x3arm-can-demo-gripper can3 8 --daemon --kp 10.0 --kd 1.0 --loop-hz 100
+GPU 机器：
 
-### 关闭
-cd ~/pi05-deploy && echo -e 'SET 0.00\nQUIT' | ./x3arm-can-demo-gripper can3 8 --daemon --kp 10.0 --kd 1.0 --loop-hz 100
+```bash
+bash run_task487_server.sh
+```
+
+指定 checkpoint：
+
+```bash
+TASK487_POLICY_CONFIG=pi05_umi_task487 \
+  bash run_task487_server.sh \
+  /path/to/checkpoint 8000
+```
+
+server 负责：
+
+- 加载 Pi0.5 checkpoint
+- 接收 observation
+- 执行 policy inference
+- 返回 action chunk
+
+---
+
+## 3. 启动 Task487 真机客户端
+
+观察模式：
+
+```bash
+bash run_task487_client.sh vegetable 127.0.0.1 8000
+```
+
+真实执行：
+
+```bash
+bash run_task487_client.sh vegetable 127.0.0.1 8000 --execute
+```
+
+显示策略输入图像：
+
+```bash
+bash run_task487_client.sh vegetable 127.0.0.1 8000 \
+  --execute --show-processed-cameras
+```
+
+---
+
+## 4. 运行顺序
+
+推荐三个终端：
+
+### Terminal 1
+
+启动 Pi0.5 server：
+
+```bash
+bash run_task487_server.sh
+```
+
+### Terminal 2
+
+启动 Marvin/Mink 后端：
+
+```bash
+./start_teleop_replay_impedance.sh enable_intervention:=false
+```
+
+### Terminal 3
+
+启动客户端：
+
+```bash
+bash run_task487_client.sh vegetable 127.0.0.1 8000 --execute
+```
+
+---
+
+## 5. 调试测试
+
+RTC contract test:
+
+```bash
+pytest -q tests_task487
+```
+
+RTC offline verification:
+
+```bash
+python offline_eval/verify_task487_rtc.py
+```
+
+---
+
+## 6. 关闭顺序
+
+1. 客户端按 `s` 进入 HOLD，然后退出。
+2. 停止 Marvin/Mink 后端。
+3. 停止 Pi0.5 server。
