@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>gripper_can_node</name>
+  <version>0.1.0</version>
+  <description>
+    独立夹爪 CAN 节点 (mink 栈专用, 不走 ros2_control)。复用 x3arm_can 的 Livelybot
+    MIT SocketCAN 驱动 + adaptive_gripper_controller 的控制律, 订阅 VR 发的
+    /Joint69|79/position_command 与 /gripper_command, 直接驱动 CAN1 (左 0x0A / 右 0x09)。
+  </description>
+  <maintainer email="dev@simpleai.local">SimpleAI</maintainer>
+  <license>Apache-2.0</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>rclcpp</depend>
+  <depend>std_msgs</depend>
+  <depend>sensor_msgs</depend>
+  <depend>arms_ros2_control_msgs</depend>
+  <depend>x3arm_can</depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

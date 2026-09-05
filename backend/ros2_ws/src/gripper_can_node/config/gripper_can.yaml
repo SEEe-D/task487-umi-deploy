@@ -1,0 +1,41 @@
+# 独立夹爪 CAN 节点参数 (mink 栈)
+# 接线 (THOR 139 verified): can1, 左手 device_id=0x0A(10), 右手 device_id=0x09(9)。
+/gripper_can_node:
+  ros__parameters:
+    can_interface: "can1"
+    can_fd: false
+    enable_left: true
+    enable_right: true
+    left_device_id: 10        # 0x0A
+    right_device_id: 9        # 0x09
+    left_joint: "Joint69"
+    right_joint: "Joint79"
+    left_mimic_joint: "Joint610"
+    right_mimic_joint: "Joint710"
+    gripper_kp: 15.0          # MIT kp (= simpleai_x3_hardware gripper_kp_default)
+    gripper_kd: 1.0           # MIT kd
+    left_zero_offset_rad: 0.0
+    right_zero_offset_rad: 0.0
+    lower_limit: -0.61086524  # 全开 35deg, 电机侧约 -700deg (×20)
+    upper_limit: 0.0          # 全闭 0deg
+    open_rad: -0.61086524     # VR open 位置
+    closed_rad: 0.0           # VR closed 位置
+    use_force_feedback: true  # /gripper_command 合爪时启用力反馈减速
+    force_threshold: 1.5      # 关节系力矩阈值 (Nm)
+    force_feedback_ratio: 0.1 # 触发后向目标移动 10%
+    recv_timeout_us: 1000
+    control_rate_hz: 100.0
+    publish_joint_states: true
+    auto_zero_on_startup: true
+    auto_zero_verbose: false
+    # ── 堵转/过载保护 (遥操夹爪夹到物体后限矩 hold; 对齐 wbc overload 参考
+    #    start_mink_ec_teleop.sh 默认值) ──
+    #   开启时遥操夹爪改走"位置-速度-最大力矩"模式 + 每周期堵转检测, 撞到物体
+    #   后在当前位置再向闭合方向夹 release 角并锁存, 收到足够开的命令才解除。
+    #   关闭 (false) 则退回原 MIT 位置控制 (老行为)。
+    gripper_stall_guard_enable: true
+    gripper_stall_release_rad: 0.03490658503988659   # 堵转后继续夹紧角 (关节侧 2deg)
+    gripper_stall_max_torque_nm: 1.05                # 限矩 (Nm)
+    gripper_release_max_torque_nm: 1.05              # 开爪限矩 (Nm), 与闭合保护一致
+    gripper_stall_velocity_rad_s: 3.0                 # 电机侧目标速度 (rad/s), 低速诊断
+    gripper_stall_rearm_delta_rad: 0.017453292519943295  # 开多少才解除锁存 (关节侧 1deg)
