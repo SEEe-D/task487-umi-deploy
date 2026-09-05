@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from typing import Any
 
 import numpy as np
@@ -14,10 +14,16 @@ TASK_PROMPTS = {
     "fruit": "Pick Up Fruit and Place Fruit on the Blue Plate on the Left",
 }
 RAW_12_5_TASK_PROMPTS = {
-    # The newly curated UMI dataset uses one space between Pink and Plate.
+    # The legacy two-wrist UMI dataset uses one space between Pink and Plate.
     # PaliGemma does not collapse the old dataset's doubled space.
     "vegetable": "Pick Up Vegetable and Place Vegetable on the Pink Plate on the Right",
     "fruit": "Pick Up Fruit and Place Fruit on the Blue Plate on the Left",
+}
+FOUR_WRIST_TASK_PROMPTS = {
+    # Verified against full1500/lerobot_combined_12_5/meta/tasks.parquet.
+    # All three 4w checkpoints learned this single sorting task, not two
+    # separately instructed vegetable/fruit policies.
+    "sorting": "Vegetable and Fruit Sorting",
 }
 
 CONTROL_HZ = 12.5
@@ -33,6 +39,31 @@ IMAGE_WIDTH = 224
 # Keep model radians/degrees one-to-one and clip only beyond these endpoints;
 # do not claim that the left gripper can physically reach the old 35° label.
 MARVIN_GRIPPER_SAFE_OPEN_DEGREES = (34.000000247628236, 24.035200207677658)
+
+# Policy key -> (UmiEnv history key, Thor label, sender camera-list index).
+# Ports are base + original index; disabling the stereo head does not renumber.
+CAMERA_SOURCES = {
+    "cam_head": ("camera5_rgb", "cam_head_left", 0),
+    "cam_left_top": ("camera2_rgb", "cam_hand_l_top", 2),
+    "cam_left_down": ("camera3_rgb", "cam_hand_l_bottom", 3),
+    "cam_right_top": ("camera0_rgb", "cam_hand_r_top", 4),
+    "cam_right_down": ("camera1_rgb", "cam_hand_r_bottom", 5),
+}
+LEGACY_CAMERA_ORDER = ("cam_head", "cam_left_top", "cam_right_top")
+FOUR_WRIST_CAMERA_ORDER = ("cam_left_top", "cam_left_down", "cam_right_top", "cam_right_down")
+
+
+def thor_cameras_for_order(camera_order: tuple[str, ...]) -> list[dict[str, Any]]:
+    if not camera_order or len(set(camera_order)) != len(camera_order):
+        raise ValueError(f"Camera order must be nonempty and unique: {camera_order}")
+    unknown = set(camera_order) - CAMERA_SOURCES.keys()
+    if unknown:
+        raise ValueError(f"Unknown policy cameras: {sorted(unknown)}")
+    return [
+        {"label": CAMERA_SOURCES[key][1], "video_port": 5000 + CAMERA_SOURCES[key][2],
+         "meta_port": 6000 + CAMERA_SOURCES[key][2]}
+        for key in camera_order
+    ]
 
 
 @dataclass(frozen=True)
@@ -58,6 +89,7 @@ class PolicyRuntimeContract:
     mask_enabled: bool = False
     camera_order: tuple[str, ...] = ("cam_head", "cam_left_top", "cam_right_top")
     head_enabled: bool | None = None
+    complete_chunk_before_replan: bool = False
 
     def expected_metadata(self) -> dict[str, Any]:
         metadata = {
@@ -146,10 +178,28 @@ POLICY_RUNTIME_CONTRACTS = {
 }
 
 
+FOUR_WRIST_POLICY_RUNTIMES = tuple(
+    f"pi05_umi_task487_{variant}_4w_12_5_v1" for variant in ("raw", "cnc", "wrist_only")
+)
+for _runtime in FOUR_WRIST_POLICY_RUNTIMES:
+    _head_enabled = "wrist_only" not in _runtime
+    POLICY_RUNTIME_CONTRACTS[_runtime] = replace(
+        POLICY_RUNTIME_CONTRACTS[DEFAULT_POLICY_RUNTIME],
+        runtime=_runtime,
+        camera_order=(("cam_head",) if _head_enabled else ()) + FOUR_WRIST_CAMERA_ORDER,
+        head_enabled=_head_enabled,
+        # Scheme A: corrected sorting prompt + original rolling replanning.
+        # Keep full-chunk scheduling available only for offline comparisons.
+        complete_chunk_before_replan=False,
+    )
+
+
 def task_prompts_for_runtime(runtime: str) -> dict[str, str]:
     """Return the exact task strings used to train one policy runtime."""
     if runtime not in POLICY_RUNTIME_CONTRACTS:
         raise ValueError(f"Unsupported Task487 runtime {runtime!r}")
+    if runtime in FOUR_WRIST_POLICY_RUNTIMES:
+        return dict(FOUR_WRIST_TASK_PROMPTS)
     prompts = (
         RAW_12_5_TASK_PROMPTS
         if runtime in (DEFAULT_POLICY_RUNTIME, MASKED_POLICY_RUNTIME, WRIST_ONLY_POLICY_RUNTIME)
@@ -158,7 +208,17 @@ def task_prompts_for_runtime(runtime: str) -> dict[str, str]:
     return dict(prompts)
 
 
-def validate_policy_metadata(metadata: dict[str, Any]) -> PolicyRuntimeContract:
+def resolve_task_for_runtime(runtime: str, task: str) -> str:
+    """Keep old CLI aliases usable without sending an untrained 4w prompt."""
+    prompts = task_prompts_for_runtime(runtime)
+    if runtime in FOUR_WRIST_POLICY_RUNTIMES and task in TASK_PROMPTS:
+        return "sorting"
+    if task not in prompts:
+        raise ValueError(f"Task {task!r} is not supported by {runtime}; choose {list(prompts)}")
+    return task
+
+
+def validate_policy_metadata(metadata: dict[str, Any], *, require_rtc: bool = True) -> PolicyRuntimeContract:
     """Fail closed unless all timing and RTC fields match a known runtime."""
 
     runtime = metadata.get("runtime")
@@ -171,7 +231,7 @@ def validate_policy_metadata(metadata: dict[str, Any]) -> PolicyRuntimeContract:
     mismatches = {
         key: (metadata.get(key), expected)
         for key, expected in contract.expected_metadata().items()
-        if metadata.get(key) != expected
+        if (require_rtc or not key.startswith("rtc_")) and metadata.get(key) != expected
     }
     if mismatches:
         raise RuntimeError(f"Task487 server contract mismatch: {mismatches}")
@@ -208,6 +268,9 @@ class PolicyRequest:
     # Identifies the operator-started ACTIVE round.  An asynchronous result
     # from an earlier round must never be merged after HOME/HOLD + a new [d].
     round_id: int = 0
+    # Local evidence only: never added to the WebSocket observation payload.
+    request_id: int = 0
+    diagnostics: dict | None = None
 
 
 def _pose6_to_matrix(pose: np.ndarray) -> np.ndarray:
@@ -258,7 +321,7 @@ def robot_pose_to_model_pose(pose: np.ndarray) -> np.ndarray:
     return np.concatenate((pose[:3], _matrix_to_rot6d(model_rotation)))
 
 
-def _state20(obs: dict, index: int) -> np.ndarray:
+def _state20(obs: dict, index: int, *, gripper_policy_coordinates=False) -> np.ndarray:
     result = np.empty(ACTION_DIM, dtype=np.float32)
     for robot_index, offset in ((0, 0), (1, 10)):
         raw_pose = np.concatenate(
@@ -269,7 +332,10 @@ def _state20(obs: dict, index: int) -> np.ndarray:
         )
         dataset_pose = right_pose_in_dataset_frame(raw_pose) if robot_index == 0 else raw_pose
         result[offset : offset + 9] = robot_pose_to_model_pose(dataset_pose)
-        gripper_degrees = float(np.asarray(obs[f"robot{robot_index}_gripper_angle"][index]).reshape(-1)[0])
+        angle_key = f"robot{robot_index}_gripper_policy_angle" if gripper_policy_coordinates else f"robot{robot_index}_gripper_angle"
+        if angle_key not in obs:
+            raise ValueError(f"missing measured gripper coordinate feedback: {angle_key}")
+        gripper_degrees = float(np.asarray(obs[angle_key][index]).reshape(-1)[0])
         result[offset + 9] = np.deg2rad(gripper_degrees)
     return result
 
@@ -302,18 +368,16 @@ def build_policy_request(
     round_id: int = 0,
     action_horizon: int = ACTION_HORIZON,
     fixed_head_mask: np.ndarray | None = None,
+    camera_order: tuple[str, ...] = LEGACY_CAMERA_ORDER,
+    gripper_policy_coordinates: bool = False,
 ) -> PolicyRequest:
-    """Build the exact three-camera, two-state input expected by pi05_umi_task487."""
-    required_images = {
-        # UmiEnv camera5 is cam_head_left, the source of training head_main.
-        # camera4 is cam_head_right / head_main_stereo_right and is not the
-        # head stream used by this three-camera checkpoint.
-        "cam_head": "camera5_rgb",
-        "cam_left_top": "camera2_rgb",
-        "cam_right_top": "camera0_rgb",
-    }
+    """Build the validated runtime's image views and two-state input."""
+    thor_cameras_for_order(camera_order)  # Validate before reading any images.
     images = {}
-    for policy_key, obs_key in required_images.items():
+    for policy_key in camera_order:
+        obs_key = CAMERA_SOURCES[policy_key][0]
+        if obs_key not in obs:
+            raise ValueError(f"Missing required camera {policy_key}: {obs_key}")
         frames = np.asarray(obs[obs_key])
         expected_shape = (2, IMAGE_HEIGHT, IMAGE_WIDTH, 3)
         if frames.shape != expected_shape:
@@ -343,11 +407,13 @@ def build_policy_request(
 
     policy_obs = {
         **images,
-        "pre_state": _state20(obs, -2),
-        "state": _state20(obs, -1),
+        "pre_state": _state20(obs, -2, gripper_policy_coordinates=gripper_policy_coordinates),
+        "state": _state20(obs, -1, gripper_policy_coordinates=gripper_policy_coordinates),
         "prompt": prompt,
     }
     if fixed_head_mask is not None:
+        if "cam_head" not in images:
+            raise ValueError("fixed_head_mask requires cam_head in camera_order")
         mask = np.asarray(fixed_head_mask)
         if mask.shape != (IMAGE_HEIGHT, IMAGE_WIDTH):
             raise ValueError(
@@ -384,7 +450,13 @@ def build_policy_request(
             )
         policy_obs["actions"] = absolute_actions
         policy_obs["action_prefill_len"] = np.int32(len(prefix))
-    return PolicyRequest(policy_obs, float(timestamps[-1]), tcp_bases, round_id)
+    return PolicyRequest(policy_obs, float(timestamps[-1]), tcp_bases, round_id,
+                         diagnostics={"observation_timestamps": timestamps.copy(),
+                                      "sources": obs.get("_diagnostics", {}),
+                                      "gripper_coordinates": "policy_reference_plus_measured_tracking_error" if gripper_policy_coordinates else "physical_joint",
+                                      "measured_gripper_degrees": np.array([
+                                          [np.asarray(obs[f"robot{i}_gripper_angle"][j]).reshape(-1)[0] for i in (0, 1)]
+                                          for j in (-2, -1)])})
 
 
 def body_actions_to_robot_targets(

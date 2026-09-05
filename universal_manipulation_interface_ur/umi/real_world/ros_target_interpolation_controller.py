@@ -166,6 +166,7 @@ class RosTargetInterpolationController(mp.Process):
             'target_pose': np.zeros(6, dtype=np.float64),
             'duration': 0.0,
             'target_time': 0.0,
+            'replace_from_time': 0.0,
         }
         self.input_queue = SharedMemoryQueue.create_from_examples(
             shm_manager=shm_manager,
@@ -267,13 +268,14 @@ class RosTargetInterpolationController(mp.Process):
             'duration': float(duration),
         })
 
-    def schedule_waypoint(self, pose, target_time):
+    def schedule_waypoint(self, pose, target_time, replace_from_time=None):
         pose = np.asarray(pose)
         assert pose.shape == (6,)
         self.input_queue.put({
             'cmd': Command.SCHEDULE_WAYPOINT.value,
             'target_pose': pose,
             'target_time': float(target_time),
+            'replace_from_time': 0.0 if replace_from_time is None else float(replace_from_time),
         })
 
     def teach_mode(self):
@@ -653,12 +655,13 @@ class RosTargetInterpolationController(mp.Process):
                         curr_time = t_now + self.dt
                         receive_wall_time = time.time()
                         receive_monotonic_time = time.monotonic()
-                        # Match RTDEInterpolationController semantics: do not force
-                        # a new waypoint behind the previous chunk's tail. When the
-                        # timestamp overlaps last_waypoint_time, schedule_waypoint()
-                        # trims the old future trajectory at curr_time, so the new
-                        # chunk replaces it. Overdue waypoints are ignored by the
-                        # interpolator; later future waypoints in the chunk remain.
+                        replace_wall_time = float(command['replace_from_time'])
+                        replace_time = (receive_monotonic_time - receive_wall_time + replace_wall_time
+                                        if replace_wall_time > 0.0 else None)
+                        # Legacy callers retain RTDE overlap semantics. Plain
+                        # continuous chunks supply an explicit replacement time
+                        # on their first point, preserving the moving old prefix
+                        # through that boundary instead of braking at curr_time.
                         pose_interp = pose_interp.schedule_waypoint(
                             pose=target_pose,
                             time=target_time,
@@ -666,6 +669,7 @@ class RosTargetInterpolationController(mp.Process):
                             max_rot_speed=self.max_rot_speed,
                             curr_time=curr_time,
                             last_waypoint_time=last_waypoint_time,
+                            replace_from_time=replace_time,
                         )
                         # Speed limiting may extend completion beyond the
                         # requested timestamp.  Future inserts must use the

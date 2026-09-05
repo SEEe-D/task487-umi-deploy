@@ -139,6 +139,12 @@ class ChunkDiagnosticRecorder:
         after: SchedulerDiagnosticSnapshot,
         stats: MergeStats | None,
         error: str | None = None,
+        splice_time: float | None = None,
+        splice_anchor: np.ndarray | None = None,
+        policy_request_id: int | None = None,
+        policy_session_id: str | None = None,
+        gripper_policy_targets: np.ndarray | None = None,
+        gripper_handoff: dict | None = None,
     ) -> pathlib.Path:
         self._sequence += 1
         raw_targets = np.asarray(raw_targets, dtype=np.float64)
@@ -160,7 +166,9 @@ class ChunkDiagnosticRecorder:
         raw_suffix = raw_targets[generated_start:].copy()
         old_replaceable_tail = before.targets[preserved_count:].copy()
         blended_suffix = after.targets[preserved_count:].copy()
-        if preserved_count:
+        if splice_anchor is not None:
+            anchor = np.asarray(splice_anchor, dtype=np.float64).copy()
+        elif preserved_count:
             anchor = after.targets[preserved_count - 1].copy()
         elif before.last_scheduled_target.shape == (14,):
             anchor = before.last_scheduled_target.copy()
@@ -191,16 +199,21 @@ class ChunkDiagnosticRecorder:
             post_queue_target_times=after.target_times,
             post_queue_nominal_times=after.nominal_times,
             post_queue_sent=after.sent,
+            gripper_policy_targets=(np.empty((0, 2)) if gripper_policy_targets is None else gripper_policy_targets),
         )
 
         summary: dict[str, Any] = {
             "schema_version": 1,
             "sequence": self._sequence,
+            "policy_request_id": policy_request_id,
+            "policy_session_id": policy_session_id,
+            "gripper_handoff": gripper_handoff,
             "status": "rejected" if error else "accepted",
             "error": error,
             "round_id": int(round_id),
             "observation_time": float(observation_time),
             "merge_time": float(merge_time),
+            "splice_time": None if splice_time is None else float(splice_time),
             "observation_age_s": float(merge_time - observation_time),
             "inference_latency_ms": float(inference_latency_s * 1000.0),
             "array_file": str(array_path.relative_to(self.output_dir)),

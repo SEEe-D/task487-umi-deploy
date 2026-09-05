@@ -1,31 +1,60 @@
 # Task487 当前真机运行指令
 
-当前配置：Task487 真机 `task487_3cam_nomask_30k/29999` 模型、端口 `8000`、Marvin
+更新于 2026-09-05。当前可选 CNC、RAW4W、Wrist4W 三组 `29999` 权重。
+下面以 Wrist4W `wrist4w_seed42/29999` 模型、端口 `8000`、Marvin
 双臂关节阻抗、`vegetable` 任务。请按“终端 1 → 终端 2 → 终端 3”的顺序启动，
 每条命令独占一个终端。
 
-该权重使用旧真机数据契约：25 Hz、20 步动作块、三路相机、无 mask、`center_square`
-图像处理，训练数据的全开标签约为 35°。当前 Marvin 的独立安全标定端点为右约 34°、
-左约 24.0°，因此客户端会从服务端元数据切换到 25 Hz，并在 HOME 时准备
-到这两个真实可达端点，而不会让左夹爪持续硬顶不可达的 35°。客户端也不会沿用 12.5 Hz
-masked 权重的时序、`resize_with_pad` 或 1° 夹爪边界。
+该权重使用 UMI 12.5 Hz 契约：20 步动作块、左右腕各上/下两路共四路、head 输入禁用、
+无 mask、`resize_with_pad` 图像处理。客户端会从服务端元数据切换到 12.5 Hz，并在
+HOME 时将左右夹爪准备到该 checkpoint 的边界状态 1°/1°。这与旧真机权重的
+25 Hz、三相机和物理全开 HOME 契约不同，不要混用。
 
 ## 终端 1：启动模型服务
 
 ```bash
 cd /home/simpleai/Code/universal_manipulation_interface-main/gj/pi05-deploy
-TASK487_POLICY_CONFIG=pi05_umi_task487 \
-  bash run_task487_server.sh \
-  checkpoints/pi05_umi_task487/task487_3cam_nomask_30k/29999 8000
+unset TASK487_POLICY_CONFIG
+CUDA_VISIBLE_DEVICES=1 bash run_task487_server.sh wrist4w 8000
+
+
+
+unset TASK487_POLICY_CONFIG
+
+# RAW：头部 + 四腕
+cd /home/simpleai/Code/universal_manipulation_interface-main/gj/pi05-deploy
+unset TASK487_POLICY_CONFIG
+CUDA_VISIBLE_DEVICES=1 bash run_task487_server.sh raw4w 8000
+
+# CNC：头部 + 四腕
+cd /home/simpleai/Code/universal_manipulation_interface-main/gj/pi05-deploy
+unset TASK487_POLICY_CONFIG
+CUDA_VISIBLE_DEVICES=1 bash run_task487_server.sh cnc 8000
+
+# Wrist-only：仅四腕
+cd /home/simpleai/Code/universal_manipulation_interface-main/gj/pi05-deploy
+unset TASK487_POLICY_CONFIG
+CUDA_VISIBLE_DEVICES=1 bash run_task487_server.sh wrist4w 8000
 ```
 
 上述命令加载：
 
 ```text
-checkpoints/pi05_umi_task487/task487_3cam_nomask_30k/29999
+checkpoints/pi05_umi_task487_wrist_only_12_5/wrist4w_seed42/29999
 ```
 
-并监听端口 `8000`。
+并监听端口 `8000`。GPU 1 用于与 GPU 0 上的 B1 服务并存；如果只运行一套模型，可指定空闲 GPU。
+切换模型时先退出客户端并停止该端口的旧模型服务，再把 `wrist4w` 换成 `raw4w` 或 `cnc`。
+脚本同时接受完整 checkpoint 路径并自动匹配这三组配置；残留的旧 `TASK487_POLICY_CONFIG` 会被拒绝。
+
+| 服务别名 | 本地模型配置 | 模型使用的画面 |
+|---|---|---|
+| `raw4w` | `pi05_umi_task487_raw_4w_12_5` | 头部 + 左上、左下、右上、右下 |
+| `cnc` | `pi05_umi_task487_cnc_4w_12_5` | 头部 + 左上、左下、右上、右下；推理不加 token mask |
+| `wrist4w` | `pi05_umi_task487_wrist_only_4w_12_5` | 左上、左下、右上、右下；head 禁用 |
+
+这些 `_4w` 名称是本地推理配置，匹配开发机的四腕训练输入；旧三相机/两腕配置保留。
+详细映射与验证记录见 [TASK487_FOUR_WRIST_DEPLOY.md](TASK487_FOUR_WRIST_DEPLOY.md)。
 
 ## 终端 2：启动 Marvin/Mink 阻抗后端
 
@@ -69,15 +98,16 @@ bash run_task487_client.sh vegetable 127.0.0.1 8000 \
   --execute --continuous --show-processed-cameras
 ```
 
-`--show-processed-cameras` 的第一行显示实际送入策略的三路 `224×224` RGB；该无 mask
-权重的第二行会明确显示 `MASK DISABLED`。窗口在 HOLD、dry-run 和 ACTIVE 状态下均按
-控制循环持续刷新，只读取请求内容，不会修改模型输入。若只想看三路 RGB，可改回
-`--show-cameras`。
+`--show-processed-cameras` 会显示请求中的相机画面；服务端元数据必须明确显示
+`camera_order=[cam_left_top, cam_left_down, cam_right_top, cam_right_down]` 和
+`head_enabled=false`。Wrist4W 预览只显示四路腕部，不订阅头部。
+窗口在 HOLD、dry-run 和 ACTIVE 状态下均按控制循环持续刷新，只读取请求内容，
+不会修改模型输入。若只想看原始相机画面，可改回 `--show-cameras`。
 
 客户端启动后的按键顺序：
 
-1. 按 `r` 执行 HOME，并将夹爪准备到硬件安全端点（右约 34°、左约 24.0°）。
-2. 人工确认双臂归位、夹爪到达上述开度且周围安全。
+1. 按 `r` 执行 HOME，并将左右夹爪准备到该 UMI checkpoint 的 1°/1° 边界状态。
+2. 人工确认双臂归位、夹爪接近闭合且周围安全。
 3. 按 `d` 进入 ACTIVE，开始模型控制。
 4. 紧急停止或暂停时按 `s`，立即回到 HOLD。
 

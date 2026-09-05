@@ -98,7 +98,9 @@ class RosGripperController(mp.Process):
         example = {
             "cmd": Command.SCHEDULE_WAYPOINT.value,
             "target_pos": 0.0,
+            "policy_target_pos": 0.0,
             "target_time": 0.0,
+            "replace_from_time": 0.0,
         }
         self.input_queue = SharedMemoryQueue.create_from_examples(
             shm_manager=shm_manager, examples=example, buffer_size=command_queue_size)
@@ -107,6 +109,8 @@ class RosGripperController(mp.Process):
             "gripper_state": 0,
             "gripper_position": 0.0,
             "gripper_target_position": 0.0,
+            "gripper_policy_position": 0.0,
+            "gripper_policy_target_position": 0.0,
             "gripper_velocity": 0.0,
             "gripper_force": 0.0,
             "gripper_measure_timestamp": time.time(),
@@ -200,11 +204,15 @@ class RosGripperController(mp.Process):
         self.stop()
 
     # ── 命令 API (与 LivelybotGripperController 一致) ──
-    def schedule_waypoint(self, pos: float, target_time: float):
+    def schedule_waypoint(self, pos: float, target_time: float, replace_from_time=None, policy_pos=None):
+        if policy_pos is not None and not np.isfinite(policy_pos):
+            raise ValueError("non-finite gripper policy reference")
         self.input_queue.put({
             "cmd": Command.SCHEDULE_WAYPOINT.value,
             "target_pos": float(pos),
+            "policy_target_pos": float(pos if policy_pos is None else policy_pos),
             "target_time": float(target_time),
+            "replace_from_time": 0.0 if replace_from_time is None else float(replace_from_time),
         })
 
     def restart_put(self, start_time):
@@ -244,6 +252,7 @@ class RosGripperController(mp.Process):
                 "wall_time", "monotonic_time", "side",
                 "target_deg", "actual_deg", "actual_velocity_deg_s",
                 "target_minus_actual_deg",
+                "policy_target_deg", "policy_actual_deg", "applied_offset_deg",
             ))
         waypoint_log = BufferedCsvLogger(
             f"gripper_{self.side}_waypoints.csv",
@@ -294,6 +303,8 @@ class RosGripperController(mp.Process):
         # 用当前夹爪 deg 种子初始化插值器 (1-DOF 塞进 6D pose)
         curr_t = time.monotonic()
         pose_interp = PoseTrajectoryInterpolator(
+            times=[curr_t], poses=[[float(cur["deg"]), 0, 0, 0, 0, 0]])
+        policy_interp = PoseTrajectoryInterpolator(
             times=[curr_t], poses=[[float(cur["deg"]), 0, 0, 0, 0, 0]])
         last_wp_time = curr_t
 
@@ -366,12 +377,19 @@ class RosGripperController(mp.Process):
                 # 2) 写状态 (position = 反馈当前 deg; velocity = 反馈位置差分, 对齐 livelybot)
                 has_fb = cur["deg"] is not None
                 pos_deg = float(cur["deg"]) if has_fb else self.deg_closed
+                policy_target_deg = float(policy_interp(t_now)[0])
+                # Inverse of the offset actually emitted at this tick. Keep
+                # measured following error, including contact/stall error.
+                # This is a policy-coordinate reading, NOT raw joint position.
+                policy_actual_deg = policy_target_deg + pos_deg - target_deg
                 vel_deg = float(cur["vel"]) if has_fb else 0.0
                 t_recv = time.time()
                 self.ring_buffer.put({
                     "gripper_state": 0,
                     "gripper_position": pos_deg,
                     "gripper_target_position": target_deg,
+                    "gripper_policy_position": policy_actual_deg,
+                    "gripper_policy_target_position": policy_target_deg,
                     "gripper_velocity": vel_deg,
                     # UDP 反馈只有关节 rad, 无力矩 → 保持 0 (需 bridge 扩展协议才能上报真实 force)
                     "gripper_force": 0.0,
@@ -387,6 +405,9 @@ class RosGripperController(mp.Process):
                     "actual_deg": pos_deg,
                     "actual_velocity_deg_s": vel_deg,
                     "target_minus_actual_deg": target_deg - pos_deg,
+                    "policy_target_deg": policy_target_deg,
+                    "policy_actual_deg": policy_actual_deg,
+                    "applied_offset_deg": target_deg - policy_target_deg,
                 })
 
                 # 3) 取命令
@@ -406,6 +427,9 @@ class RosGripperController(mp.Process):
                         requested_wall_time = float(command["target_time"])
                         wp_t = (time.monotonic() - time.time()
                                 + requested_wall_time)
+                        replace_wall = float(command["replace_from_time"])
+                        replace_time = (time.monotonic() - time.time() + replace_wall
+                                        if replace_wall > 0.0 else None)
                         waypoint_log.write({
                             "receive_wall_time": time.time(),
                             "receive_monotonic_time": time.monotonic(),
@@ -420,8 +444,15 @@ class RosGripperController(mp.Process):
                             pose=[wp, 0, 0, 0, 0, 0], time=wp_t,
                             max_pos_speed=self.max_speed_deg_per_sec,
                             max_rot_speed=self.max_speed_deg_per_sec,
-                            curr_time=t_now, last_waypoint_time=last_wp_time)
-                        last_wp_time = wp_t
+                            curr_time=t_now, last_waypoint_time=last_wp_time,
+                            replace_from_time=replace_time)
+                        # Match any low-level extension of the physical path;
+                        # the reference has no actuator speed limit of its own.
+                        policy_interp = policy_interp.schedule_waypoint(
+                            pose=[float(command["policy_target_pos"]), 0, 0, 0, 0, 0],
+                            time=float(pose_interp.times[-1]), curr_time=t_now,
+                            last_waypoint_time=last_wp_time, replace_from_time=replace_time)
+                        last_wp_time = float(pose_interp.times[-1])
                     elif c == Command.RESTART_PUT.value:
                         t_start = (float(command["target_time"])
                                    - time.time() + time.monotonic())

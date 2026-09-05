@@ -7,11 +7,36 @@ would confound the comparison.
 
 ## Experiment matrix
 
+2026-09-05 subsequent rollback (current scheme A): at the operator's request,
+all three four-wrist contracts restore the original rolling replanning
+(`complete_chunk_before_replan=False`), retaining the corrected sorting prompt.
+The operator reported failure to open after grasping under full-chunk execution
+(scheme B), whose observed replan intervals were about 5–12 seconds. This is a
+controlled scheduling comparison, not a demonstrated release fix. Cameras,
+gripper scaling, speed limits and safety checks are unchanged. No post-rollback
+hardware outcome has been measured. Keep scheme A and B trial results separate.
+
+2026-09-05 follow-up: operator reports that the new four-wrist runs often fail to
+close enough to pick. Read-only audit found an incorrect legacy task prompt and
+replanning that replaced speed-retimed closing tails. All three four-wrist groups
+now use the verified training prompt `Vegetable and Fruit Sorting` and preserve
+accepted chunk tails until dispatched. These are common deployment corrections,
+not per-group tuning. Treat post-fix runs as a new comparison; do not pool their
+outcomes with earlier runs. Legacy R0/W0 configurations are unchanged. Offline
+replay shows tail dispatch progress, not a successful physical grasp. Post-fix
+hardware outcomes remain unmeasured; details are in the four-wrist deployment note.
+
+2026-09-05: the newly downloaded `cnc8gpu_seed42`, `raw4w_seed42`, and `wrist4w_seed42`
+checkpoints use four wrist views. Deployment support and read-only verification are
+recorded in [TASK487_FOUR_WRIST_DEPLOY.md](TASK487_FOUR_WRIST_DEPLOY.md).
+The R0/W0 observations below concern the older two-wrist experiments; no new grasp
+outcome has been recorded for the four-wrist checkpoints in this update.
+
 | Run | Group | Head input | Checkpoint | Status | Primary observation |
 |---|---|---|---|---|---|
 | R0 | raw-head control | Original `observation.images.head_raw`, no mask | `pi05_umi_task487_raw_12_5/raw_seed42/29999` | Run observed | Both arms move; grippers open/close normally; grasp is offset |
 | M0 | masked-head | TBD | TBD | Pending | — |
-| W0 | wrist-only | TBD | TBD | Pending | — |
+| W0 | wrist-only | Disabled; left/right wrist only | `pi05_umi_task487_wrist_only_12_5/wrist_only_seed42/29999` | Server ready; execution pending | Metadata verified; no robot trial recorded yet |
 
 ## R0 — raw-head control — 2026-08-18
 

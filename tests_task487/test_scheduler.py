@@ -53,6 +53,80 @@ def _rtc_output(prefix, count=20, step=0.001):
     return result
 
 
+@pytest.mark.parametrize("step", [0.001, 0.01])
+@pytest.mark.parametrize("inference_latency", [0.02, 1.0])
+@pytest.mark.parametrize("tick_dt", [0.01, 0.08])
+def test_complete_chunk_keeps_closing_tail_and_bounded_rtc_prefix(step, inference_latency, tick_dt):
+    config = SchedulerConfig.for_policy_rate(12.5, 20, complete_chunk_before_replan=True)
+    scheduler = RollingScheduler(config)
+    targets = _target_sequence(step=step)
+    targets[:, [6, 13]] = 15.0
+    targets[-3:, [6, 13]] = 1.0
+    live = targets[0].copy()
+    live[[0, 7]] = 0.0
+    scheduler.activate(live)
+    assert scheduler.request_due(1.0)
+    scheduler.mark_request_started(1.0)
+    scheduler.merge_chunk(targets, 1.0, 1.0, live)
+    dispatched = []
+    for tick in range(2000):
+        now = 1.0 + tick * tick_dt
+        snapshot = scheduler.diagnostic_snapshot()
+        due = snapshot.sent & (snapshot.target_times <= now)
+        if due.any():
+            live = snapshot.targets[np.flatnonzero(due)[-1]].copy()
+        scheduler.advance(now, live)
+        if scheduler.request_due(now):
+            break
+        batch = scheduler.pop_batch(live, now)
+        dispatched.extend(batch)
+        assert scheduler.committed_steps <= config.commit_steps
+        after = scheduler.diagnostic_snapshot()
+        # Existing progress exception: one long segment may exceed 0.4s,
+        # but never enqueue the rest of the slow chunk with it.
+        if scheduler.committed_steps > 1:
+            assert after.target_times[after.sent].max() <= now + 0.4 + 1e-9
+        if (~after.sent).any():
+            assert not scheduler.request_due(now)
+    else:
+        pytest.fail("Replan never became due after dispatching the closing tail")
+    np.testing.assert_allclose(np.stack([a.target for a in dispatched]), targets)
+    prefix = scheduler.rtc_prefix_targets()
+    assert 0 < len(prefix) <= 5
+    np.testing.assert_allclose(prefix[-1, [6, 13]], [1.0, 1.0])
+    scheduler.mark_request_started(now)
+    assert not scheduler.request_due(now)
+    assert scheduler.pop_batch(live, now) == []
+    snapshot = scheduler.diagnostic_snapshot()
+    arrival = now + inference_latency
+    due = snapshot.sent & (snapshot.target_times <= arrival)
+    if due.any():
+        live = snapshot.targets[np.flatnonzero(due)[-1]].copy()
+    scheduler.advance(arrival, live)
+    new_chunk = np.repeat(prefix[-1:], 20, axis=0)
+    new_chunk[:len(prefix)] = prefix
+    stats = scheduler.merge_chunk(new_chunk, now, arrival, live)
+    assert stats.rtc_prefix_preserved == len(prefix) - int(due.sum())
+    assert not scheduler.request_due(arrival)
+    assert scheduler.state is RunState.ACTIVE
+    scheduler.hold("operator pause")
+    assert scheduler.queued_steps == 0
+    assert scheduler.pop_batch(live, arrival) == []
+    assert not scheduler.request_due(arrival)
+
+
+def test_complete_chunk_keeps_physical_tracking_guard():
+    scheduler = RollingScheduler(SchedulerConfig.for_policy_rate(
+        12.5, 20, complete_chunk_before_replan=True))
+    _initial_chunk(scheduler)
+    actual = np.zeros(14)
+    actual[0] = 0.2
+    with pytest.raises(UnsafeChunkError):
+        scheduler.validate_physical_tracking(actual, np.zeros(14))
+    assert scheduler.state is RunState.HOLD
+    assert scheduler.queued_steps == 0
+
+
 def test_initial_chunk_skips_expired_nominal_prefix_then_retimes_reachable():
     scheduler = RollingScheduler(SchedulerConfig(dispatch_lead_s=0.0))
     scheduler.activate()

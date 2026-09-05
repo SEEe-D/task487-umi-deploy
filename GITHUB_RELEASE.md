@@ -21,3 +21,12 @@ Intentionally excluded:
 The commands in `TASK487_CURRENT_RUN_COMMANDS.md` retain the original absolute
 paths used on the development machine. Restore checkpoints separately before
 starting a policy server.
+
+## 2026-09-05 client update
+
+Archives the four-wrist deployment contracts, author-sync scheduler and speed
+limits, passive gripper/policy I/O logging, paired physical/policy gripper
+compensation, first right-to-left handoff gate, and open-before-close HOME
+preparation. Associated source tests and investigation reports are included.
+Reports retain development-machine evidence paths; raw evidence is not bundled.
+The external Marvin/Mink ROS backend is a separate installation.

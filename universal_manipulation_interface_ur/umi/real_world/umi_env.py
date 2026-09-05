@@ -26,6 +26,23 @@ from umi.common.cv_util import (
 from umi.real_world.multi_camera_visualizer import MultiCameraVisualizer
 
 
+def thor_observation_key(label):
+    """Map physical streams explicitly; accept the legacy bottom abbreviation."""
+    mapping = {
+        "cam_hand_r_top": "camera0_rgb",
+        "cam_hand_r_bottom": "camera1_rgb",
+        "cam_hand_r_btm": "camera1_rgb",
+        "cam_hand_l_top": "camera2_rgb",
+        "cam_hand_l_bottom": "camera3_rgb",
+        "cam_hand_l_btm": "camera3_rgb",
+        "cam_head_right": "camera4_rgb",
+        "cam_head_left": "camera5_rgb",
+    }
+    if label not in mapping:
+        raise ValueError(f"Unknown Thor camera label {label!r}; refusing camera alias fallback")
+    return mapping[label]
+
+
 def center_square_resize(frame, output_res):
     """Match the Task487 recorder: center-square crop, then INTER_AREA resize."""
     height, width = frame.shape[:2]
@@ -229,6 +246,9 @@ class UmiEnv:
             raise ValueError("thor_center_crop and thor_resize_with_pad are mutually exclusive")
         self.thor_receivers = {}  # label -> CameraReceiver
         if thor_enabled and thor_cameras:
+            camera_keys = [thor_observation_key(cfg["label"]) for cfg in thor_cameras]
+            if len(set(camera_keys)) != len(camera_keys):
+                raise ValueError(f"Duplicate Thor camera observation slots: {camera_keys}")
             import sys as _sys
             _sys.path.insert(0, thor_receiver_path)
             from receiver_gi import CameraReceiver, measure_clock_offset
@@ -861,6 +881,15 @@ class UmiEnv:
 
         dt = 1 / self.frequency
 
+        # Evidence only; not sent to the policy or used to select/control motion.
+        source_diagnostics = {
+            'assembled_time': time.time(),
+            'cameras': {},
+            'robot_feedback_last_time': [float(data['robot_timestamp'][-1]) for data in last_robots_data],
+            'gripper_feedback_last_time': [float(data['gripper_timestamp'][-1]) for data in last_grippers_data],
+            'robot_joint_positions': [data['ActualQ'][-1].copy() for data in last_robots_data],
+        }
+
         if self.thor_enabled and self.thor_receivers:
             # ===== Thor 模式: 用推流帧替代本地相机 =====
             import cv2 as _cv2
@@ -874,19 +903,17 @@ class UmiEnv:
                 np.arange(self.camera_obs_horizon)[::-1] * self.camera_down_sample_steps * dt)
             camera_obs = dict()
 
-            # Thor label -> camera key 映射
-            thor_label_to_cam = { 
-                "cam_hand_r_top": "camera0_rgb",
-                "cam_hand_r_btm": "camera1_rgb",
-                "cam_hand_l_top": "camera2_rgb",
-                "cam_hand_l_btm": "camera3_rgb",
-                "cam_head_right": "camera4_rgb",
-                "cam_head_left": "camera5_rgb",
-            }
-
             for label, receiver in self.thor_receivers.items():
                 with receiver.lock:
                     frame = receiver.frame  # BGR uint8 or None
+                    source_diagnostics['cameras'][label] = {
+                        'metadata_timestamp_us': int(receiver.meta.latest_ts_us),
+                        'metadata_frame_id': int(getattr(receiver.meta, 'latest_frame_id', 0)),
+                        'clock_offset_ms': float(receiver.meta.clock_offset_ms),
+                        'decoded_receive_time': float(getattr(receiver, '_last_frame_time', 0.)),
+                        'decoded_frame_count': int(getattr(receiver, 'total_frames', 0)),
+                        'note': 'Metadata and video are separate streams; frame_id is not a verified video-frame match.',
+                    }
                 if frame is not None:
                     frame_rgb = _cv2.cvtColor(frame, _cv2.COLOR_BGR2RGB)
                     obs_res = self.obs_image_resolution if hasattr(self, 'obs_image_resolution') else (224, 224)
@@ -903,12 +930,10 @@ class UmiEnv:
                 else:
                     raise RuntimeError(f"Thor camera {label} has no decoded frame")
 
-                cam_key = thor_label_to_cam.get(label, f"camera0_rgb")
+                cam_key = thor_observation_key(label)
+                if cam_key in camera_obs:
+                    raise RuntimeError(f"Duplicate Thor camera observation slot: {cam_key}")
                 camera_obs[cam_key] = frames
-
-            # 确保 camera0_rgb 存在（推理需要）
-            if 'camera0_rgb' not in camera_obs and len(camera_obs) > 0:
-                camera_obs['camera0_rgb'] = list(camera_obs.values())[0]
 
         else:
             # ===== 本地相机模式 =====
@@ -944,6 +969,7 @@ class UmiEnv:
 
         # return obs
         obs_data = dict(camera_obs)
+        obs_data['_diagnostics'] = source_diagnostics
 
         # include camera timesteps
         obs_data['timestamp'] = camera_obs_timestamps
@@ -980,6 +1006,11 @@ class UmiEnv:
             gripper_obs = {
                 f'robot{robot_idx}_gripper_angle': gripper_interpolator(gripper_obs_timestamps)
             }
+            if 'gripper_policy_position' in last_gripper_data:
+                policy_interpolator = get_interp1d(
+                    t=last_gripper_data['gripper_timestamp'],
+                    x=last_gripper_data['gripper_policy_position'][..., None])
+                gripper_obs[f'robot{robot_idx}_gripper_policy_angle'] = policy_interpolator(gripper_obs_timestamps)
             # update obs_data
             obs_data.update(gripper_obs)
 
@@ -1010,12 +1041,18 @@ class UmiEnv:
             timestamps: np.ndarray,
             compensate_latency=False,
             time_is_new=True,
-            bimanual=True):
+            bimanual=True,
+            replace_from_time=None,
+            gripper_policy_angles=None):
         assert self.is_ready
         if not isinstance(actions, np.ndarray):
             actions = np.array(actions)
         if not isinstance(timestamps, np.ndarray):
             timestamps = np.array(timestamps)
+        if gripper_policy_angles is not None:
+            gripper_policy_angles = np.asarray(gripper_policy_angles, dtype=float)
+            if gripper_policy_angles.shape != (len(actions), 2) or not np.isfinite(gripper_policy_angles).all():
+                raise ValueError("gripper policy references must be finite Nx2")
 
         # convert action to pose
         receive_time = time.time()
@@ -1026,9 +1063,16 @@ class UmiEnv:
         else:
             new_actions = actions
             new_timestamps = timestamps
+        policy_angles = (None if gripper_policy_angles is None else
+                         gripper_policy_angles[is_new] if time_is_new else gripper_policy_angles)
 
         r_latency = self.robot_action_latency if compensate_latency else 0.0
         g_latency = self.gripper_action_latency if compensate_latency else 0.0
+        if replace_from_time is not None:
+            if (not np.isfinite(replace_from_time) or
+                    replace_from_time - max(r_latency, g_latency) <= receive_time or
+                    not len(new_timestamps) or replace_from_time >= new_timestamps[0]):
+                raise ValueError("trajectory replacement boundary expired or invalid")
 
         # # schedule waypoints
         # for i in range(len(new_actions)):
@@ -1065,11 +1109,16 @@ class UmiEnv:
                 
                 robot.schedule_waypoint(
                     pose=r_actions,
-                    target_time=new_timestamps[i] - r_latency
+                    target_time=new_timestamps[i] - r_latency,
+                    **({"replace_from_time": replace_from_time-r_latency}
+                       if replace_from_time is not None and i == 0 else {}),
                 )
                 gripper.schedule_waypoint(
                     pos=g_actions,
-                    target_time=new_timestamps[i] - g_latency
+                    target_time=new_timestamps[i] - g_latency,
+                    **({"policy_pos": float(policy_angles[i, robot_idx])} if policy_angles is not None else {}),
+                    **({"replace_from_time": replace_from_time-g_latency}
+                       if replace_from_time is not None and i == 0 else {}),
                 )
          
         # record actions

@@ -39,11 +39,18 @@ class SchedulerConfig:
     # controller prefix by actual executable duration. The remaining policy
     # horizon stays replaceable so it can provide a continuous blend reference.
     commit_window_s: float | None = None
+    # Slow 4w execution must make progress through the accepted suffix. Do
+    # not replace it on every short dispatch window and starve tail actions
+    # (notably closing). Still dispatch only the bounded controller prefix.
+    complete_chunk_before_replan: bool = False
     dispatch_lead_s: float = 0.05
     # These must match the effective (post cube_diag) limits in UmiEnv's
     # RosTargetInterpolationController instances.
     max_physical_translation_speed_m_s: float = 0.02
     max_physical_rotation_speed_rad_s: float = 0.08
+    # Production reads this from the CAN node (motor rad/s / gear ratio).
+    # None preserves the arm-only contract for standalone scheduler users.
+    max_physical_gripper_speed_deg_s: float | None = None
     # At most one committed prefix plus one policy horizon is retained.
     max_queue_steps: int = 30
     # Cross-fade the first generated suffix samples with the replaceable,
@@ -77,6 +84,8 @@ class SchedulerConfig:
         *,
         min_tcp_z_m: float | None = None,
         max_downward_excursion_m: float | None = None,
+        complete_chunk_before_replan: bool = False,
+        max_physical_gripper_speed_deg_s: float | None = None,
     ) -> "SchedulerConfig":
         """Build a duration-equivalent scheduler for a supported policy rate."""
 
@@ -112,6 +121,8 @@ class SchedulerConfig:
             max_rotation_step_rad=max_rotation_step_rad,
             min_tcp_z_m=min_tcp_z_m,
             max_downward_excursion_m=max_downward_excursion_m,
+            complete_chunk_before_replan=complete_chunk_before_replan,
+            max_physical_gripper_speed_deg_s=max_physical_gripper_speed_deg_s,
         )
 
     @property
@@ -137,6 +148,7 @@ class ScheduledAction:
     target: np.ndarray
     target_time: float
     nominal_time: float
+    gripper_policy_target: np.ndarray | None = None
 
 
 @dataclass(frozen=True)
@@ -172,6 +184,11 @@ class RollingScheduler:
             raise ValueError("max physical translation speed must be positive")
         if config.max_physical_rotation_speed_rad_s <= 0:
             raise ValueError("max physical rotation speed must be positive")
+        if config.max_physical_gripper_speed_deg_s is not None and (
+            not np.isfinite(config.max_physical_gripper_speed_deg_s)
+            or config.max_physical_gripper_speed_deg_s <= 0
+        ):
+            raise ValueError("max physical gripper speed must be finite and positive")
         if config.request_every_steps <= 0:
             raise ValueError("request_every_steps must be positive")
         if config.replan_remaining_steps < 0:
@@ -312,6 +329,22 @@ class RollingScheduler:
         self._workspace_min_z = None
 
     def request_due(self, now: float | None = None) -> bool:
+        if self.config.complete_chunk_before_replan:
+            if self.state is not RunState.ACTIVE or self._request_pending:
+                return False
+            if not len(self._queue):
+                return True
+            if not self._sent.all():
+                return False
+            # The whole remaining suffix is now immutable and fits the RTC
+            # prefix. Inference may overlap its final execution, not replace
+            # the still-undispatched tail. HOLD always clears this timeline.
+            if now is None:
+                return len(self._queue) <= self.config.replan_remaining_steps
+            return (
+                float(self._times[-1]) - float(now)
+                <= self.config.replan_remaining_steps * self.config.dt + 1e-9
+            )
         committed = self.committed_steps
         executable_prefix_due = False
         if now is not None and committed and self.config.replan_remaining_steps:
@@ -406,7 +439,7 @@ class RollingScheduler:
                     )
             previous = target
 
-    def _minimum_duration(self, left: np.ndarray, right: np.ndarray) -> float:
+    def _minimum_duration(self, left: np.ndarray, right: np.ndarray, *, include_gripper=True) -> float:
         duration = 0.0
         for arm_offset in (0, 7):
             translation = np.linalg.norm(
@@ -421,7 +454,15 @@ class RollingScheduler:
                 translation / self.config.max_physical_translation_speed_m_s,
                 rotation / self.config.max_physical_rotation_speed_rad_s,
             )
+        if include_gripper:
+            duration = max(duration, self._gripper_duration(left, right))
         return float(duration)
+
+    def _gripper_duration(self, left: np.ndarray, right: np.ndarray) -> float:
+        speed = self.config.max_physical_gripper_speed_deg_s
+        if speed is None:
+            return 0.0
+        return float(np.max(np.abs(right[[6, 13]] - left[[6, 13]])) / speed)
 
     def _retime(
         self,

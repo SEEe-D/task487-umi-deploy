@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Task487 Pi0.5 three-camera client for the Tianji/Marvin Mink stack."""
+"""Task487 Pi0.5 multi-camera client for the Tianji/Marvin Mink stack."""
 
 from __future__ import annotations
 
 import argparse
+from contextlib import contextmanager
 import fcntl
 import logging
 from multiprocessing.managers import SharedMemoryManager
@@ -25,14 +26,27 @@ from openpi_client import websocket_client_policy
 from pi05_geometry_mask import GeometryMasker, geometry_q14_from_observation
 from task487_runtime.contract import (
     TASK_PROMPTS,
+    FOUR_WRIST_TASK_PROMPTS,
+    CAMERA_SOURCES,
+    LEGACY_CAMERA_ORDER,
     PolicyRuntimeContract,
     build_policy_request,
     task_prompts_for_runtime,
+    resolve_task_for_runtime,
+    thor_cameras_for_order,
     validate_policy_metadata,
 )
 from task487_runtime.diagnostics import ChunkDiagnosticRecorder
+from task487_runtime.policy_logging import PolicyExchangeRecorder
+from task487_runtime.telemetry_process import PassiveGripperTelemetry
+from task487_runtime.gripper_dynamics import DEFAULT_GRIPPER_CONFIG, load_gripper_dynamics
 from task487_runtime.scheduler import RollingScheduler, RunState, SchedulerConfig, UnsafeChunkError
 from task487_runtime.worker import InferenceWorker
+from task487_runtime.author_sync import (
+    AuthorSyncScheduler, DEFAULT_SYNC_MAX_POS_SPEED, DEFAULT_SYNC_MAX_ROT_SPEED,
+    DEFAULT_SYNC_SPEED_SCALE,
+    ROBOT_LATENCY, GRIPPER_LATENCY,
+)
 from umi.real_world.umi_env import UmiEnv
 
 
@@ -115,7 +129,7 @@ class CameraPreview:
 
     RGB_WINDOW_NAME = "Task487 Pi0.5 exact model input (RGB before normalization)"
     PROCESSED_WINDOW_NAME = "Task487 Pi0.5 processed camera input (RGB + head mask tokens)"
-    IMAGE_KEYS = ("cam_head", "cam_left_top", "cam_right_top")
+    IMAGE_KEYS = tuple(CAMERA_SOURCES)
     TOKEN_GRID = 16
     MIN_KEEP_HEAD_TOKENS = 64
 
@@ -145,8 +159,11 @@ class CameraPreview:
     @classmethod
     def compose(cls, observation: dict, caption: str) -> np.ndarray:
         """Build a BGR display canvas without modifying policy input pixels."""
+        image_keys = tuple(key for key in cls.IMAGE_KEYS if key in observation)
+        if not image_keys:
+            raise ValueError("Preview observation has no policy camera images")
         panels = []
-        for key in cls.IMAGE_KEYS:
+        for key in image_keys:
             image = np.asarray(observation[key])
             if image.shape != (224, 224, 3) or image.dtype != np.uint8:
                 raise ValueError(f"Preview expected {key} uint8[224,224,3], got {image.shape} {image.dtype}")
@@ -154,11 +171,11 @@ class CameraPreview:
 
         image_row = np.concatenate(panels, axis=1)
         header = np.zeros((40, image_row.shape[1], 3), dtype=np.uint8)
-        for index, key in enumerate(cls.IMAGE_KEYS):
+        for index, key in enumerate(image_keys):
             cv2.putText(
                 header,
                 key,
-                (index * 224 + 8, 25),
+                (index * 224 + 8, 17),
                 cv2.FONT_HERSHEY_SIMPLEX,
                 0.55,
                 (0, 255, 255),
@@ -168,7 +185,7 @@ class CameraPreview:
         cv2.putText(
             header,
             caption,
-            (350, 25),
+            (8, 35),
             cv2.FONT_HERSHEY_SIMPLEX,
             0.45,
             (255, 255, 255),
@@ -209,6 +226,8 @@ class CameraPreview:
     @classmethod
     def compose_processed(cls, observation: dict, caption: str) -> np.ndarray:
         """Add pixel- and token-level mask views below the unmodified RGB row."""
+        if "cam_head" not in observation:
+            return cls.compose(observation, caption)
         rgb_canvas = cls.compose(observation, "")
         status_header = np.zeros((28, rgb_canvas.shape[1], 3), dtype=np.uint8)
         cv2.putText(
@@ -301,6 +320,10 @@ class CameraPreview:
             panels = [pixel_overlay, token_view, binary_mask]
 
         processed_row = np.concatenate(panels, axis=1)
+        if processed_row.shape[1] < rgb_canvas.shape[1]:
+            processed_row = np.pad(
+                processed_row, ((0, 0), (0, rgb_canvas.shape[1] - processed_row.shape[1]), (0, 0))
+            )
         return np.concatenate((status_header, rgb_canvas, processed_header, processed_row), axis=0)
 
     def show(self, request, stage: str) -> None:
@@ -358,14 +381,36 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument("--server-host", default="127.0.0.1")
     parser.add_argument("--server-port", type=int, default=8000)
-    parser.add_argument("--task", choices=TASK_PROMPTS, default="vegetable")
+    parser.add_argument("--task", choices=(*TASK_PROMPTS, *FOUR_WRIST_TASK_PROMPTS), default="vegetable")
     parser.add_argument(
         "--no-task-ui",
         action="store_true",
-        help="Disable the vegetable/fruit task-selection window",
+        help="Disable the runtime-specific task-selection window",
     )
     parser.add_argument("--execute", action="store_true", help="Enable real robot command output")
     parser.add_argument("--continuous", action="store_true", help="Continue beyond the first five-waypoint round")
+    parser.add_argument("--execution-mode", choices=("rolling", "author-sync"), default="rolling")
+    parser.add_argument("--gripper-config", type=pathlib.Path,
+                        default=pathlib.Path(os.environ.get("TASK487_GRIPPER_CONFIG", DEFAULT_GRIPPER_CONFIG)),
+                        help="The same gripper_can.yaml loaded by the robot backend; used for joint timing.")
+    parser.add_argument("--sync-steps-per-inference", type=int, default=6)
+    parser.add_argument("--sync-max-pos-speed", type=float, default=DEFAULT_SYNC_MAX_POS_SPEED,
+                        help="Effective Cartesian m/s cap for author-sync (no further sqrt(3) multiplier)")
+    parser.add_argument("--sync-max-rot-speed", type=float, default=DEFAULT_SYNC_MAX_ROT_SPEED,
+                        help="Effective rad/s cap for author-sync")
+    parser.add_argument("--sync-speed-scale", type=float, default=DEFAULT_SYNC_SPEED_SCALE,
+                        help="Author-sync path playback rate in (0, 1], default 0.5; "
+                             "keeps physical speed caps, gripper travel time and replan cadence")
+    parser.add_argument("--sync-right-gripper-preload-deg", type=float, default=0.0,
+                        help="Optional right closing preload, 0..2 degrees (default 0/off); "
+                             "withdrawn on opening, retimed with both arms; not force control")
+    parser.add_argument("--sync-gripper-close-compensation-deg", type=float, default=0.0,
+                        help="Both hands: subtract 0..5 degrees on closing (default 0/off)")
+    parser.add_argument("--sync-gripper-open-compensation-deg", type=float, default=0.0,
+                        help="Both hands: add 0..5 degrees on opening (default 0/off); "
+                             "physical endpoints and shared speed limits retained")
+    parser.add_argument("--sync-right-before-left", action="store_true",
+                        help="Hold left arm/gripper until right close-then-open target is reached; requires compensation")
     parser.add_argument(
         "--max-waypoints",
         type=int,
@@ -377,7 +422,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--show-cameras",
         action="store_true",
-        help="Show the exact cam_head/cam_left_top/cam_right_top images sent in each policy request",
+        help="Show all camera images selected by the server contract in each policy request",
     )
     parser.add_argument(
         "--show-processed-cameras",
@@ -397,16 +442,37 @@ def parse_args() -> argparse.Namespace:
     args = parser.parse_args()
     if args.max_waypoints is not None and args.max_waypoints <= 0:
         parser.error("--max-waypoints must be positive")
+    if not np.isfinite(args.sync_right_gripper_preload_deg) or not 0 <= args.sync_right_gripper_preload_deg <= 2:
+        parser.error("--sync-right-gripper-preload-deg must be finite and in [0, 2]")
+    if args.sync_right_gripper_preload_deg and args.execution_mode != "author-sync":
+        parser.error("--sync-right-gripper-preload-deg requires --execution-mode author-sync")
+    for name in ("sync_gripper_close_compensation_deg", "sync_gripper_open_compensation_deg"):
+        value = getattr(args, name)
+        if not np.isfinite(value) or not 0 <= value <= 5:
+            parser.error(f"--{name.replace('_', '-')} must be finite and in [0, 5]")
+    if args.sync_gripper_close_compensation_deg or args.sync_gripper_open_compensation_deg:
+        if args.execution_mode != "author-sync":
+            parser.error("gripper compensation requires --execution-mode author-sync")
+        if args.sync_right_gripper_preload_deg:
+            parser.error("gripper compensation cannot be combined with --sync-right-gripper-preload-deg")
+    if args.sync_right_before_left and not (args.sync_gripper_close_compensation_deg or args.sync_gripper_open_compensation_deg):
+        parser.error("--sync-right-before-left requires gripper compensation")
     return args
 
 
-def validate_server_metadata(metadata: dict) -> PolicyRuntimeContract:
-    return validate_policy_metadata(metadata)
+def validate_server_metadata(metadata: dict, *, require_rtc: bool = True) -> PolicyRuntimeContract:
+    return validate_policy_metadata(metadata, require_rtc=require_rtc)
 
 
-def validate_thor(env: UmiEnv, max_age: float, max_skew: float) -> None:
+def validate_thor(
+    env: UmiEnv, max_age: float, max_skew: float,
+    camera_order: tuple[str, ...] = LEGACY_CAMERA_ORDER,
+) -> None:
     now = time.time()
-    expected = ("cam_head_left", "cam_hand_l_top", "cam_hand_r_top")
+    expected = tuple(camera["label"] for camera in thor_cameras_for_order(camera_order))
+    missing = set(expected) - env.thor_receivers.keys()
+    if missing:
+        raise RuntimeError(f"Missing required Thor receivers: {sorted(missing)}")
     capture_times = []
     for label in expected:
         receiver = env.thor_receivers[label]
@@ -421,15 +487,18 @@ def validate_thor(env: UmiEnv, max_age: float, max_skew: float) -> None:
         capture_times.append(capture_time)
     skew = max(capture_times) - min(capture_times)
     if skew > max_skew:
-        raise RuntimeError(f"Thor three-camera skew {skew:.4f}s exceeds {max_skew:.4f}s")
+        raise RuntimeError(f"Thor {len(expected)}-camera skew {skew:.4f}s exceeds {max_skew:.4f}s")
 
 
-def wait_for_thor(env: UmiEnv, max_age: float, max_skew: float, timeout: float = 15.0) -> None:
+def wait_for_thor(
+    env: UmiEnv, max_age: float, max_skew: float, timeout: float = 15.0,
+    camera_order: tuple[str, ...] = LEGACY_CAMERA_ORDER,
+) -> None:
     deadline = time.monotonic() + timeout
     last_error = None
     while time.monotonic() < deadline:
         try:
-            validate_thor(env, max_age, max_skew)
+            validate_thor(env, max_age, max_skew, camera_order)
             return
         except RuntimeError as exc:
             last_error = exc
@@ -491,6 +560,28 @@ def hold_robot(env: UmiEnv) -> None:
     env.hold(wait=True, timeout=2.0)
 
 
+def activate_scheduler(scheduler, env, live):
+    if isinstance(scheduler, AuthorSyncScheduler) and scheduler.compensation_enabled:
+        policy_angles = [float(np.asarray(state["gripper_policy_position"]).reshape(-1)[-1])
+                         for state in env.get_gripper_state()]
+        scheduler.activate(live, gripper_policy_live=policy_angles)
+    else:
+        scheduler.activate(live)
+
+
+@contextmanager
+def physical_hold_on_exit(env, execute):
+    """HOLD before UmiEnv tears down its processes, including exception paths."""
+    try:
+        yield
+    finally:
+        if execute:
+            try:
+                hold_robot(env)
+            except Exception:
+                logging.exception("Failed to confirm final HOLD; inspect backend / use hardware E-stop")
+
+
 def read_gripper_degrees(env: UmiEnv) -> np.ndarray:
     return np.asarray(
         [
@@ -512,28 +603,49 @@ def prepare_grippers_for_runtime(
     runtime_contract: PolicyRuntimeContract,
     timeout: float = 5.0,
 ) -> None:
-    """Move both grippers to this checkpoint's demonstrated boundary state."""
-    targets = np.asarray(runtime_contract.gripper_start_degrees, dtype=np.float64)
-    target_time = time.time() + 0.10
-    for gripper, target in zip(env.grippers, targets, strict=True):
-        gripper.schedule_waypoint(float(target), target_time)
+    """Clear a previous grasp latch by opening before preparing the boundary.
 
-    deadline = time.monotonic() + timeout
+    The installed driver rearms on a request >1 degree beyond the measured
+    opening. Merely sending a smaller angle cannot leave a latched hold.
+    """
+    targets = np.asarray(runtime_contract.gripper_start_degrees, dtype=np.float64)
     positions = read_gripper_degrees(env)
-    while time.monotonic() < deadline:
-        positions = read_gripper_degrees(env)
-        if np.all(np.abs(positions - targets) <= runtime_contract.gripper_ready_tolerance_deg):
-            logging.info(
-                "Grippers prepared at right=%.1fdeg left=%.1fdeg "
-                "(targets %.1f/%.1fdeg)",
-                *positions,
-                *targets,
-            )
-            return
-        time.sleep(0.05)
+    if positions.shape != (2,) or not np.isfinite(positions).all():
+        raise RuntimeError("gripper preparation requires finite measured positions")
+    release_targets = np.minimum(positions + 2.0, GRIPPER_SAFE_OPEN_DEG)
+    logging.info("Gripper prepare: open to clear previous stall latch, right=%.2fdeg left=%.2fdeg",
+                 *release_targets)
+    failure = None
+    for stage, goal, tolerance in (
+        ("open-to-rearm", release_targets, .25),
+        ("checkpoint-close", targets, min(.5, runtime_contract.gripper_ready_tolerance_deg)),
+    ):
+        target_time = time.time() + .10
+        for gripper, target in zip(env.grippers, goal, strict=True):
+            # No compensation during preparation; reset the paired reference.
+            gripper.schedule_waypoint(float(target), target_time)
+        deadline = time.monotonic() + timeout
+        while time.monotonic() < deadline:
+            measured = read_gripper_degrees(env)
+            if measured.shape != (2,) or not np.isfinite(measured).all():
+                failure = f"{stage}: invalid gripper feedback"
+                break
+            positions = measured
+            if np.all(np.abs(positions - goal) <= tolerance):
+                logging.info("Gripper prepare %s reached: right=%.2fdeg left=%.2fdeg", stage, *positions)
+                break
+            time.sleep(.05)
+        else:
+            failure = f"{stage}: targets not reached"
+        if failure:
+            break
+    if failure is None:
+        logging.info("Grippers prepared at right=%.1fdeg left=%.1fdeg (targets %.1f/%.1fdeg)",
+                     *positions, *targets)
+        return
 
     # Freeze at measured positions before failing.  Without this, the gripper
-    # interpolation processes keep streaming the unreachable 35-degree target
+    # interpolation processes keep streaming an unreachable target
     # and the motor driver remains torque-saturated even though ACTIVE is
     # blocked.
     freeze_time = time.time() + 0.10
@@ -542,9 +654,10 @@ def prepare_grippers_for_runtime(
     time.sleep(0.20)
     raise RuntimeError(
         "grippers did not reach the checkpoint boundary state: "
+        f"{failure}; "
         f"right={positions[0]:.1f}deg left={positions[1]:.1f}deg "
         f"(targets={targets[0]:.1f}/{targets[1]:.1f}deg, "
-        f"tolerance={runtime_contract.gripper_ready_tolerance_deg:.1f}deg)"
+        f"stage_tolerance={tolerance:.2f}deg)"
     )
 
 
@@ -560,6 +673,7 @@ def wait_for_warmup(worker: InferenceWorker, request, timeout: float = 30.0):
     while time.monotonic() < deadline:
         result = worker.poll()
         if result is not None:
+            worker.record_disposition(result, "warmup_error" if result.error is not None else "warmup_discarded")
             if result.error is not None:
                 raise RuntimeError("Task487 warmup inference failed") from result.error
             logging.info("Warmup inference complete in %.1fms", result.latency_s * 1000)
@@ -598,7 +712,10 @@ def submit_rtc_request(
     runtime_contract: PolicyRuntimeContract,
     geometry_masker: GeometryMasker | None,
 ) -> None:
-    prefix = scheduler.rtc_prefix_targets()
+    if worker.busy:
+        return  # Drain/invalidate the previous round before submitting another.
+    plain = isinstance(scheduler, AuthorSyncScheduler)
+    prefix = None if plain else scheduler.rtc_prefix_targets()
     mask_result = render_runtime_head_mask(obs, runtime_contract, geometry_masker)
     request = build_policy_request(
         obs,
@@ -607,8 +724,10 @@ def submit_rtc_request(
         round_id=round_id,
         action_horizon=action_horizon,
         fixed_head_mask=None if mask_result is None else mask_result["combined_mask"],
+        camera_order=runtime_contract.camera_order,
+        gripper_policy_coordinates=plain and scheduler.compensation_enabled,
     )
-    camera_preview.show(request, f"rtc_prefix={len(prefix)}")
+    camera_preview.show(request, "plain_author_sync" if plain else f"rtc_prefix={len(prefix)}")
     worker.submit(request)
     scheduler.mark_request_started(time.time())
 
@@ -621,7 +740,8 @@ def main() -> None:
     pathlib.Path(args.output).mkdir(parents=True, exist_ok=True)
     policy = websocket_client_policy.WebsocketClientPolicy(args.server_host, args.server_port)
     server_metadata = policy.get_server_metadata()
-    runtime_contract = validate_server_metadata(server_metadata)
+    author_sync = args.execution_mode == "author-sync"
+    runtime_contract = validate_server_metadata(server_metadata, require_rtc=not author_sync)
     geometry_masker = (
         GeometryMasker(
             image_size=224,
@@ -631,18 +751,45 @@ def main() -> None:
         else None
     )
     task_prompts = task_prompts_for_runtime(runtime_contract.runtime)
+    selected_task_key = resolve_task_for_runtime(runtime_contract.runtime, args.task)
+    if selected_task_key != args.task:
+        logging.warning(
+            "Task alias %r maps to %r for %s: this checkpoint was trained on one sorting prompt",
+            args.task, selected_task_key, runtime_contract.runtime,
+        )
     prompt = task_prompts[selected_task_key]
     task_ui_instructions, task_ui_index = task_ui_configuration(task_prompts)
     action_horizon = runtime_contract.action_horizon
     control_hz = runtime_contract.control_hz
+    gripper_dynamics = load_gripper_dynamics(args.gripper_config)
     scheduler = RollingScheduler(
         SchedulerConfig.for_policy_rate(
             control_hz,
             action_horizon,
             min_tcp_z_m=MIN_TCP_Z_M,
             max_downward_excursion_m=MAX_DOWNWARD_EXCURSION_M,
+            complete_chunk_before_replan=runtime_contract.complete_chunk_before_replan,
+            max_physical_gripper_speed_deg_s=gripper_dynamics.joint_speed_deg_s,
         )
     )
+    if author_sync:
+        scheduler = AuthorSyncScheduler(
+            scheduler.config, action_horizon=action_horizon,
+            steps_per_inference=args.sync_steps_per_inference,
+            max_pos_speed=args.sync_max_pos_speed, max_rot_speed=args.sync_max_rot_speed,
+            speed_scale=args.sync_speed_scale,
+            right_gripper_preload_deg=args.sync_right_gripper_preload_deg,
+            gripper_close_compensation_deg=args.sync_gripper_close_compensation_deg,
+            gripper_open_compensation_deg=args.sync_gripper_open_compensation_deg,
+            gripper_open_limits_deg=GRIPPER_SAFE_OPEN_DEG,
+            right_before_left=args.sync_right_before_left)
+    logging.warning(
+        "Execution=%s; effective speed limits=%.3fm/s %.3frad/s; policy rate=%.1fHz",
+        args.execution_mode, scheduler.config.max_physical_translation_speed_m_s,
+        scheduler.config.max_physical_rotation_speed_rad_s, control_hz)
+    logging.info("Gripper timing: %.3f deg/s joint (CAN %.3f rad/s motor, gear 20); config=%s",
+                 gripper_dynamics.joint_speed_deg_s, gripper_dynamics.motor_speed_rad_s,
+                 gripper_dynamics.config_path)
     diagnostic_root = pathlib.Path(os.environ.get("UMI_ACTION_LOG_DIR", args.output))
     chunk_diagnostics = ChunkDiagnosticRecorder(diagnostic_root)
     dt = scheduler.config.dt
@@ -651,7 +798,7 @@ def main() -> None:
     logging.info(
         "Task487 task=%s prompt=%r runtime=%s control_hz=%.1f action_horizon=%d "
         "image_geometry=%s gripper_start=%.1f/%.1fdeg",
-        args.task,
+        selected_task_key,
         prompt,
         server_metadata["runtime"],
         control_hz,
@@ -664,6 +811,29 @@ def main() -> None:
         chunk_diagnostics.summary_path,
         chunk_diagnostics.chunk_dir,
     )
+    logging.info("Policy camera order: %s; Thor streams: %s",
+                 runtime_contract.camera_order, thor_cameras_for_order(runtime_contract.camera_order))
+    if author_sync:
+        logging.info("Plain Bezier: replan=%d steps (%.3fs); device latency=%.3f/%.3fs; no RTC prefill",
+                     scheduler.steps_per_inference, scheduler.steps_per_inference * dt,
+                     ROBOT_LATENCY, GRIPPER_LATENCY)
+        logging.info("Path playback=%.2fx; continuous future splice; extra local timing correction <=150ms; "
+                     "controller speed caps retained", scheduler.speed_scale)
+        logging.info("Right gripper closing preload=%.2fdeg (0=off); original policy values remain in diagnostics; "
+                     "feedback remains measured", scheduler.right_gripper_preload_deg)
+        logging.info("Both grippers compensation: closing=-%.2fdeg opening=+%.2fdeg (0=off); "
+                     "opening limits right=%.3fdeg left=%.3fdeg; direction hysteresis=0.5deg; "
+                     "original policy values and measured feedback retained",
+                     scheduler.gripper_close_compensation_deg, scheduler.gripper_open_compensation_deg,
+                     *GRIPPER_SAFE_OPEN_DEG)
+        if scheduler.compensation_enabled:
+            logging.info("Compensation feedback=v2 paired physical/policy trajectories; "
+                         "policy state=policy reference + measured tracking error; raw feedback separately logged; "
+                         "right-before-left=%s", scheduler.right_before_left)
+    else:
+        logging.info("Scheduler complete_chunk_before_replan=%s; commit_window_s=%s; commit_steps=%d",
+                     scheduler.config.complete_chunk_before_replan,
+                     scheduler.config.commit_window_s, scheduler.config.commit_steps)
 
     with CameraPreview(
         args.show_cameras or args.show_processed_cameras,
@@ -685,7 +855,7 @@ def main() -> None:
             gripper_closed_rad=(0.0, 0.0),
             gripper_kp=10.0,
             gripper_kd=1.0,
-            gripper_max_speed_dps=35.0,
+            gripper_max_speed_dps=gripper_dynamics.joint_speed_deg_s,
             frequency=control_hz,
             # Select the exact camera geometry tied to the validated runtime:
             # old pure-real checkpoints center-crop, raw UMI preserves the full
@@ -701,8 +871,8 @@ def main() -> None:
             camera_obs_latency=0.0,
             robot_obs_latency=0.0001,
             gripper_obs_latency=0.01,
-            robot_action_latency=0.0,
-            gripper_action_latency=0.0,
+            robot_action_latency=ROBOT_LATENCY if author_sync else 0.0,
+            gripper_action_latency=GRIPPER_LATENCY if author_sync else 0.0,
             camera_obs_horizon=2,
             robot_obs_horizon=2,
             gripper_obs_horizon=2,
@@ -723,19 +893,24 @@ def main() -> None:
             thor_enabled=True,
             thor_host=args.thor_host,
             thor_receiver_path=args.thor_receiver_path,
-            thor_cameras=[
-                # Training field observation.images.head_main is recorded from
-                # cam_head_left. Port 5001 is the unused stereo-right view.
-                {"label": "cam_head_left", "video_port": 5000, "meta_port": 6000},
-                {"label": "cam_hand_l_top", "video_port": 5002, "meta_port": 6002},
-                {"label": "cam_hand_r_top", "video_port": 5004, "meta_port": 6004},
-            ],
+            thor_cameras=thor_cameras_for_order(runtime_contract.camera_order),
             thor_tile_w=640,
             thor_tile_h=512,
-        ) as env, TerminalKeys() as keys:
-            worker = InferenceWorker(policy, action_horizon=action_horizon)
+        ) as env, TerminalKeys() as keys, \
+                PolicyExchangeRecorder(diagnostic_root, metadata={
+                    "server_metadata": server_metadata, "client_args": vars(args),
+                    "runtime_contract": vars(runtime_contract),
+                    "gripper_config_path": str(gripper_dynamics.config_path),
+                    "gripper_config_text": gripper_dynamics.config_path.read_text(),
+                    "angle_convention": "model gripper radians; robot_targets opening degrees; right then left",
+                }) as policy_recorder, PassiveGripperTelemetry(diagnostic_root) as telemetry, \
+                InferenceWorker(policy, action_horizon=action_horizon, recorder=policy_recorder) as worker, \
+                physical_hold_on_exit(env, args.execute):
+            logging.info("Exact policy RGB/state/responses: %s (async, lossless; request IDs link to chunk logs)",
+                         policy_recorder.events_path)
 
-            wait_for_thor(env, args.max_camera_age, args.max_camera_skew)
+            wait_for_thor(env, args.max_camera_age, args.max_camera_skew,
+                          camera_order=runtime_contract.camera_order)
             latest_obs = env.get_obs()
             warmup_mask = render_runtime_head_mask(latest_obs, runtime_contract, geometry_masker)
             warmup_request = build_policy_request(
@@ -743,6 +918,7 @@ def main() -> None:
                 prompt,
                 action_horizon=action_horizon,
                 fixed_head_mask=None if warmup_mask is None else warmup_mask["combined_mask"],
+                camera_order=runtime_contract.camera_order,
             )
             if warmup_mask is not None:
                 mask_preview_path = pathlib.Path(args.output) / "geometry_mask_preview.png"
@@ -761,16 +937,17 @@ def main() -> None:
             # The JAX function has a separate compiled signature when action
             # prefill is present. Compile it in HOLD, never on the first live
             # RTC handoff.
-            rtc_warmup_request = build_policy_request(
-                latest_obs,
-                prompt,
-                rtc_prefix_targets=warmup_result.targets[: scheduler.config.commit_steps],
-                action_horizon=action_horizon,
-                fixed_head_mask=None if warmup_mask is None else warmup_mask["combined_mask"],
-            )
-            camera_preview.show(rtc_warmup_request, "rtc_warmup")
-            wait_for_warmup(worker, rtc_warmup_request)
-            logging.info("Plain and RTC-prefill warmup outputs discarded")
+            if not author_sync:
+                rtc_warmup_request = build_policy_request(
+                    latest_obs, prompt,
+                    rtc_prefix_targets=warmup_result.targets[: scheduler.config.commit_steps],
+                    action_horizon=action_horizon,
+                    fixed_head_mask=None if warmup_mask is None else warmup_mask["combined_mask"],
+                    camera_order=runtime_contract.camera_order,
+                )
+                camera_preview.show(rtc_warmup_request, "rtc_warmup")
+                wait_for_warmup(worker, rtc_warmup_request)
+            logging.info("Warmup outputs discarded (RTC prefill=%s)", not author_sync)
             # The window starts together with UmiEnv, so an operator may have
             # selected the other Task487 prompt while JAX warmup was running.
             selected_instruction = env.get_task_instruction()
@@ -783,7 +960,7 @@ def main() -> None:
             if waypoint_limit is None and not args.continuous:
                 waypoint_limit = 5
             round_mode = (
-                f"bounded RTC round ({waypoint_limit} waypoints)"
+                f"bounded {args.execution_mode} round ({waypoint_limit} waypoints)"
                 if waypoint_limit is not None
                 else "continuous"
             )
@@ -803,6 +980,7 @@ def main() -> None:
             next_tick = time.monotonic()
             last_sensor_error = None
             while not stop_requested.is_set():
+                telemetry.check()
                 next_tick += dt
                 camera_preview.pump()
                 selected_instruction = env.get_task_instruction()
@@ -834,7 +1012,7 @@ def main() -> None:
                     if resume_after_switch:
                         try:
                             activation_live, _ = read_live_targets(env)
-                            scheduler.activate(activation_live)
+                            activate_scheduler(scheduler, env, activation_live)
                         except Exception:
                             scheduler.hold("task switch activation failed")
                             logging.exception(
@@ -873,7 +1051,7 @@ def main() -> None:
                         else:
                             activation_live, _ = read_live_targets(env)
                             active_round_id += 1
-                            scheduler.activate(activation_live)
+                            activate_scheduler(scheduler, env, activation_live)
                             executed_in_round = 0
                             workspace_floors = scheduler.workspace_min_z
                             if workspace_floors is None:
@@ -890,7 +1068,8 @@ def main() -> None:
                     elif key == "r" and scheduler.state is RunState.HOLD:
                         if args.execute:
                             latest_obs = env.get_obs()
-                            validate_thor(env, args.max_camera_age, args.max_camera_skew)
+                            validate_thor(env, args.max_camera_age, args.max_camera_skew,
+                                          runtime_contract.camera_order)
                             return_home(env)
                             try:
                                 prepare_grippers_for_runtime(env, runtime_contract)
@@ -899,11 +1078,14 @@ def main() -> None:
                                 logging.error("HOME complete but start remains blocked: %s", exc)
                             else:
                                 grippers_prepared = True
+                                if author_sync:
+                                    scheduler.reset_gripper_episode()
                         else:
                             logging.info("DRY RUN: HOME command ignored")
 
                 try:
-                    validate_thor(env, args.max_camera_age, args.max_camera_skew)
+                    validate_thor(env, args.max_camera_age, args.max_camera_skew,
+                                  runtime_contract.camera_order)
                     latest_obs = env.get_obs()
                     live, controller_target = read_live_targets(env)
                 except Exception as exc:
@@ -933,6 +1115,7 @@ def main() -> None:
                             latest_obs,
                             prompt,
                             round_id=active_round_id,
+                            camera_order=runtime_contract.camera_order,
                             action_horizon=action_horizon,
                             fixed_head_mask=(
                                 None
@@ -964,11 +1147,17 @@ def main() -> None:
                         # controller_target says which action was consumed;
                         # ActualTCPPose proves that Marvin really followed it.
                         scheduler.validate_physical_tracking(live, controller_target)
+                        if author_sync:
+                            scheduler.observe_controller(controller_target)
                         # Queue progress follows the setpoint actually emitted by
                         # RosTargetInterpolationController. ActualTCPPose may lag
                         # that setpoint during Mink's anchor release and must not
                         # make RTC retire/hold on the wrong action index.
+                        was_left_allowed = scheduler._left_released if author_sync else None
                         completed = scheduler.advance(time.time(), controller_target)
+                        if author_sync and scheduler.right_before_left and not was_left_allowed and scheduler._left_released:
+                            logging.info("Gripper handoff: right opening reached %.2fdeg; left arm/gripper allowed",
+                                         scheduler._right_release_goal)
                     except UnsafeChunkError as exc:
                         if args.execute:
                             hold_robot(env)
@@ -988,14 +1177,17 @@ def main() -> None:
                 result = worker.poll()
                 if result is not None:
                     if result.request.round_id != active_round_id:
+                        worker.record_disposition(result, "stale_round", active_round=active_round_id)
                         logging.warning(
                             "Discarded stale inference from round=%d; active round=%d",
                             result.request.round_id,
                             active_round_id,
                         )
                     elif scheduler.state is RunState.HOLD:
+                        worker.record_disposition(result, "discarded_while_hold")
                         logging.info("Discarded inference completed while HOLD")
                     elif result.error is not None:
+                        worker.record_disposition(result, "inference_error", error=repr(result.error))
                         scheduler.mark_request_failed(f"inference failed: {result.error}")
                         if args.execute:
                             hold_robot(env)
@@ -1012,8 +1204,11 @@ def main() -> None:
                                 live,
                             )
                             after_merge = scheduler.diagnostic_snapshot()
+                            worker.record_disposition(result, "accepted", accepted=stats.accepted)
                             try:
                                 chunk_diagnostics.record(
+                                    policy_request_id=result.request.request_id,
+                                    policy_session_id=policy_recorder.session_id,
                                     round_id=result.request.round_id,
                                     observation_time=result.request.observation_time,
                                     merge_time=merge_now,
@@ -1025,19 +1220,24 @@ def main() -> None:
                                     before=before_merge,
                                     after=after_merge,
                                     stats=stats,
+                                    **({"gripper_policy_targets": scheduler._queue_policy_grippers,
+                                        "gripper_handoff": scheduler.gripper_handoff_status()} if author_sync else {}),
+                                    **({"splice_time": scheduler.replace_from_time,
+                                        "splice_anchor": scheduler._trajectory_targets[0]}
+                                       if author_sync else {}),
                                 )
                             except Exception:
                                 logging.exception(
                                     "Failed to persist policy chunk diagnostics; control continues"
                                 )
                             logging.info(
-                                "chunk round=%d obs_age=%.3fs accepted=%d expired=%d "
+                                "chunk mode=%s round=%d obs_age=%.3fs accepted=%d expired=%d "
                                 "rtc_prefix=%d infer_delay=%d unsafe_tail=%d "
                                 "retimed=%d max_delay=%.3fs queue_cut=%d blend=%d "
                                 "infer=%.1fms queue=%d committed=%d "
                                 "intent5[first=%d R=%.1fmm/%.1fdeg L=%.1fmm/%.1fdeg "
                                 "Rxyz=(%+.1f,%+.1f,%+.1f)mm Lxyz=(%+.1f,%+.1f,%+.1f)mm]",
-                                result.request.round_id,
+                                args.execution_mode, result.request.round_id,
                                 merge_now - result.request.observation_time,
                                 stats.accepted,
                                 stats.expired,
@@ -1059,8 +1259,11 @@ def main() -> None:
                                 *intent[5:11],
                             )
                         except UnsafeChunkError as exc:
+                            worker.record_disposition(result, "rejected", error=str(exc))
                             try:
                                 chunk_diagnostics.record(
+                                    policy_request_id=result.request.request_id,
+                                    policy_session_id=policy_recorder.session_id,
                                     round_id=result.request.round_id,
                                     observation_time=result.request.observation_time,
                                     merge_time=merge_now,
@@ -1088,7 +1291,8 @@ def main() -> None:
                             )
 
                 if scheduler.state is RunState.ACTIVE:
-                    if scheduler.request_due(time.time()):
+                    if (scheduler.request_due(time.time()) and
+                            (waypoint_limit is None or executed_in_round + scheduler.committed_steps < waypoint_limit)):
                         submit_rtc_request(
                             worker,
                             scheduler,
@@ -1101,7 +1305,10 @@ def main() -> None:
                             geometry_masker,
                         )
                     try:
-                        scheduled_batch = scheduler.pop_batch(live, now=time.time())
+                        remaining = (None if waypoint_limit is None else
+                                     waypoint_limit - executed_in_round - scheduler.committed_steps)
+                        scheduled_batch = ([] if remaining is not None and remaining <= 0 else
+                                           scheduler.pop_batch(live, now=time.time(), max_actions=remaining))
                     except UnsafeChunkError as exc:
                         if args.execute:
                             hold_robot(env)
@@ -1126,11 +1333,16 @@ def main() -> None:
                                     [scheduled.target_time for scheduled in scheduled_batch],
                                     dtype=np.float64,
                                 ),
-                                compensate_latency=False,
+                                compensate_latency=author_sync,
                                 time_is_new=True,
+                                **({"gripper_policy_angles": np.stack([a.gripper_policy_target for a in scheduled_batch])}
+                                   if author_sync and scheduler.compensation_enabled else {}),
+                                **({"replace_from_time": scheduler.replace_from_time}
+                                   if author_sync else {}),
                             )
 
-                if scheduler.request_due(time.time()):
+                if (scheduler.request_due(time.time()) and
+                        (waypoint_limit is None or executed_in_round + scheduler.committed_steps < waypoint_limit)):
                     submit_rtc_request(
                         worker,
                         scheduler,
@@ -1154,7 +1366,6 @@ def main() -> None:
             if args.execute:
                 hold_robot(env)
             logging.warning("Ctrl+C: commanded HOLD, shutting down")
-            worker.close()
             signal.signal(signal.SIGINT, previous_sigint)
 
     # Keep the descriptor alive for the full UmiEnv/controller lifetime.

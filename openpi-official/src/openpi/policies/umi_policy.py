@@ -18,8 +18,11 @@ _BIMANUAL_DIM = 20
 _CAMERAS = {
     "base_0_rgb": "cam_head",
     "left_wrist_0_rgb": "cam_left_top",
+    "left_wrist_1_rgb": "cam_left_down",
     "right_wrist_0_rgb": "cam_right_top",
+    "right_wrist_1_rgb": "cam_right_down",
 }
+UMI_IMAGE_KEYS = tuple(_CAMERAS)
 _HEAD_MASK_KEY = "fixed_head_mask"
 _VISION_TOKEN_GRID = 16
 _MIN_KEEP_HEAD_TOKENS = 64
@@ -32,6 +35,7 @@ class UMIRepackTransform(transforms.DataTransformFn):
     head_feature: str = "observation.images.head_main"
     use_head_mask: bool = True
     use_head_camera: bool = True
+    use_four_wrist_cameras: bool = False
     load_images: bool = True
 
     def __call__(self, data: dict) -> dict:
@@ -48,6 +52,11 @@ class UMIRepackTransform(transforms.DataTransformFn):
                     "cam_left_top": "observation.images.left_hand_up",
                 }
             )
+            if self.use_four_wrist_cameras:
+                paths.update({
+                    "cam_left_down": "observation.images.left_hand_down",
+                    "cam_right_down": "observation.images.right_hand_down",
+                })
             if self.use_head_camera:
                 paths["cam_head"] = self.head_feature
         result = {name: flat[path] for name, path in paths.items()}
@@ -178,6 +187,7 @@ class UMIBimanualInputs(transforms.DataTransformFn):
 
     model_type: _model.ModelType
     use_head_camera: bool = True
+    use_four_wrist_cameras: bool = False
     load_images: bool = True
 
     def __call__(self, data: dict) -> dict:
@@ -197,8 +207,12 @@ class UMIBimanualInputs(transforms.DataTransformFn):
                     else np.zeros_like(left_wrist)
                 ),
                 "left_wrist_0_rgb": left_wrist,
-                "right_wrist_0_rgb": _parse_image(data[_CAMERAS["right_wrist_0_rgb"]]),
             }
+            if self.use_four_wrist_cameras:
+                images["left_wrist_1_rgb"] = _parse_image(data[_CAMERAS["left_wrist_1_rgb"]])
+            images["right_wrist_0_rgb"] = _parse_image(data[_CAMERAS["right_wrist_0_rgb"]])
+            if self.use_four_wrist_cameras:
+                images["right_wrist_1_rgb"] = _parse_image(data[_CAMERAS["right_wrist_1_rgb"]])
             image_masks = dict.fromkeys(images, np.True_)
             image_masks["base_0_rgb"] = np.bool_(self.use_head_camera)
             inputs["image"] = images

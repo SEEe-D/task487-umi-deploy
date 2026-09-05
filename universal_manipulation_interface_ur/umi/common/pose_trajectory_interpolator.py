@@ -107,10 +107,24 @@ class PoseTrajectoryInterpolator:
             max_pos_speed=np.inf, 
             max_rot_speed=np.inf,
             curr_time=None,
-            last_waypoint_time=None
+            last_waypoint_time=None,
+            replace_from_time=None,
         ) -> "PoseTrajectoryInterpolator":
         assert(max_pos_speed > 0)
         assert(max_rot_speed > 0)
+        if replace_from_time is not None:
+            # The first point of a new chunk replaces only the future AFTER
+            # this boundary. The old prefix must keep moving during transport
+            # lead time; trimming it at curr_time brakes on every replan.
+            if curr_time is None or not np.isfinite(replace_from_time):
+                raise ValueError("replacement boundary requires finite time and curr_time")
+            if time <= curr_time:
+                return self
+            boundary = max(float(replace_from_time), float(curr_time))
+            if boundary >= time:
+                raise ValueError("replacement boundary must precede first waypoint")
+            self = self.trim(curr_time, boundary)
+            last_waypoint_time = boundary
         if last_waypoint_time is not None:
             assert curr_time is not None
 

@@ -64,7 +64,7 @@ cameras:
     height: 1536
 
   - label: cam_hand_l_bottom
-    enabled: false
+    enabled: true
     device_path: /dev/video2
     width: 1920
     height: 1536
@@ -75,7 +75,7 @@ cameras:
     height: 1536
 
   - label: cam_hand_r_bottom
-    enabled: false
+    enabled: true
     device_path: /dev/video4
     width: 1920
     height: 1536

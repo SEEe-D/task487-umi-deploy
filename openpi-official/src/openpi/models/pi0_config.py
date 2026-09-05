@@ -36,6 +36,8 @@ class Pi0Config(_model.BaseModelConfig):
     # Masked Task487 training disables this so image patches and token masks
     # remain in exactly the same spatial coordinate system.
     image_geometric_augmentation: bool = True
+    # Task487 four-wrist checkpoints retain a fifth (possibly masked) head slot.
+    image_keys: tuple[str, ...] = _model.IMAGE_KEYS
 
     pytorch_compile_mode: str | None = "max-autotune"
 
@@ -72,16 +74,8 @@ class Pi0Config(_model.BaseModelConfig):
 
         with at.disable_typechecking():
             observation_spec = _model.Observation(
-                images={
-                    "base_0_rgb": image_spec,
-                    "left_wrist_0_rgb": image_spec,
-                    "right_wrist_0_rgb": image_spec,
-                },
-                image_masks={
-                    "base_0_rgb": image_mask_spec,
-                    "left_wrist_0_rgb": image_mask_spec,
-                    "right_wrist_0_rgb": image_mask_spec,
-                },
+                images=dict.fromkeys(self.image_keys, image_spec),
+                image_masks=dict.fromkeys(self.image_keys, image_mask_spec),
                 state=jax.ShapeDtypeStruct([batch_size, self.action_dim], jnp.float32),
                 tokenized_prompt=jax.ShapeDtypeStruct([batch_size, self.max_token_len], jnp.int32),
                 tokenized_prompt_mask=jax.ShapeDtypeStruct([batch_size, self.max_token_len], bool),

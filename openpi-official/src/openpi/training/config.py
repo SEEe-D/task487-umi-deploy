@@ -300,6 +300,7 @@ class LeRobotUMIBimanualDataConfig(DataConfigFactory):
     head_feature: str = "observation.images.head_main"
     use_head_mask: bool = True
     use_head_camera: bool = True
+    use_four_wrist_cameras: bool = False
 
     @override
     def create(self, assets_dirs: pathlib.Path, model_config: _model.BaseModelConfig) -> DataConfig:
@@ -309,6 +310,7 @@ class LeRobotUMIBimanualDataConfig(DataConfigFactory):
                     head_feature=self.head_feature,
                     use_head_mask=self.use_head_mask,
                     use_head_camera=self.use_head_camera,
+                    use_four_wrist_cameras=self.use_four_wrist_cameras,
                 )
             ]
         )
@@ -317,6 +319,7 @@ class LeRobotUMIBimanualDataConfig(DataConfigFactory):
                 umi_policy.UMIBimanualInputs(
                     model_type=model_config.model_type,
                     use_head_camera=self.use_head_camera,
+                    use_four_wrist_cameras=self.use_four_wrist_cameras,
                 )
             ],
             outputs=[umi_policy.UMIBimanualOutputs()],
@@ -1201,6 +1204,38 @@ _CONFIGS = [
     *roboarena_config.get_roboarena_configs(),
     *polaris_config.get_polaris_configs(),
 ]
+
+# Deployment configs for the September four-wrist checkpoints. Explicit new
+# names/runtime IDs distinguish these from the older two-wrist checkpoints,
+# since the cloud reused its original config/runtime names. CNC's extra loss
+# is training-only: inference uses ordinary RGB, with no geometry/token mask.
+_task487_raw = next(c for c in _CONFIGS if c.name == "pi05_umi_task487_raw_12_5")
+for _variant, _head_feature, _head_enabled in (
+    ("raw", "observation.images.head_raw", True),
+    ("cnc", "observation.images.head_fixed", True),
+    ("wrist_only", "observation.images.head_main", False),
+):
+    _four_wrist_order = ["cam_left_top", "cam_left_down", "cam_right_top", "cam_right_down"]
+    _CONFIGS.append(dataclasses.replace(
+        _task487_raw,
+        name=f"pi05_umi_task487_{_variant}_4w_12_5",
+        model=dataclasses.replace(_task487_raw.model, image_keys=umi_policy.UMI_IMAGE_KEYS),
+        data=dataclasses.replace(
+            _task487_raw.data,
+            head_feature=_head_feature,
+            use_head_camera=_head_enabled,
+            use_four_wrist_cameras=True,
+            use_head_mask=False,
+        ),
+        policy_metadata={
+            **_task487_raw.policy_metadata,
+            "runtime": f"pi05_umi_task487_{_variant}_4w_12_5_v1",
+            "camera_order": (["cam_head"] if _head_enabled else []) + _four_wrist_order,
+            "head_enabled": _head_enabled,
+            "head_feature": _head_feature if _head_enabled else None,
+            "training_objective": "cnc_mask_v2" if _variant == "cnc" else "flow_matching",
+        },
+    ))
 
 if len({config.name for config in _CONFIGS}) != len(_CONFIGS):
     raise ValueError("Config names must be unique.")
